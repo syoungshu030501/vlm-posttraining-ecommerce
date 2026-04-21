@@ -369,16 +369,46 @@ python -m src.stage4_rag.indexer \
 
 ---
 
-## Part 6 · 已知限制与数据成本
+## Part 6 · 数据可训练性、剩余限制、累计成本
 
-### 6.1 已知限制
+### 6.1 可训练性判定：当前数据可直接进入 Stage 1 SFT
 
-1. **品类偏斜已缓解但仍倾向服装/鞋**：图片池 3093 张 — 基础 2493 张来自 DeepFashion 衍生集（服装+鞋+手表+包），Pexels 补 600 张（食品/化妆品/电子各 200）。蒸馏后 SFT 6685 行的粗粒度分布见 §1.1：服装仍占 51.6%，但食品/化妆品/电子产品/医药/配饰从 0 都已有数十到数百条实样，可支撑 Stage 4 RAG 召回对应视觉样本。原始 Pexels 图像里 qwen-vl-max 偶尔会将食品/化妆品误判到服装桶（例如盒装食品=礼盒包装），这是剩余噪声源。
-2. **Preference 规模 2000 对**：已从 1500 扩展并均衡到四策略（见 §1.3）；`missed_cue` 提升到 325 后可做分层 RM 评估。
-3. **原始 `category` 字段是 425 种自由文本**：不改原始 jsonl，而是在读取侧通过 [src/schema.py](src/schema.py) 的 `coarse_category()` 映射到 10 个粗粒度桶（食品/化妆品/电子产品/医药/鞋/手表/包/服装/配饰/其他）。guard 的同品类契约、Stage 2/3 分层评估、Stage 4 RAG 路由均基于粗粒度桶。
-4. **RAG 索引脚本**：[scripts/build_rag_kb.py](scripts/build_rag_kb.py) 为入口，但与 [src/stage4_rag/indexer.py](src/stage4_rag/indexer.py) 的完整集成尚未在 pipeline 默认跑。注意 `build_rag_kb.py` 会 **覆盖** `violation_cases.jsonl` 为合成模板数据——如需保留现有 150 条（含 132 条真实处罚案例）请勿再跑该入口。
+Guard 全绿 + 下列可量化指标达到训练准入线：
 
-### 6.2 累计数据成本
+| 指标 | 当前值 | 训练准入线 | 判定 |
+|---|---|---|---|
+| SFT 总行数 | 6685 | ≥ 4000 | ✓ |
+| 合规 : 违规 | 4009 : 2676 (60 : 40) | 50 : 50 ~ 70 : 30 | ✓ |
+| JSON 可解析率 | 100% | ≥ 99% | ✓ |
+| train / val / test 切分 | 5353 / 668 / 664 | 按 image_file 分组、可复现 | ✓ |
+| 视觉等价类跨 split 泄漏 | 0（train/val/test/pref 两两交集） | 0 | ✓ |
+| 幻觉三元组 | 16061（仅 train 图） | 0 eval 泄漏 | ✓ |
+| 粗粒度品类覆盖 | 10 桶全非空，最小桶 80 行（医药） | 每桶 ≥ 50 行 | ✓ |
+| 同粗粒度契约（Pref） | 100% | ≥ 95% | ✓ |
+| violation-flip 契约（Pref） | 100%（各策略） | 100% | ✓ |
+| Preference 规模 | 2000 对（missed_cue 325） | ≥ 1500、missed_cue ≥ 200 | ✓ |
+
+直接运行 `bash src/stage1_sft/run.sh` 即可进入 SFT 训练；RM 与 FIPO 阶段亦无数据侧阻塞。
+
+### 6.2 已修复的历史限制
+
+| 问题 | 当前状态 |
+|---|---|
+| 食品/化妆品/电子产品 SFT 样本数为 0 | Pexels 补 600 图后 → 145 / 358 / 95 行 |
+| Preference 总量 1500，`missed_cue` 仅 103 | 扩至 2000，`missed_cue` 325（`--only_mode` 二次蒸馏） |
+| SFT `category` 425 种自由文本噪声 | [src/schema.py](src/schema.py) `coarse_category()` → 10 桶；guard 与 Stage 2/3/4 均基于粗粒度 |
+| Preference 同 `category` 契约噪声 | 改为同粗粒度桶契约，100% 达标 |
+| 数据 split 切换后 triplets 残留 eval 图 | `build_triplets.py` 入参固定为 train 子集，0 泄漏 |
+| Parquet 无 `image_file` 列导致 guard 读不到文件名 | `data_prep.py` 保留该列（不影响训练侧 `image` bytes 字段） |
+
+### 6.3 剩余限制（训练侧可接受，但评估需注意）
+
+1. **SFT 分布仍倾向服装/鞋**：服装 51.6% + 鞋 17.3% 占近 70%。Stage 1 验证集准确率不能只看 overall，必须按粗粒度桶分层。最小桶（医药 80 行）在 val/test 里可能只有 ~8 条，分层 accuracy 方差较大，用 macro-F1 更稳。
+2. **qwen-vl-max 对 Pexels 图的类目误判残余**：盒装食品会被标成"礼盒服装"、护肤套装被标成"化妆品收纳包"。粗粒度桶吸收了大部分，但 `其他` 桶 6.6% 里混有这类边缘样本。不影响 SFT 学"结构化输出 + 违规识别"的主目标。
+3. **`build_rag_kb.py` 会覆盖 `violation_cases.jsonl`**：[scripts/build_rag_kb.py](scripts/build_rag_kb.py) 是旧的合成模板生成器。当前 150 条案例（含 132 条真实处罚）来自 [scripts/data/S4Data.py](scripts/data/S4Data.py) 的 samr/gd 爬取 + 模板补录，**勿再跑 `build_rag_kb.py`** 覆盖掉。Stage 4 RAG 索引构建入口仍是 `src/stage4_rag/indexer.py`。
+4. **`missed_cue` 覆盖上限**：只能从 violation=True 的样本翻转，SFT 里 2676 条 violation 中在 train split 的 ~2140 条是候选池，已用 325（~15%）。若后续 RM 需要更多，可继续跑到 ~1000，但边际收益递减。
+
+### 6.4 累计数据成本
 
 | 阶段 | ¥ |
 |---|---|
@@ -386,8 +416,8 @@ python -m src.stage4_rag.indexer \
 | SFT balanced_v3 重跑 | 97 |
 | Preference 首轮蒸馏 + weak_evidence 重跑 | 80 |
 | 视觉去重后 preference 补蒸馏（486 条） | 20 |
-| Pexels 补图 SFT 蒸馏（+1796 行，本轮） | 59 |
-| Preference 扩展（missed_cue +200 + 总量至 2000，本轮） | 22 |
+| Pexels 补图 SFT 蒸馏（+1796 行） | 59 |
+| Preference 扩展（missed_cue +200 + 总量至 2000） | 22 |
 | **合计** | **~¥441** |
 
 ---
