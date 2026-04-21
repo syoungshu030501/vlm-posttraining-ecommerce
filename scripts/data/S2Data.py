@@ -298,7 +298,7 @@ def main():
 
     random.seed(args.seed)
     client = make_client()
-    project_root = Path(__file__).resolve().parent.parent
+    project_root = Path(__file__).resolve().parents[2]
 
     sft_path = project_root / args.sft_file
     pool_path = project_root / args.pool_file

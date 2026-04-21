@@ -6,9 +6,10 @@ Checks:
   2. Split reproducibility: parquet train/val/test rowcount matches deterministic split
   3. Visual-class leakage: after JPEG re-encode + MD5, each image hashes to a unique class;
      preference ∩ val = 0, preference ∩ test = 0, train ∩ val = 0, train ∩ test = 0 at class level
-  4. Preference contract: category preserved; violation flip consistent with pair_strategy
+  4. Preference contract: same coarse category; violation flip consistent with pair_strategy
   5. JSON parse rate for SFT response / preference chosen/rejected
   6. Image path existence (no deleted victims referenced)
+  7. Coarse-category distribution report (non-failing, informational)
 """
 from __future__ import annotations
 
@@ -24,6 +25,9 @@ import pandas as pd
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+from src.schema import coarse_category, same_coarse  # noqa: E402
+
 SFT_JSONL = ROOT / "data/sft/sft.jsonl"
 PREF_JSONL = ROOT / "data/preference/preference.jsonl"
 IMG_DIR = ROOT / "data/raw/images"
@@ -117,9 +121,16 @@ def main() -> int:
     print(f"\n[2] Split reproducibility (by image_file group)")
     print(f"  train classes: {len(train_cls)}, val: {len(val_cls)}, test: {len(test_cls)}")
     # Check parquet train rows' image paths are a subset of train_cls images
-    train_img_files = {Path(p).name for p in train_df["image"].astype(str).tolist()}
-    val_img_files = {Path(p).name for p in val_df["image"].astype(str).tolist()}
-    test_img_files = {Path(p).name for p in test_df["image"].astype(str).tolist()}
+    # Prefer the `image_file` column if present (newer parquets preserve it);
+    # fall back to parsing the `image` column when it holds a path string.
+    def _img_names(df: pd.DataFrame) -> set[str]:
+        if "image_file" in df.columns:
+            return {Path(str(p)).name for p in df["image_file"].tolist()}
+        return {Path(str(p)).name for p in df["image"].astype(str).tolist()}
+
+    train_img_files = _img_names(train_df)
+    val_img_files = _img_names(val_df)
+    test_img_files = _img_names(test_df)
     if not train_img_files.issubset(train_cls):
         print(f"  [FAIL] train.parquet has images outside reproduced train set")
         fail += 1
@@ -137,7 +148,7 @@ def main() -> int:
     print(f"\n[3] Visual-class leakage (JPEG re-encode + MD5)")
     # Compute hash for every image referenced
     all_imgs = train_img_files | val_img_files | test_img_files
-    pref_img_files = {Path(p).name for p in pref_df["image"].astype(str).tolist()}
+    pref_img_files = _img_names(pref_df) if len(pref_df) else set()
     all_imgs |= pref_img_files
 
     img_hash: dict[str, str] = {}
@@ -185,22 +196,28 @@ def main() -> int:
         fail += 1
 
     # --- 4. Preference contract ---
-    print(f"\n[4] Preference contract")
+    print(f"\n[4] Preference contract (coarse-category contract via src.schema)")
     bad_cat, bad_flip = 0, 0
+    strat_same_coarse = defaultdict(lambda: [0, 0])  # strategy -> [match, mismatch]
     for r in pref_rows:
         c = safe_load(r["chosen"])
         rj = safe_load(r["rejected"])
         if not c or not rj:
             continue
-        if c.get("category") != rj.get("category"):
+        strat = r.get("pair_strategy", "?")
+        if same_coarse(c.get("category"), rj.get("category")):
+            strat_same_coarse[strat][0] += 1
+        else:
             bad_cat += 1
-        flip_required = any(s in r.get("pair_strategy", "")
-                            for s in ("missed_cue", "over_strict"))
+            strat_same_coarse[strat][1] += 1
+        flip_required = any(s in strat for s in ("missed_cue", "over_strict"))
         flipped = bool(c.get("violation")) != bool(rj.get("violation"))
         if flip_required != flipped:
             bad_flip += 1
-    print(f"  category mismatch: {bad_cat}")
+    print(f"  coarse-category mismatch: {bad_cat}")
     print(f"  flip contract violation: {bad_flip}")
+    for strat, (ok, bad) in sorted(strat_same_coarse.items()):
+        print(f"    {strat}: same-coarse {ok}/{ok+bad}")
     if bad_cat > 0 or bad_flip > 0:
         fail += 1
 
@@ -224,6 +241,15 @@ def main() -> int:
     cats = Counter(safe_load(r["response"]).get("category", "?")
                    for r in sft_rows if safe_load(r["response"]))
     print(f"  SFT categories: {len(cats)} unique")
+    coarse_sft = Counter(coarse_category(safe_load(r["response"]).get("category"))
+                         for r in sft_rows if safe_load(r["response"]))
+    total_sft = sum(coarse_sft.values()) or 1
+    coarse_pct = {k: f"{v} ({v*100/total_sft:.1f}%)" for k, v in coarse_sft.most_common()}
+    print(f"  SFT coarse categories: {coarse_pct}")
+    # Preference coarse distribution (by chosen side)
+    coarse_pref = Counter(coarse_category(safe_load(r["chosen"]).get("category"))
+                          for r in pref_rows if safe_load(r["chosen"]))
+    print(f"  Pref coarse categories: {dict(coarse_pref.most_common())}")
 
     # --- 7. Triplet sanity ---
     print(f"\n[7] Triplets")

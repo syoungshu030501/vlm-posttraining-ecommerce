@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import argparse
 import collections
+import hashlib
 import json
 import re
 import sys
@@ -378,6 +379,22 @@ def cmd_merge(args: argparse.Namespace) -> None:
     template = _load_jsonl(Path(args.template))
     print(f"[load] template cases: {len(template)}")
 
+    # 建立已存在案例的文本指纹集合 + 最大 REAL 编号，避免重复入库与 ID 冲突
+    def fingerprint(rec: dict) -> str | None:
+        t = (rec.get("text") or "")[:200]
+        u = rec.get("source") or rec.get("source_url") or ""
+        if not t:
+            return None
+        return hashlib.md5(f"{u}|{t}".encode("utf-8")).hexdigest()
+
+    existing_fp = {fp for fp in (fingerprint(r) for r in template) if fp}
+    max_real_id = 0
+    for r in template:
+        cid = r.get("case_id", "")
+        if cid.startswith("REAL") and cid[4:].isdigit():
+            max_real_id = max(max_real_id, int(cid[4:]))
+    print(f"[dedup] existing fingerprints: {len(existing_fp)}, max REAL id: {max_real_id}")
+
     real_raw: list[dict] = []
     for src in args.sources:
         rows = _load_jsonl(Path(src))
@@ -385,13 +402,15 @@ def cmd_merge(args: argparse.Namespace) -> None:
         real_raw.extend(rows)
 
     real_cases = []
+    next_id = max_real_id + 1
+    skipped_dup = 0
     for rec in real_raw:
         if not is_real_case(rec):
             continue
         text = clean_merge_text(rec["text"])
         cat = refine_category(text, rec.get("category", "通用"))
-        real_cases.append({
-            "case_id": f"REAL{len(real_cases)+1:04d}",
+        merged_rec = {
+            "case_id": f"REAL{next_id:04d}",
             "category": cat,
             "violation_type": "真实处罚案例",
             "penalty_amount": rec.get("penalty_amount"),
@@ -400,16 +419,18 @@ def cmd_merge(args: argparse.Namespace) -> None:
             "source": rec.get("source_url"),
             "source_title": rec.get("source_title"),
             "text": text[:600],
-        })
-    print(f"[filter] real cases after evidence ≥2 filter: {len(real_cases)}")
-
-    seen_ids, merged = set(), []
-    for rec in template + real_cases:
-        cid = rec.get("case_id")
-        if cid and cid in seen_ids:
+        }
+        fp = fingerprint(merged_rec)
+        if fp and fp in existing_fp:
+            skipped_dup += 1
             continue
-        seen_ids.add(cid)
-        merged.append(rec)
+        if fp:
+            existing_fp.add(fp)
+        real_cases.append(merged_rec)
+        next_id += 1
+    print(f"[filter] real cases after evidence ≥2 filter: {len(real_cases)}  (dedup skipped: {skipped_dup})")
+
+    merged = list(template) + real_cases
 
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)

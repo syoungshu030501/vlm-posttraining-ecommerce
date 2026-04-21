@@ -20,4 +20,6 @@ env/
 
 # OS
 .DS_Store
-data/
+
+# Datasets (top-level only; do NOT match scripts/data/)
+/data/

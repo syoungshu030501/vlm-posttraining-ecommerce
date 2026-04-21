@@ -24,21 +24,37 @@ NOTE：本项目模型使用Qwen3-VL-8B，用于Agentic RAG的模型为bge-m3和
 
 | 数据集 | 产物 | 行数 | 用途 | 生成方式 |
 |---|---|---|---|---|
-| 原始图片池 | [data/raw/images/](data/raw/images/) | **2493** | 所有阶段视觉源（已去重） | DeepFashion-MultiModal 衍生下载 → 视觉等价类去重 |
+| 原始图片池 | [data/raw/images/](data/raw/images/) | **3093** | 所有阶段视觉源（已去重） | DeepFashion-MultiModal 衍生下载 → 视觉等价类去重；Pexels 补食品/化妆品/电子各 200 张 |
 | 规则库 | [data/raw/rules.jsonl](data/raw/rules.jsonl) | 20 | Stage 4 RAG / reward 规则 | 人工编写 |
-| 违规案例库 | [data/raw/violation_cases.jsonl](data/raw/violation_cases.jsonl) | 142 | Stage 4 RAG 语料 | 10 模板 + 132 广东市监局爬取 |
-| SFT 注解 | [data/sft/sft.jsonl](data/sft/sft.jsonl) | **4889** | Stage 1 SFT 主注解 | qwen-vl-max 三批次 API 蒸馏 |
-| SFT 切分 | [data/sft/{train,val,test}.parquet](data/sft/) | **3903 / 491 / 495** | Stage 1 训练/评估 | 按 `image_file` 分组 80/10/10 切 |
-| 幻觉三元组 | [data/sft/triplets.parquet](data/sft/triplets.parquet) | **11704** | Stage 1 对比损失辅助（仅 train 图） | 属性白名单扰动 |
-| 偏好数据 | [data/preference/preference.{jsonl,parquet}](data/preference/) | **1500** | Stage 2 RM 训练 | qwen-vl-max 四策略同图降质蒸馏 |
+| 违规案例库 | [data/raw/violation_cases.jsonl](data/raw/violation_cases.jsonl) | **150** | Stage 4 RAG 语料 | 18 模板（含服装/鞋补录） + 132 广东市监局爬取 |
+| SFT 注解 | [data/sft/sft.jsonl](data/sft/sft.jsonl) | **6685** | Stage 1 SFT 主注解 | qwen-vl-max 四批次 API 蒸馏（基础 4889 + Pexels 补充 1796） |
+| SFT 切分 | [data/sft/{train,val,test}.parquet](data/sft/) | **5353 / 668 / 664** | Stage 1 训练/评估 | 按 `image_file` 分组 80/10/10 切 |
+| 幻觉三元组 | [data/sft/triplets.parquet](data/sft/triplets.parquet) | **16061** | Stage 1 对比损失辅助（仅 train 图） | 属性白名单扰动 |
+| 偏好数据 | [data/preference/preference.{jsonl,parquet}](data/preference/) | **2000** | Stage 2 RM 训练 | qwen-vl-max 四策略同图降质蒸馏 |
+| 粗粒度品类映射 | [src/schema.py](src/schema.py) (`coarse_category`) | 10 桶 | Stage 2/3/4 同品类契约 + 分层评估 | 自由文本 `category` → 食品/化妆品/电子产品/医药/鞋/手表/包/服装/配饰/其他 |
 
 **核心硬契约**（guard 通过，见 [scripts/data/guard.py](scripts/data/guard.py)）：
 
 - 图片视觉等价类去重：hash 碰撞 0，train ∩ val、train ∩ test、val ∩ test、preference ∩ val、preference ∩ test 均为 0
-- `preference.image_file ⊂ SFT_train.image_file`：100%
+- `preference.image_file ⊂ SFT_train.image_file`：100%（2000/2000）
 - chosen/rejected JSON 解析：100% / 100%
-- 同品类契约：100%；violation-flip 契约（各策略）：100%
+- **同粗粒度品类契约**：100%（基于 [src/schema.py](src/schema.py) `coarse_category()` 而非原始 425 种自由文本）；violation-flip 契约（各策略）：100%
 - triplets 仅取自 SFT train 图：0 eval 泄漏
+
+**Stage 1 品类分布**（SFT 6685 行，粗粒度桶，见 §6.1 的现状与限制）：
+
+| 桶 | 行数 | 占比 |
+|---|---|---|
+| 服装 | 3448 | 51.6% |
+| 鞋 | 1159 | 17.3% |
+| 手表 | 565 | 8.5% |
+| 其他 | 439 | 6.6% |
+| 化妆品 | 358 | 5.4% |
+| 包 | 268 | 4.0% |
+| 食品 | 145 | 2.2% |
+| 配饰 | 128 | 1.9% |
+| 电子产品 | 95 | 1.4% |
+| 医药 | 80 | 1.2% |
 
 ### 1.2 五阶段数据流
 
@@ -97,12 +113,12 @@ NOTE：本项目模型使用Qwen3-VL-8B，用于Agentic RAG的模型为bge-m3和
 
 | 策略 | 行数 | violation 契约 | 降质手段 |
 |---|---|---|---|
-| `api_weaker_weak_evidence` | 530 | 保持 chosen label | reason 保留结论但变敷衍，不引用任何具体属性 |
-| `api_weaker_wrong_attribute` | 448 | 保持 chosen label | 把 1–2 个属性改为视觉错值，reason 引用错误属性作证据 |
-| `api_weaker_over_strict` | 419 | chosen=False → rejected=True | 牵强认定违规（把普通描述当极限词） |
-| `api_weaker_missed_cue` | 103 | chosen=True → rejected=False | 漏判违规，对违规证据给出开脱理由 |
+| `api_weaker_weak_evidence` | 620 | 保持 chosen label | reason 保留结论但变敷衍，不引用任何具体属性 |
+| `api_weaker_wrong_attribute` | 535 | 保持 chosen label | 把 1–2 个属性改为视觉错值，reason 引用错误属性作证据 |
+| `api_weaker_over_strict` | 520 | chosen=False → rejected=True | 牵强认定违规（把普通描述当极限词） |
+| `api_weaker_missed_cue` | 325 | chosen=True → rejected=False | 漏判违规，对违规证据给出开脱理由 |
 
-`missed_cue` 占比低是天然约束——只有 chosen=True 的样本才能翻成 False。
+`missed_cue` 占比曾是天然约束——只有 chosen=True 的样本才能翻成 False。当前通过 `--only_mode missed_cue` 二次蒸馏（见 [scripts/data/S2Data.py](scripts/data/S2Data.py)）从 103 提升到 325，覆盖了所有 violation=True 候选图的 ~50%，已足以做分层 RM 评估。
 
 ### 1.4 数据质量问题发现与修复时间线
 
@@ -357,10 +373,10 @@ python -m src.stage4_rag.indexer \
 
 ### 6.1 已知限制
 
-1. **品类偏斜**：图片池服装 60% / 鞋 20% / 手表 10% / 包 10%；食品/化妆品/电子产品为 0。Stage 4 RAG 的案例库有电子产品 46 条但图片池没有对应视觉样本，RAG 召回后模型仍可能失准。
-2. **preference 规模 1500 对**：可训，但不宽裕。若 RM held-out accuracy < 80% 或分层 accuracy 差异过大，可继续蒸馏至 2000+（约 ¥20）。
-3. **`missed_cue` 策略偏少（103 条）**：天然约束——只有 SFT 标为 violation=True 的样本才能翻 False。增大必须先扩充 SFT 的 violation=True 池。
-4. **RAG 索引脚本**：[scripts/build_rag_kb.py](scripts/build_rag_kb.py) 为入口，但与 [src/stage4_rag/indexer.py](src/stage4_rag/indexer.py) 的完整集成尚未在 pipeline 默认跑。
+1. **品类偏斜已缓解但仍倾向服装/鞋**：图片池 3093 张 — 基础 2493 张来自 DeepFashion 衍生集（服装+鞋+手表+包），Pexels 补 600 张（食品/化妆品/电子各 200）。蒸馏后 SFT 6685 行的粗粒度分布见 §1.1：服装仍占 51.6%，但食品/化妆品/电子产品/医药/配饰从 0 都已有数十到数百条实样，可支撑 Stage 4 RAG 召回对应视觉样本。原始 Pexels 图像里 qwen-vl-max 偶尔会将食品/化妆品误判到服装桶（例如盒装食品=礼盒包装），这是剩余噪声源。
+2. **Preference 规模 2000 对**：已从 1500 扩展并均衡到四策略（见 §1.3）；`missed_cue` 提升到 325 后可做分层 RM 评估。
+3. **原始 `category` 字段是 425 种自由文本**：不改原始 jsonl，而是在读取侧通过 [src/schema.py](src/schema.py) 的 `coarse_category()` 映射到 10 个粗粒度桶（食品/化妆品/电子产品/医药/鞋/手表/包/服装/配饰/其他）。guard 的同品类契约、Stage 2/3 分层评估、Stage 4 RAG 路由均基于粗粒度桶。
+4. **RAG 索引脚本**：[scripts/build_rag_kb.py](scripts/build_rag_kb.py) 为入口，但与 [src/stage4_rag/indexer.py](src/stage4_rag/indexer.py) 的完整集成尚未在 pipeline 默认跑。注意 `build_rag_kb.py` 会 **覆盖** `violation_cases.jsonl` 为合成模板数据——如需保留现有 150 条（含 132 条真实处罚案例）请勿再跑该入口。
 
 ### 6.2 累计数据成本
 
@@ -370,7 +386,9 @@ python -m src.stage4_rag.indexer \
 | SFT balanced_v3 重跑 | 97 |
 | Preference 首轮蒸馏 + weak_evidence 重跑 | 80 |
 | 视觉去重后 preference 补蒸馏（486 条） | 20 |
-| **合计** | **~¥360** |
+| Pexels 补图 SFT 蒸馏（+1796 行，本轮） | 59 |
+| Preference 扩展（missed_cue +200 + 总量至 2000，本轮） | 22 |
+| **合计** | **~¥441** |
 
 ---
 

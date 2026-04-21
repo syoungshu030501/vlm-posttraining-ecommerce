@@ -113,8 +113,10 @@ def build_sft_parquet(
         rows.append(row)
 
     df = pd.DataFrame(rows)
-    # Drop helper column before saving the full parquet; splitter re-reads df in memory.
-    df.drop(columns=["image_file"]).to_parquet(out_path, index=False)
+    # Keep `image_file` column in the saved parquet so downstream validators
+    # (guard.py) and stratified eval can group by source filename without
+    # decoding the (possibly embedded) `image` column.
+    df.to_parquet(out_path, index=False)
     print(f"Saved {len(df)} rows to {out_path}")
     return df
 
@@ -151,6 +153,7 @@ def build_preference_parquet(
 
         row = {
             "image": img_data,
+            "image_file": img_file,
             "prompt": ann.get("description", ann.get("prompt", "")),
             "chosen": chosen,
             "rejected": rejected,
@@ -207,9 +210,7 @@ def train_val_test_split(
     out_path.mkdir(parents=True, exist_ok=True)
     for name, split_df in splits.items():
         path = out_path / f"{name}.parquet"
-        # Drop helper column before saving
-        save_df = split_df.drop(columns=[group_col]) if group_col in split_df.columns else split_df
-        save_df.to_parquet(path, index=False)
+        split_df.to_parquet(path, index=False)
         print(f"  {name}: {len(split_df)} samples → {path}")
 
 

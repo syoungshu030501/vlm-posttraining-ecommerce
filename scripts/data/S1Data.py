@@ -36,8 +36,8 @@ from typing import Optional
 
 from openai import OpenAI
 
-sys.path.insert(0, str(Path(__file__).parent.parent))
-from src.schema import try_parse
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from src.schema import try_parse  # noqa: E402,F401
 
 # ── API client ──────────────────────────────────────────────
 def make_client() -> OpenAI:
