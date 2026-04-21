@@ -57,6 +57,20 @@ def train(args: argparse.Namespace) -> None:
     )
     freeze_vision_encoder(model)
 
+    if args.gradient_checkpointing:
+        # PEFT requires inputs to retain grad when grad-ckpt is on; otherwise the
+        # frozen embedding outputs have no grad and adapters won't backprop.
+        if hasattr(model, "enable_input_require_grads"):
+            model.enable_input_require_grads()
+        gc_kwargs = {"use_reentrant": False}
+        try:
+            model.gradient_checkpointing_enable(gradient_checkpointing_kwargs=gc_kwargs)
+        except TypeError:
+            model.gradient_checkpointing_enable()
+        if hasattr(model, "config"):
+            model.config.use_cache = False
+        print("Enabled gradient checkpointing (use_reentrant=False)")
+
     # Dataset
     dataset = SFTDataset(
         parquet_path=args.train_parquet,
@@ -120,7 +134,7 @@ def train(args: argparse.Namespace) -> None:
 
             violation_labels = batch.pop("violation_labels")
 
-            outputs = model(
+            model_kwargs = dict(
                 input_ids=batch["input_ids"],
                 attention_mask=batch["attention_mask"],
                 pixel_values=batch.get("pixel_values"),
@@ -128,6 +142,9 @@ def train(args: argparse.Namespace) -> None:
                 labels=batch["labels"],
                 output_hidden_states=True,
             )
+            if "mm_token_type_ids" in batch:
+                model_kwargs["mm_token_type_ids"] = batch["mm_token_type_ids"]
+            outputs = model(**model_kwargs)
 
             ce_loss = outputs.loss
 
@@ -228,6 +245,8 @@ if __name__ == "__main__":
     parser.add_argument("--log_every", type=int, default=10)
     parser.add_argument("--flash_attn", action="store_true")
     parser.add_argument("--no_device_map", action="store_true")
+    parser.add_argument("--gradient_checkpointing", action="store_true",
+                        help="Enable activation checkpointing to cut memory ~3-5x at ~20%% speed cost")
     parser.add_argument("--project_name", default="vlm-posttraining")
     parser.add_argument("--experiment_name", default="stage1-sft")
     parser.add_argument("--max_steps", type=int, default=0)

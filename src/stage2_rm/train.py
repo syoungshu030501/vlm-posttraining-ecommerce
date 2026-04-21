@@ -81,12 +81,14 @@ def train(args: argparse.Namespace) -> None:
                 attention_mask=to_device(batch["chosen_attention_mask"]),
                 pixel_values=to_device(batch.get("chosen_pixel_values")),
                 image_grid_thw=to_device(batch.get("chosen_image_grid_thw")),
+                mm_token_type_ids=to_device(batch.get("chosen_mm_token_type_ids")),
             )
             rejected_r = rm(
                 input_ids=to_device(batch["rejected_input_ids"]),
                 attention_mask=to_device(batch["rejected_attention_mask"]),
                 pixel_values=to_device(batch.get("rejected_pixel_values")),
                 image_grid_thw=to_device(batch.get("rejected_image_grid_thw")),
+                mm_token_type_ids=to_device(batch.get("rejected_mm_token_type_ids")),
             )
 
             loss = bradley_terry_loss(chosen_r, rejected_r)

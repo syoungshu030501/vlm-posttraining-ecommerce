@@ -14,7 +14,14 @@ class RewardModel(nn.Module):
     def __init__(self, base_model: PreTrainedModel):
         super().__init__()
         self.backbone = base_model
-        hidden_size = base_model.config.hidden_size
+        cfg = base_model.config
+        # VLM configs (e.g. Qwen3VLConfig) nest hidden_size under text_config
+        hidden_size = (
+            getattr(cfg, "hidden_size", None)
+            or getattr(getattr(cfg, "text_config", None), "hidden_size", None)
+        )
+        if hidden_size is None:
+            raise ValueError(f"Could not infer hidden_size from {type(cfg).__name__}")
         self.reward_head = nn.Linear(hidden_size, 1, bias=False)
 
         # Freeze backbone
@@ -27,14 +34,18 @@ class RewardModel(nn.Module):
         attention_mask: torch.Tensor,
         pixel_values: torch.Tensor | None = None,
         image_grid_thw: torch.Tensor | None = None,
+        mm_token_type_ids: torch.Tensor | None = None,
     ) -> torch.Tensor:
-        outputs = self.backbone(
+        backbone_kwargs = dict(
             input_ids=input_ids,
             attention_mask=attention_mask,
             pixel_values=pixel_values,
             image_grid_thw=image_grid_thw,
             output_hidden_states=True,
         )
+        if mm_token_type_ids is not None:
+            backbone_kwargs["mm_token_type_ids"] = mm_token_type_ids
+        outputs = self.backbone(**backbone_kwargs)
         # Use last non-padding token's hidden state
         seq_lengths = attention_mask.sum(dim=1) - 1  # (B,)
         last_hidden = outputs.hidden_states[-1]  # (B, T, D)

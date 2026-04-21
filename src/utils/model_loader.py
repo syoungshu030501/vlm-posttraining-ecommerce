@@ -18,14 +18,28 @@ import torch
 from peft import LoraConfig, TaskType, get_peft_model
 from transformers import AutoModelForCausalLM, AutoProcessor, PreTrainedModel
 
-# LoRA config matching plan §3.2
+try:
+    from transformers import AutoModelForImageTextToText  # transformers >= 4.45
+except ImportError:  # pragma: no cover
+    AutoModelForImageTextToText = None  # type: ignore[assignment]
+
+# LoRA targets — chosen to cover both attention and MLP in the language tower
+# AND the vision→text merger MLP (Qwen3-VL names them linear_fc1/linear_fc2 only
+# inside `visual.merger.*` and `visual.deepstack_merger_list.*`, so the suffix
+# match is safe — language layers use gate/up/down_proj instead).
+# Vision encoder attention (qkv/proj) is intentionally excluded; it is frozen
+# by `freeze_vision_encoder` as the vision backbone is generally robust enough
+# without adaptation on small SFT datasets.
 DEFAULT_LORA_CONFIG = LoraConfig(
     r=32,
     lora_alpha=64,
     target_modules=[
+        # LM tower attention
         "q_proj", "k_proj", "v_proj", "o_proj",
-        "visual_merger.mlp.0",
-        "visual_merger.mlp.2",
+        # LM tower MLP (most parameters; biggest expressivity gain)
+        "gate_proj", "up_proj", "down_proj",
+        # Vision→text merger (4 layers across main + 3 deepstack mergers)
+        "linear_fc1", "linear_fc2",
     ],
     lora_dropout=0.05,
     bias="none",
@@ -83,7 +97,25 @@ def load_model_and_processor(
         attn_implementation=attn_impl,
     )
 
-    model = AutoModelForCausalLM.from_pretrained(model_path, **model_kwargs)
+    # Qwen*-VL families require AutoModelForImageTextToText in transformers >= 4.45;
+    # AutoModelForCausalLM does not register vision-language configs.
+    model = None
+    last_err: Exception | None = None
+    if family in ("qwen2_5_vl", "qwen3_vl", "qwen3_5_vl") and AutoModelForImageTextToText is not None:
+        try:
+            model = AutoModelForImageTextToText.from_pretrained(model_path, **model_kwargs)
+        except Exception as exc:  # noqa: BLE001
+            last_err = exc
+            print(f"[WARN] AutoModelForImageTextToText failed ({exc}); trying AutoModelForCausalLM")
+    if model is None:
+        try:
+            model = AutoModelForCausalLM.from_pretrained(model_path, **model_kwargs)
+        except Exception as exc:  # noqa: BLE001
+            if last_err is not None:
+                raise RuntimeError(
+                    f"Failed to load model. ImageTextToText error: {last_err}; CausalLM error: {exc}"
+                ) from exc
+            raise
 
     # Disable thinking mode for Qwen3.x series
     if family in ("qwen3_vl", "qwen3_5_vl"):
@@ -111,14 +143,18 @@ def load_model_and_processor(
 
 
 def _resolve_attn_impl(use_flash_attn: bool) -> str:
-    if not use_flash_attn or not torch.cuda.is_available():
+    # Prefer flash_attention_2 → sdpa → eager.
+    # SDPA uses PyTorch's memory-efficient attention; vital for VL vision towers
+    # where eager softmax over 10k+ vision tokens easily blows past 30 GB.
+    if not torch.cuda.is_available():
         return "eager"
-    try:
-        import flash_attn  # noqa: F401
-        return "flash_attention_2"
-    except Exception as exc:
-        print(f"[WARN] flash-attn unavailable, falling back to eager attention: {exc}")
-        return "eager"
+    if use_flash_attn:
+        try:
+            import flash_attn  # noqa: F401
+            return "flash_attention_2"
+        except Exception as exc:
+            print(f"[WARN] flash-attn unavailable, falling back to SDPA: {exc}")
+    return "sdpa"
 
 
 def _disable_thinking_mode(model: PreTrainedModel, processor) -> None:

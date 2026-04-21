@@ -53,13 +53,14 @@ class PreferenceDataset(Dataset):
         full_text = self.processor.apply_chat_template(
             messages, tokenize=False, add_generation_prompt=False
         )
+        # NOTE: Do NOT truncate. Truncation can drop image-placeholder tokens and
+        # break the image-token-count check inside Qwen-VL processors (the
+        # number of <|image_pad|> tokens must match pixel_values count).
         return self.processor(
             text=[full_text],
             images=[image],
             return_tensors="pt",
             padding=False,
-            truncation=True,
-            max_length=self.max_len,
         )
 
     def __getitem__(self, idx: int) -> Dict:
@@ -70,7 +71,7 @@ class PreferenceDataset(Dataset):
         chosen_enc = self._encode(image, prompt, str(row["chosen"]))
         rejected_enc = self._encode(image, prompt, str(row["rejected"]))
 
-        return {
+        item = {
             "chosen_input_ids": chosen_enc["input_ids"][0],
             "chosen_attention_mask": chosen_enc["attention_mask"][0],
             "chosen_pixel_values": chosen_enc.get("pixel_values"),
@@ -80,6 +81,11 @@ class PreferenceDataset(Dataset):
             "rejected_pixel_values": rejected_enc.get("pixel_values"),
             "rejected_image_grid_thw": rejected_enc.get("image_grid_thw"),
         }
+        if "mm_token_type_ids" in chosen_enc:
+            item["chosen_mm_token_type_ids"] = chosen_enc["mm_token_type_ids"][0]
+        if "mm_token_type_ids" in rejected_enc:
+            item["rejected_mm_token_type_ids"] = rejected_enc["mm_token_type_ids"][0]
+        return item
 
 
 def preference_collate_fn(batch: List[Dict], pad_token_id: int = 0) -> Dict:
@@ -118,6 +124,15 @@ def preference_collate_fn(batch: List[Dict], pad_token_id: int = 0) -> Dict:
     ]
     if rejected_image_grid_thw:
         out["rejected_image_grid_thw"] = torch.cat(rejected_image_grid_thw, dim=0)
+
+    if all("chosen_mm_token_type_ids" in b for b in batch):
+        out["chosen_mm_token_type_ids"] = torch.stack(
+            [_pad(b["chosen_mm_token_type_ids"], chosen_max_len, 0) for b in batch]
+        )
+    if all("rejected_mm_token_type_ids" in b for b in batch):
+        out["rejected_mm_token_type_ids"] = torch.stack(
+            [_pad(b["rejected_mm_token_type_ids"], rejected_max_len, 0) for b in batch]
+        )
 
     return out
 

@@ -190,9 +190,10 @@ NOTE：本项目模型使用Qwen3-VL-8B，用于Agentic RAG的模型为bge-m3和
 
 **Stage 1 细节**
 - 主损失：`losses.py` 中 `SUPCON_WEIGHT=0.05, TRIPLET_WEIGHT=0.03`，基于 EOS token embedding 做对比
-- LoRA 注入：`q_proj, k_proj, v_proj, o_proj, visual_merger.mlp.{0,2}`（[configs/model.yaml](configs/model.yaml)）
-- Flash-Attention 自动 fallback（[src/utils/model_loader.py:114](src/utils/model_loader.py#L114)）
-- 视觉编码器默认冻结
+- LoRA 注入：LM 注意力 (`q/k/v/o_proj`) + LM MLP (`gate/up/down_proj`) + 视觉→文本 merger (`linear_fc1/linear_fc2`，仅命中 `visual.merger.*` 和 `visual.deepstack_merger_list.*`)；详见 [configs/model.yaml](configs/model.yaml)
+- 注意力实现优先级：`flash_attention_2 → sdpa → eager`，自动回退（[src/utils/model_loader.py](src/utils/model_loader.py)）
+- 视觉编码器默认冻结（merger 不冻结，是 LoRA 注入点之一）
+- 多卡训练：`device_map="auto"` 触发 accelerate 的 model parallelism；不支持 DDP/FSDP
 
 **Stage 2 细节**
 - Bradley-Terry：对 (chosen, rejected) 仅训练一个 scalar head 输出标量 reward

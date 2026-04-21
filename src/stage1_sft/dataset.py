@@ -99,7 +99,7 @@ class SFTDataset(Dataset):
         labels = input_ids.clone()
         labels[:prompt_len] = -100
 
-        return {
+        item = {
             "input_ids": input_ids,
             "attention_mask": inputs["attention_mask"][0],
             "pixel_values": inputs.get("pixel_values"),
@@ -107,6 +107,10 @@ class SFTDataset(Dataset):
             "labels": labels,
             "violation_label": torch.tensor(violation_label, dtype=torch.long),
         }
+        # Qwen3-VL M-RoPE requires mm_token_type_ids (per-token modality marker)
+        if "mm_token_type_ids" in inputs:
+            item["mm_token_type_ids"] = inputs["mm_token_type_ids"][0]
+        return item
 
 
 def sft_collate_fn(batch: List[Dict], pad_token_id: int = 0) -> Dict:
@@ -138,6 +142,11 @@ def sft_collate_fn(batch: List[Dict], pad_token_id: int = 0) -> Dict:
     image_grid_thw = [b["image_grid_thw"] for b in batch if b["image_grid_thw"] is not None]
     if image_grid_thw:
         out["image_grid_thw"] = torch.cat(image_grid_thw, dim=0)
+
+    if all("mm_token_type_ids" in b for b in batch):
+        out["mm_token_type_ids"] = torch.stack(
+            [_pad(b["mm_token_type_ids"], max_len, 0) for b in batch]
+        )
 
     return out
 

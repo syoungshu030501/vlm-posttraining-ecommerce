@@ -9,13 +9,19 @@ pretrained:
 lora:
   r: 32
   lora_alpha: 64
+  # Covers LM attention + LM MLP + vision→text merger MLP. The two `linear_fc*`
+  # entries match only inside `visual.merger.*` and `visual.deepstack_merger_list.*`
+  # in Qwen3-VL (no clash with the LM tower, which uses gate/up/down_proj).
   target_modules:
     - q_proj
     - k_proj
     - v_proj
     - o_proj
-    - visual_merger.mlp.0
-    - visual_merger.mlp.2
+    - gate_proj
+    - up_proj
+    - down_proj
+    - linear_fc1
+    - linear_fc2
   lora_dropout: 0.05
   bias: none
 
