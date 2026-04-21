@@ -423,6 +423,66 @@ Guard 全绿 + 下列可量化指标达到训练准入线：
 
 ---
 
+## Part 7 · 待办（已发现但未修，按优先级）
+
+### P0 · Stage 1 辅助损失实际未生效（影响"模型有效性"判断）
+
+代码现状（[src/stage1_sft/train.py](src/stage1_sft/train.py)）：
+
+| 损失 | 配置权重 | 实际生效 | 原因 |
+|---|---|---|---|
+| CE | 1.0 | ✅ | — |
+| SupCon | 0.05 | ❌ 等价 0 | `train.py` SupCon 路径有 `violation_labels.shape[0] > 1` 守卫；当前 `batch_size=1` 始终触发 0 分支 |
+| Triplet | 0.03 | ❌ 等价 0 | `train.py` 中 `tri_loss = torch.tensor(0.0)` 是占位，triplet parquet 加载后**未接进 loss** |
+
+→ 当前正在跑的 SFT 实质是 CE-only。STRATEGY.md / 旧 README 里"CE + 0.05·SupCon + 0.03·Triplet"的描述与代码不符。
+
+**修复方案**（三选一）：
+1. **接好辅助损失 + 消融**（首选）：
+   - SupCon：把 `batch_size` 提到 ≥ 2（或在 collate 内组合多 micro-batch 凑对比对），让 `violation_labels` 同时含 True/False
+   - Triplet：在 SFT loop 里加一个 secondary dataloader 从 `triplets.parquet` 抽 (anchor, pos, neg)，按 EOS embedding 算 `triplet_margin_loss` 并按 0.03 加权
+   - 修完后跑下面"§7.2 消融实验"
+2. **删除两个权重 + 文档**：承认只用 CE，把 README/STRATEGY.md 里的对应描述去掉
+3. **保留代码占位但 weight=0**：明确"已设计，未启用"，README 注脚说明
+
+### P1 · RM 没有 held-out 验证集
+
+`src/stage2_rm/train.py` 把 `preference.parquet` 全 2000 对当训练集，日志里的 `acc` 是 **running train accuracy**，不能验证泛化。当前跑的 RM 训练完后只能看 epoch_avg_loss，无独立指标。
+
+**修复方案**：
+- 训练前按 `image_file` 分组（保持与 SFT split 一致逻辑）切 200 对作为 holdout
+- 每 epoch 末用 RM 在 holdout 上计算 pair_acc + 按 `pair_strategy` 分层（weak_evidence / wrong_attribute / over_strict / missed_cue 四类）
+- 写 `results/stage2_rm.json` 并 swanlab `log_metrics`
+
+### P2 · Stage 1 辅助损失消融实验（依赖 P0 修复完成）
+
+**目标**：验证 0.05·SupCon + 0.03·Triplet 是否真带来 ≥ 1 pp 的下游收益。
+
+**最小矩阵**（在 `data/sft/test.parquet` 上同分布评估）：
+
+| 实验 | 损失组合 | 实验名 | 数据点来源 |
+|---|---|---|---|
+| A | CE only | `vlm-posttraining-ecommerce-SFT` | 当前 2026-04-21 这次跑（白送） |
+| B | CE + SupCon + Triplet | `vlm-posttraining-ecommerce-SFT-aux` | P0 修完后新跑 1 次 |
+
+可选 C：`CE + SupCon only` 进一步分离贡献，5K 数据信号可能淹没在噪声里，**非必需**。
+
+**对比指标**：
+- `violation_f1`（主指标）
+- `hallucination_rate`（triplet 的目标）
+- `json_format_acc`（应基本不变，监控用）
+- 按粗粒度品类桶分层
+
+**显著性判定**：单 seed 差值 ≥ 1 pp 视为有信号；< 1 pp 应跑 2 个 seed 才下结论。
+
+### P3 · 其它（低优先）
+
+- LoRA 视觉 attn 启用：当前仅 LM + merger 加 LoRA。若评估发现细粒度视觉属性（颜色/材质）准确率掉，可白名单匹配 `visual.*qkv` / `visual.*proj`（注意视觉 encoder 默认冻结要先解冻或单独允许）
+- DDP/FSDP 入口：当前两阶段都只支持单进程 + `device_map="auto"` 的 model parallelism，吞吐受限于通信。若后续要扩 batch 或上更大模型，需改写训练入口
+- Flash-Attention 安装：torch 2.10/cu128 暂无现成 wheel，需 `nvcc + ninja` 本地编译 ~30 min；当前 SDPA 已能跑
+
+---
+
 ## 相关文档
 
 - 训练策略细节：[STRATEGY.md](STRATEGY.md)
