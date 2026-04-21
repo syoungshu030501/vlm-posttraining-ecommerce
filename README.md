@@ -12,6 +12,8 @@
 - **Part 5 — 快速开始**
 - **Part 6 — 已知限制与数据成本**
 
+
+NOTE：本项目模型使用Qwen3-VL-8B，用于Agentic RAG的模型为bge-m3和clip-vit-base-patch32，请自行下载；数据集已经放在清华大学云盘https://cloud.tsinghua.edu.cn/library/77bf2259-4f1b-4ac9-8a3c-19ef63f4d30f/VLM-posttraining/
 ---
 
 ## Part 1 · 数据工程
