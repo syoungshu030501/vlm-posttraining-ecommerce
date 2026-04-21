@@ -33,7 +33,11 @@ def train(args: argparse.Namespace) -> None:
         use_flash_attn=args.flash_attn,
         device_map=None,
     )
-    rm = RewardModel(model).to(device)
+    rm = RewardModel(
+        model,
+        head_bias=args.head_bias,
+        head_layernorm=args.head_layernorm,
+    ).to(device)
 
     dataset = PreferenceDataset(args.train_parquet, processor)
     pad_id = getattr(processor, "pad_token_id", None)
@@ -160,4 +164,14 @@ if __name__ == "__main__":
     parser.add_argument("--project_name", default="vlm-posttraining")
     parser.add_argument("--experiment_name", default="stage2-rm")
     parser.add_argument("--max_steps", type=int, default=0)
+    parser.add_argument(
+        "--head_bias",
+        action="store_true",
+        help="Add bias term to the scalar reward head (default off, preserves v0 behaviour).",
+    )
+    parser.add_argument(
+        "--head_layernorm",
+        action="store_true",
+        help="Insert LayerNorm before the scalar reward head (default off).",
+    )
     train(parser.parse_args())

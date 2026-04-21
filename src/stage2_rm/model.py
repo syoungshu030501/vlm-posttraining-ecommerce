@@ -11,7 +11,12 @@ from transformers import PreTrainedModel
 
 
 class RewardModel(nn.Module):
-    def __init__(self, base_model: PreTrainedModel):
+    def __init__(
+        self,
+        base_model: PreTrainedModel,
+        head_bias: bool = False,
+        head_layernorm: bool = False,
+    ):
         super().__init__()
         self.backbone = base_model
         cfg = base_model.config
@@ -22,7 +27,16 @@ class RewardModel(nn.Module):
         )
         if hidden_size is None:
             raise ValueError(f"Could not infer hidden_size from {type(cfg).__name__}")
-        self.reward_head = nn.Linear(hidden_size, 1, bias=False)
+
+        # Head architecture is configurable for ablation. Defaults preserve the
+        # original behaviour (no LN, no bias) so existing checkpoints stay loadable.
+        self.head_bias = head_bias
+        self.head_layernorm = head_layernorm
+        head_layers: list[nn.Module] = []
+        if head_layernorm:
+            head_layers.append(nn.LayerNorm(hidden_size))
+        head_layers.append(nn.Linear(hidden_size, 1, bias=head_bias))
+        self.reward_head = nn.Sequential(*head_layers) if len(head_layers) > 1 else head_layers[0]
 
         # Freeze backbone
         for param in self.backbone.parameters():

@@ -445,6 +445,25 @@ Guard 全绿 + 下列可量化指标达到训练准入线：
 2. **删除两个权重 + 文档**：承认只用 CE，把 README/STRATEGY.md 里的对应描述去掉
 3. **保留代码占位但 weight=0**：明确"已设计，未启用"，README 注脚说明
 
+### P0.5 · RM backbone 当前用 base，**不是 SFT-merged**（架构性，待 SFT 完成）
+
+`scripts/run_pipeline.sh:153` 和当前手动启动命令都用：
+```
+MODEL_PATH=/mnt/nfs/young/VLM4reasoning/models/pretrained/Qwen3-VL-8B-Instruct  # 裸 base
+```
+不是 SFT 后 merge 出来的 `sft_merged`。在当前"frozen backbone + 4097 参数 linear head"配置下，head 表达力上限就是 backbone features 的判别力——base 的 EOS embedding 没见过电商 violation 任务格式，导致 RM acc 摆在 ~0.74-0.78（理论上限）。
+
+**正确顺序**：
+```
+SFT(running) → merge LoRA → 用 sft_merged 重跑 RM → Stage 3
+```
+
+**修复方案**：等 SFT 收尾后立即起 **RM-v2**：
+- backbone 改用 `models/sft_merged`
+- 同时打开 backbone LoRA（`apply_lora=True`），让 backbone features 进一步与 reward 任务对齐
+- 预期把 train acc 抬到 0.80-0.85，held-out acc ≥ 0.75
+- 与下面 §P1 的 held-out 评估一起做
+
 ### P1 · RM 没有 held-out 验证集
 
 `src/stage2_rm/train.py` 把 `preference.parquet` 全 2000 对当训练集，日志里的 `acc` 是 **running train accuracy**，不能验证泛化。当前跑的 RM 训练完后只能看 epoch_avg_loss，无独立指标。
@@ -453,6 +472,28 @@ Guard 全绿 + 下列可量化指标达到训练准入线：
 - 训练前按 `image_file` 分组（保持与 SFT split 一致逻辑）切 200 对作为 holdout
 - 每 epoch 末用 RM 在 holdout 上计算 pair_acc + 按 `pair_strategy` 分层（weak_evidence / wrong_attribute / over_strict / missed_cue 四类）
 - 写 `results/stage2_rm.json` 并 swanlab `log_metrics`
+
+### P1.5 · RM head 架构消融（**正在进行**）
+
+**动机**：原 head 是 `Linear(4096, 1, bias=False)`，4097 参数。在 frozen backbone 下，加 `bias` 让 reward 有零点自由度，加 `LayerNorm` 稳定 features 尺度，理论上 +0.5-1.5 pp，**几乎零成本**（~8K 额外参数）。
+
+**架构改动**（[src/stage2_rm/model.py](src/stage2_rm/model.py)）：
+- 新增 CLI flag `--head_bias` / `--head_layernorm`（默认 False，保留 v0 行为不影响已有 ckpt）
+- 启用后 head = `LayerNorm(4096) → Linear(4096, 1, bias=True)`
+
+**消融矩阵**（在 SFT 等待期间跑完，同 backbone = base，同数据，只换 head）：
+
+| 实验 | head | exp_name | 状态 |
+|---|---|---|---|
+| v0（基线）| `Linear(4096,1)` | `vlm-posttraining-ecommerce-RM` | 2026-04-21 19:57 起，正在跑 |
+| v1 | `LN(4096) → Linear(4096,1,bias=True)` | `vlm-posttraining-ecommerce-RM-headv1` | v0 跑完后自动接，由 [scripts/run_rm_head_ablation.sh](scripts/run_rm_head_ablation.sh) 守护 |
+
+**判定**：
+- v1 train acc 比 v0 高 **≥ 1 pp**：bias+LN 是有效升级，写进默认配置（开 flag 或改默认值）
+- v1 vs v0 差距 **< 1 pp**：信号在噪声内，head 升级边际效用低，专注做 P0.5 的 backbone 升级
+- 任一情况下，P0.5 的 RM-v2（sft_merged + LoRA）都要做，head 用 v0 还是 v1 取决于此次结果
+
+**已知局限**：还是没有 held-out（同 P1），所以 v0/v1 比较只是 train acc 之差，泛化差距未知；但**消融对比仍有意义**，因为两边过拟合幅度相近。
 
 ### P2 · Stage 1 辅助损失消融实验（依赖 P0 修复完成）
 
