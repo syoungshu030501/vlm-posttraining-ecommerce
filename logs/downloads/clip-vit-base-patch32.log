@@ -1,0 +1,9367 @@
+
+ _   .-')                _ .-') _     ('-.             .-')                              _ (`-.    ('-.
+( '.( OO )_             ( (  OO) )  _(  OO)           ( OO ).                           ( (OO  ) _(  OO)
+ ,--.   ,--.).-'),-----. \     .'_ (,------.,--.     (_)---\_)   .-----.  .-'),-----.  _.`     \(,------.
+ |   `.'   |( OO'  .-.  ',`'--..._) |  .---'|  |.-') /    _ |   '  .--./ ( OO'  .-.  '(__...--'' |  .---'
+ |         |/   |  | |  ||  |  \  ' |  |    |  | OO )\  :` `.   |  |('-. /   |  | |  | |  /  | | |  |
+ |  |'.'|  |\_) |  |\|  ||  |   ' |(|  '--. |  |`-' | '..`''.) /_) |OO  )\_) |  |\|  | |  |_.' |(|  '--.
+ |  |   |  |  \ |  | |  ||  |   / : |  .--'(|  '---.'.-._)   \ ||  |`-'|   \ |  | |  | |  .___.' |  .--'
+ |  |   |  |   `'  '-'  '|  '--'  / |  `---.|      | \       /(_'  '--'\    `'  '-'  ' |  |      |  `---.
+ `--'   `--'     `-----' `-------'  `------'`------'  `-----'    `-----'      `-----'  `--'      `------'
+
+Downloading Model from https://www.modelscope.cn to directory: /home/young/VLM-posttraining/models/pretrained/clip-vit-base-patch32
+Processing 12 items:   0%|          | 0.00/12.0 [00:00<?, ?it/s]
+Downloading [config.json]:   0%|          | 0.00/4.09k [00:00<?, ?B/s][A
+
+Downloading [configuration.json]:   0%|          | 0.00/88.0 [00:00<?, ?B/s][A[A
+
+
+Downloading [flax_model.msgpack]:   0%|          | 0.00/577M [00:00<?, ?B/s][A[A[A
+
+
+
+Downloading [merges.txt]:   0%|          | 0.00/512k [00:00<?, ?B/s][A[A[A[A
+
+
+
+
+Downloading [preprocessor_config.json]:   0%|          | 0.00/316 [00:00<?, ?B/s][A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   0%|          | 0.00/577M [00:00<?, ?B/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [README.md]:   0%|          | 0.00/7.76k [00:00<?, ?B/s][A[A[A[A[A[A[A
+
+
+
+
+
+
+
+Downloading [special_tokens_map.json]:   0%|          | 0.00/389 [00:00<?, ?B/s][A[A[A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [README.md]: 100%|██████████| 7.76k/7.76k [00:00<00:00, 59.7kB/s][A[A[A[A[A[A[ADownloading [README.md]: 100%|██████████| 7.76k/7.76k [00:00<00:00, 59.5kB/s]
+
+
+
+
+
+
+
+Downloading [tf_model.h5]:   0%|          | 0.00/577M [00:00<?, ?B/s][A[A[A[A[A[A[AProcessing 12 items:   8%|▊         | 1.00/12.0 [00:00<00:01, 7.09it/s]
+Downloading [config.json]: 100%|██████████| 4.09k/4.09k [00:00<00:00, 28.9kB/s][ADownloading [config.json]: 100%|██████████| 4.09k/4.09k [00:00<00:00, 28.9kB/s]
+
+Downloading [tokenizer.json]:   0%|          | 0.00/2.12M [00:00<?, ?B/s][A
+
+
+
+
+Downloading [preprocessor_config.json]: 100%|██████████| 316/316 [00:00<00:00, 2.18kB/s][A[A[A[A[A
+
+
+
+
+
+
+
+Downloading [special_tokens_map.json]: 100%|██████████| 389/389 [00:00<00:00, 2.70kB/s][A[A[A[A[A[A[A[ADownloading [preprocessor_config.json]: 100%|██████████| 316/316 [00:00<00:00, 2.15kB/s]
+Downloading [special_tokens_map.json]: 100%|██████████| 389/389 [00:00<00:00, 2.69kB/s]
+
+
+
+
+
+Downloading [tokenizer_config.json]:   0%|          | 0.00/592 [00:00<?, ?B/s][A[A[A[A[A
+
+
+
+
+
+
+
+Downloading [vocab.json]:   0%|          | 0.00/842k [00:00<?, ?B/s][A[A[A[A[A[A[A[A
+
+Downloading [configuration.json]: 100%|██████████| 88.0/88.0 [00:00<00:00, 487B/s][A[ADownloading [configuration.json]: 100%|██████████| 88.0/88.0 [00:00<00:00, 487B/s]
+
+
+
+
+
+Downloading [tokenizer_config.json]: 100%|██████████| 592/592 [00:00<00:00, 4.16kB/s][A[A[A[A[ADownloading [tokenizer_config.json]: 100%|██████████| 592/592 [00:00<00:00, 4.16kB/s]
+Processing 12 items:  50%|█████     | 6.00/12.0 [00:00<00:00, 22.4it/s]
+
+
+
+Downloading [merges.txt]: 100%|██████████| 512k/512k [00:00<00:00, 1.09MB/s][A[A[A[ADownloading [merges.txt]: 100%|██████████| 512k/512k [00:00<00:00, 1.09MB/s]
+
+
+
+Downloading [flax_model.msgpack]:   0%|          | 1.00M/577M [00:00<06:27, 1.56MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   0%|          | 1.00M/577M [00:00<06:34, 1.53MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   0%|          | 1.00M/577M [00:00<07:56, 1.27MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   0%|          | 2.00M/577M [00:01<04:54, 2.05MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   0%|          | 2.00M/577M [00:01<04:57, 2.03MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   0%|          | 2.00M/577M [00:01<05:47, 1.74MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   1%|          | 3.00M/577M [00:01<04:29, 2.24MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   1%|          | 3.00M/577M [00:01<04:51, 2.06MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   1%|          | 3.00M/577M [00:01<04:57, 2.02MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   1%|          | 4.00M/577M [00:02<04:37, 2.16MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   1%|          | 4.00M/577M [00:02<05:01, 1.99MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   1%|          | 4.00M/577M [00:02<04:46, 2.10MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   1%|          | 5.00M/577M [00:02<04:36, 2.17MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   1%|          | 5.00M/577M [00:02<04:49, 2.08MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   1%|          | 5.00M/577M [00:02<04:34, 2.19MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   1%|          | 6.00M/577M [00:03<04:39, 2.14MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   1%|          | 6.00M/577M [00:03<04:40, 2.13MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   1%|          | 6.00M/577M [00:03<04:23, 2.28MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   1%|          | 7.00M/577M [00:03<04:39, 2.14MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   1%|          | 7.00M/577M [00:03<04:36, 2.16MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   1%|          | 7.00M/577M [00:03<04:25, 2.25MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   1%|▏         | 8.00M/577M [00:03<04:20, 2.29MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   1%|▏         | 8.00M/577M [00:03<04:37, 2.15MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   1%|▏         | 8.00M/577M [00:03<04:15, 2.33MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   2%|▏         | 9.00M/577M [00:04<04:10, 2.38MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   2%|▏         | 9.00M/577M [00:04<04:34, 2.17MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   2%|▏         | 9.00M/577M [00:04<04:17, 2.31MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   2%|▏         | 10.0M/577M [00:04<04:09, 2.38MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   2%|▏         | 10.0M/577M [00:04<04:30, 2.20MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   2%|▏         | 10.0M/577M [00:04<04:17, 2.31MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   2%|▏         | 11.0M/577M [00:05<04:06, 2.41MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   2%|▏         | 11.0M/577M [00:05<04:16, 2.31MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   2%|▏         | 11.0M/577M [00:05<04:05, 2.42MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   2%|▏         | 12.0M/577M [00:05<03:54, 2.52MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   2%|▏         | 12.0M/577M [00:05<03:48, 2.60MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   2%|▏         | 12.0M/577M [00:05<04:07, 2.39MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   2%|▏         | 13.0M/577M [00:05<03:54, 2.52MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   2%|▏         | 13.0M/577M [00:05<03:51, 2.56MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   2%|▏         | 13.0M/577M [00:06<04:11, 2.35MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   2%|▏         | 14.0M/577M [00:06<03:59, 2.47MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   2%|▏         | 14.0M/577M [00:06<03:54, 2.52MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   2%|▏         | 14.0M/577M [00:06<04:14, 2.32MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   3%|▎         | 15.0M/577M [00:06<04:03, 2.42MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   3%|▎         | 15.0M/577M [00:06<03:58, 2.47MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   3%|▎         | 15.0M/577M [00:07<04:17, 2.29MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   3%|▎         | 16.0M/577M [00:07<04:06, 2.39MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   3%|▎         | 16.0M/577M [00:07<04:02, 2.43MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   3%|▎         | 16.0M/577M [00:07<04:16, 2.30MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   3%|▎         | 17.0M/577M [00:07<04:07, 2.37MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   3%|▎         | 17.0M/577M [00:07<04:02, 2.42MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   3%|▎         | 17.0M/577M [00:08<04:18, 2.27MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   3%|▎         | 18.0M/577M [00:08<04:11, 2.33MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   3%|▎         | 18.0M/577M [00:08<04:05, 2.39MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   3%|▎         | 18.0M/577M [00:08<04:23, 2.22MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   3%|▎         | 19.0M/577M [00:08<04:14, 2.30MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   3%|▎         | 19.0M/577M [00:08<04:09, 2.34MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   3%|▎         | 19.0M/577M [00:09<04:27, 2.19MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   3%|▎         | 20.0M/577M [00:09<04:15, 2.29MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   3%|▎         | 20.0M/577M [00:09<04:10, 2.34MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   3%|▎         | 20.0M/577M [00:09<04:25, 2.20MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   4%|▎         | 21.0M/577M [00:09<04:12, 2.31MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   4%|▎         | 21.0M/577M [00:09<04:10, 2.33MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   4%|▎         | 21.0M/577M [00:09<04:25, 2.20MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   4%|▍         | 22.0M/577M [00:10<04:07, 2.35MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   4%|▍         | 22.0M/577M [00:10<04:14, 2.29MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   4%|▍         | 22.0M/577M [00:10<04:22, 2.21MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   4%|▍         | 23.0M/577M [00:10<04:07, 2.35MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   4%|▍         | 23.0M/577M [00:10<04:15, 2.27MB/s][A[A[A[A[A[A[A
+Downloading [tokenizer.json]:  47%|████▋     | 1.00M/2.12M [00:10<00:11, 98.9kB/s][A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   4%|▍         | 23.0M/577M [00:10<04:20, 2.23MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   4%|▍         | 24.0M/577M [00:10<04:07, 2.35MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   4%|▍         | 24.0M/577M [00:10<04:12, 2.30MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   4%|▍         | 25.0M/577M [00:11<04:04, 2.36MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   4%|▍         | 24.0M/577M [00:11<04:22, 2.21MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   4%|▍         | 25.0M/577M [00:11<04:04, 2.37MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   5%|▍         | 26.0M/577M [00:11<04:07, 2.34MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   4%|▍         | 25.0M/577M [00:11<04:19, 2.23MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   5%|▍         | 26.0M/577M [00:11<04:07, 2.34MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   5%|▍         | 27.0M/577M [00:12<04:08, 2.32MB/s][A[A[A
+
+
+
+
+
+
+
+Downloading [vocab.json]: 100%|██████████| 842k/842k [00:12<00:00, 70.9kB/s][A[A[A[A[A[A[A[ADownloading [vocab.json]: 100%|██████████| 842k/842k [00:12<00:00, 70.9kB/s]
+
+
+
+
+
+
+Downloading [pytorch_model.bin]:   5%|▍         | 26.0M/577M [00:12<04:22, 2.20MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   5%|▍         | 27.0M/577M [00:12<04:06, 2.34MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   5%|▍         | 28.0M/577M [00:12<04:11, 2.29MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   5%|▍         | 27.0M/577M [00:12<04:26, 2.16MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   5%|▍         | 28.0M/577M [00:12<04:12, 2.29MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   5%|▌         | 29.0M/577M [00:13<04:18, 2.22MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   5%|▌         | 29.0M/577M [00:13<04:13, 2.27MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   5%|▍         | 28.0M/577M [00:13<04:35, 2.09MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   5%|▌         | 30.0M/577M [00:13<04:16, 2.23MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   5%|▌         | 30.0M/577M [00:13<04:14, 2.25MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   5%|▌         | 29.0M/577M [00:13<04:33, 2.10MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   5%|▌         | 31.0M/577M [00:14<04:20, 2.20MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   5%|▌         | 31.0M/577M [00:14<04:11, 2.28MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   5%|▌         | 30.0M/577M [00:14<04:36, 2.07MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   6%|▌         | 32.0M/577M [00:14<04:18, 2.21MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   6%|▌         | 32.0M/577M [00:14<04:12, 2.26MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   5%|▌         | 31.0M/577M [00:14<04:34, 2.09MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   6%|▌         | 33.0M/577M [00:15<04:08, 2.30MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   6%|▌         | 33.0M/577M [00:15<04:06, 2.32MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   6%|▌         | 32.0M/577M [00:15<04:22, 2.18MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   6%|▌         | 34.0M/577M [00:15<03:59, 2.37MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   6%|▌         | 34.0M/577M [00:15<04:03, 2.34MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   6%|▌         | 33.0M/577M [00:15<04:11, 2.27MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   6%|▌         | 35.0M/577M [00:15<03:49, 2.48MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   6%|▌         | 35.0M/577M [00:15<03:53, 2.43MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   6%|▌         | 34.0M/577M [00:16<03:51, 2.46MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   6%|▌         | 36.0M/577M [00:16<03:48, 2.48MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   6%|▌         | 36.0M/577M [00:16<03:41, 2.56MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   6%|▌         | 35.0M/577M [00:16<03:43, 2.54MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   6%|▋         | 37.0M/577M [00:16<03:35, 2.63MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   6%|▋         | 37.0M/577M [00:16<03:35, 2.63MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   6%|▌         | 36.0M/577M [00:16<03:42, 2.55MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   7%|▋         | 38.0M/577M [00:17<03:32, 2.65MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   7%|▋         | 38.0M/577M [00:16<03:27, 2.72MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   6%|▋         | 37.0M/577M [00:17<03:39, 2.58MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   7%|▋         | 39.0M/577M [00:17<03:30, 2.69MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   7%|▋         | 39.0M/577M [00:17<03:31, 2.67MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   7%|▋         | 38.0M/577M [00:17<03:30, 2.69MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   7%|▋         | 40.0M/577M [00:17<03:31, 2.66MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   7%|▋         | 40.0M/577M [00:17<03:24, 2.75MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   7%|▋         | 39.0M/577M [00:18<03:26, 2.74MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   7%|▋         | 41.0M/577M [00:18<03:24, 2.75MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   7%|▋         | 41.0M/577M [00:18<03:35, 2.61MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   7%|▋         | 40.0M/577M [00:18<03:27, 2.71MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   7%|▋         | 42.0M/577M [00:18<03:17, 2.84MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   7%|▋         | 42.0M/577M [00:18<03:28, 2.69MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   7%|▋         | 41.0M/577M [00:18<03:32, 2.65MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   7%|▋         | 43.0M/577M [00:18<03:16, 2.85MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   7%|▋         | 43.0M/577M [00:18<03:25, 2.73MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   7%|▋         | 42.0M/577M [00:19<03:30, 2.66MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   8%|▊         | 44.0M/577M [00:19<03:22, 2.76MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   8%|▊         | 44.0M/577M [00:19<03:25, 2.72MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   7%|▋         | 43.0M/577M [00:19<03:34, 2.61MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   8%|▊         | 45.0M/577M [00:19<03:18, 2.80MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   8%|▊         | 45.0M/577M [00:19<03:20, 2.78MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   8%|▊         | 44.0M/577M [00:19<03:23, 2.75MB/s][A[A[A[A[A[AProcessing 12 items:  67%|██████▋   | 8.00/12.0 [00:19<00:00, 22.4it/s]
+
+
+
+
+
+
+Downloading [tf_model.h5]:   8%|▊         | 46.0M/577M [00:19<03:22, 2.75MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   8%|▊         | 46.0M/577M [00:20<03:23, 2.73MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   8%|▊         | 45.0M/577M [00:20<03:24, 2.73MB/s][A[A[A[A[A[A
+Downloading [tokenizer.json]:  94%|█████████▍| 2.00M/2.12M [00:20<00:01, 105kB/s] [A
+
+
+Downloading [flax_model.msgpack]:   8%|▊         | 47.0M/577M [00:20<03:21, 2.76MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   8%|▊         | 47.0M/577M [00:20<03:24, 2.72MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   8%|▊         | 46.0M/577M [00:20<03:24, 2.72MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   8%|▊         | 48.0M/577M [00:20<03:19, 2.78MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   8%|▊         | 48.0M/577M [00:20<03:25, 2.70MB/s][A[A[A[A[A[A[A
+Downloading [tokenizer.json]: 100%|██████████| 2.12M/2.12M [00:20<00:00, 110kB/s][ADownloading [tokenizer.json]: 100%|██████████| 2.12M/2.12M [00:20<00:00, 107kB/s]
+Processing 12 items:  75%|███████▌  | 9.00/12.0 [00:20<00:08, 2.98s/it]
+
+
+
+
+
+Downloading [pytorch_model.bin]:   8%|▊         | 47.0M/577M [00:21<03:24, 2.72MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   8%|▊         | 49.0M/577M [00:21<03:15, 2.83MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   8%|▊         | 49.0M/577M [00:21<03:25, 2.70MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   8%|▊         | 48.0M/577M [00:21<03:20, 2.76MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   9%|▊         | 50.0M/577M [00:21<03:19, 2.77MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   9%|▊         | 50.0M/577M [00:21<03:21, 2.74MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   8%|▊         | 49.0M/577M [00:21<03:23, 2.72MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   9%|▉         | 51.0M/577M [00:22<03:22, 2.73MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   9%|▉         | 51.0M/577M [00:21<03:16, 2.81MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   9%|▊         | 50.0M/577M [00:22<03:27, 2.66MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   9%|▉         | 52.0M/577M [00:22<03:13, 2.85MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   9%|▉         | 52.0M/577M [00:22<03:22, 2.72MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   9%|▉         | 53.0M/577M [00:22<03:08, 2.92MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   9%|▉         | 51.0M/577M [00:22<03:32, 2.60MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   9%|▉         | 53.0M/577M [00:22<03:25, 2.67MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:   9%|▉         | 54.0M/577M [00:22<03:12, 2.85MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   9%|▉         | 52.0M/577M [00:23<03:28, 2.65MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:   9%|▉         | 54.0M/577M [00:23<03:26, 2.66MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  10%|▉         | 55.0M/577M [00:23<03:02, 3.00MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   9%|▉         | 53.0M/577M [00:23<03:20, 2.74MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  10%|▉         | 55.0M/577M [00:23<03:21, 2.71MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  10%|▉         | 56.0M/577M [00:23<03:00, 3.02MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:   9%|▉         | 54.0M/577M [00:23<03:25, 2.67MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  10%|▉         | 56.0M/577M [00:23<03:25, 2.66MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  10%|▉         | 57.0M/577M [00:24<03:06, 2.92MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  10%|▉         | 55.0M/577M [00:24<03:26, 2.65MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  10%|▉         | 57.0M/577M [00:24<03:21, 2.71MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  10%|█         | 58.0M/577M [00:24<03:01, 3.00MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  10%|▉         | 56.0M/577M [00:24<03:26, 2.65MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  10%|█         | 58.0M/577M [00:24<03:17, 2.76MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  10%|█         | 59.0M/577M [00:24<02:59, 3.04MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  10%|█         | 59.0M/577M [00:25<03:13, 2.81MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  10%|▉         | 57.0M/577M [00:25<03:34, 2.55MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  10%|█         | 60.0M/577M [00:25<03:01, 2.99MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  10%|█         | 60.0M/577M [00:25<03:05, 2.92MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  11%|█         | 61.0M/577M [00:25<02:56, 3.06MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  10%|█         | 58.0M/577M [00:25<03:34, 2.54MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  11%|█         | 61.0M/577M [00:25<03:09, 2.85MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  11%|█         | 62.0M/577M [00:25<02:58, 3.03MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  10%|█         | 59.0M/577M [00:25<03:22, 2.68MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  11%|█         | 62.0M/577M [00:26<03:05, 2.91MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  11%|█         | 63.0M/577M [00:26<03:03, 2.95MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  10%|█         | 60.0M/577M [00:26<03:22, 2.68MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  11%|█         | 63.0M/577M [00:26<03:04, 2.93MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  11%|█         | 64.0M/577M [00:26<03:07, 2.87MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  11%|█         | 61.0M/577M [00:26<03:19, 2.71MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  11%|█         | 64.0M/577M [00:26<03:09, 2.83MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  11%|█▏        | 65.0M/577M [00:26<03:13, 2.77MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  11%|█         | 62.0M/577M [00:27<03:16, 2.74MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  11%|█▏        | 65.0M/577M [00:27<03:08, 2.85MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  11%|█         | 63.0M/577M [00:27<03:16, 2.75MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  11%|█▏        | 66.0M/577M [00:27<03:15, 2.74MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  11%|█▏        | 66.0M/577M [00:27<03:04, 2.90MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  12%|█▏        | 67.0M/577M [00:27<03:11, 2.80MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  11%|█         | 64.0M/577M [00:27<03:17, 2.72MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  12%|█▏        | 67.0M/577M [00:27<03:00, 2.97MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  12%|█▏        | 68.0M/577M [00:27<03:07, 2.85MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  11%|█▏        | 65.0M/577M [00:28<03:16, 2.73MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  12%|█▏        | 68.0M/577M [00:28<03:00, 2.96MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  12%|█▏        | 69.0M/577M [00:28<03:01, 2.94MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  11%|█▏        | 66.0M/577M [00:28<03:23, 2.64MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  12%|█▏        | 69.0M/577M [00:28<02:58, 2.98MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  12%|█▏        | 70.0M/577M [00:28<03:04, 2.89MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  12%|█▏        | 70.0M/577M [00:28<02:57, 2.99MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  12%|█▏        | 67.0M/577M [00:28<03:21, 2.65MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  12%|█▏        | 71.0M/577M [00:29<03:07, 2.83MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  12%|█▏        | 68.0M/577M [00:29<03:13, 2.76MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  12%|█▏        | 71.0M/577M [00:29<03:07, 2.83MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  12%|█▏        | 72.0M/577M [00:29<03:05, 2.85MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  12%|█▏        | 69.0M/577M [00:29<03:12, 2.77MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  12%|█▏        | 72.0M/577M [00:29<03:02, 2.90MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  13%|█▎        | 73.0M/577M [00:29<03:12, 2.75MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  12%|█▏        | 70.0M/577M [00:30<03:03, 2.89MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  13%|█▎        | 73.0M/577M [00:30<03:09, 2.78MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  12%|█▏        | 71.0M/577M [00:30<03:00, 2.94MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  13%|█▎        | 74.0M/577M [00:30<03:18, 2.65MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  13%|█▎        | 74.0M/577M [00:30<03:10, 2.77MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  13%|█▎        | 75.0M/577M [00:30<03:08, 2.79MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  12%|█▏        | 72.0M/577M [00:30<03:02, 2.90MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  13%|█▎        | 75.0M/577M [00:30<03:09, 2.78MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  13%|█▎        | 73.0M/577M [00:31<03:07, 2.82MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  13%|█▎        | 76.0M/577M [00:31<03:12, 2.73MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  13%|█▎        | 76.0M/577M [00:31<03:12, 2.73MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  13%|█▎        | 77.0M/577M [00:31<03:06, 2.82MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  13%|█▎        | 74.0M/577M [00:31<03:17, 2.68MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  13%|█▎        | 77.0M/577M [00:31<03:17, 2.66MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  14%|█▎        | 78.0M/577M [00:31<03:00, 2.90MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  13%|█▎        | 75.0M/577M [00:31<03:09, 2.78MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  14%|█▎        | 78.0M/577M [00:32<03:14, 2.70MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  14%|█▎        | 79.0M/577M [00:32<03:01, 2.89MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  13%|█▎        | 76.0M/577M [00:32<03:11, 2.75MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  14%|█▎        | 79.0M/577M [00:32<03:11, 2.72MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  14%|█▍        | 80.0M/577M [00:32<03:11, 2.72MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  13%|█▎        | 77.0M/577M [00:32<03:12, 2.72MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  14%|█▍        | 80.0M/577M [00:32<03:17, 2.64MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  14%|█▍        | 81.0M/577M [00:32<03:17, 2.63MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  14%|█▎        | 78.0M/577M [00:33<03:09, 2.76MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  14%|█▍        | 81.0M/577M [00:33<03:03, 2.83MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  14%|█▍        | 82.0M/577M [00:33<03:19, 2.60MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  14%|█▎        | 79.0M/577M [00:33<03:14, 2.68MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  14%|█▍        | 82.0M/577M [00:33<03:02, 2.85MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  14%|█▍        | 83.0M/577M [00:33<03:14, 2.66MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  14%|█▍        | 80.0M/577M [00:33<03:08, 2.77MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  14%|█▍        | 83.0M/577M [00:33<02:59, 2.88MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  15%|█▍        | 84.0M/577M [00:34<03:09, 2.72MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  14%|█▍        | 81.0M/577M [00:34<03:09, 2.74MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  15%|█▍        | 84.0M/577M [00:34<03:01, 2.85MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  15%|█▍        | 85.0M/577M [00:34<03:11, 2.69MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  14%|█▍        | 82.0M/577M [00:34<03:10, 2.73MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  15%|█▍        | 85.0M/577M [00:34<03:05, 2.78MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  14%|█▍        | 83.0M/577M [00:34<03:07, 2.76MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  15%|█▍        | 86.0M/577M [00:34<03:11, 2.69MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  15%|█▍        | 86.0M/577M [00:35<03:10, 2.70MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  15%|█▌        | 87.0M/577M [00:35<03:12, 2.67MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  15%|█▍        | 84.0M/577M [00:35<03:11, 2.70MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  15%|█▌        | 87.0M/577M [00:35<03:08, 2.72MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  15%|█▌        | 88.0M/577M [00:35<03:08, 2.73MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  15%|█▍        | 85.0M/577M [00:35<03:14, 2.65MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  15%|█▌        | 88.0M/577M [00:35<03:06, 2.75MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  15%|█▌        | 89.0M/577M [00:36<03:07, 2.73MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  15%|█▍        | 86.0M/577M [00:36<03:19, 2.59MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  15%|█▌        | 89.0M/577M [00:36<03:08, 2.72MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  16%|█▌        | 90.0M/577M [00:36<02:57, 2.87MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  15%|█▌        | 87.0M/577M [00:36<03:15, 2.63MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  16%|█▌        | 90.0M/577M [00:36<03:08, 2.71MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  16%|█▌        | 91.0M/577M [00:36<02:57, 2.87MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  15%|█▌        | 88.0M/577M [00:36<03:06, 2.75MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  16%|█▌        | 91.0M/577M [00:37<03:18, 2.57MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  16%|█▌        | 92.0M/577M [00:36<02:45, 3.07MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  15%|█▌        | 89.0M/577M [00:37<03:09, 2.71MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  16%|█▌        | 93.0M/577M [00:37<02:46, 3.06MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  16%|█▌        | 92.0M/577M [00:37<03:17, 2.57MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  16%|█▌        | 90.0M/577M [00:37<03:14, 2.63MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  16%|█▋        | 94.0M/577M [00:37<02:45, 3.07MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  16%|█▌        | 93.0M/577M [00:37<03:12, 2.63MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  16%|█▋        | 95.0M/577M [00:38<02:54, 2.90MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  16%|█▌        | 91.0M/577M [00:38<03:17, 2.58MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  16%|█▋        | 94.0M/577M [00:38<03:05, 2.72MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  17%|█▋        | 96.0M/577M [00:38<02:52, 2.92MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  16%|█▌        | 92.0M/577M [00:38<03:17, 2.57MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  16%|█▋        | 95.0M/577M [00:38<03:09, 2.67MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  17%|█▋        | 97.0M/577M [00:38<02:56, 2.86MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  16%|█▌        | 93.0M/577M [00:39<03:13, 2.62MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  17%|█▋        | 96.0M/577M [00:39<03:11, 2.64MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  17%|█▋        | 98.0M/577M [00:39<02:58, 2.81MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  16%|█▋        | 94.0M/577M [00:39<03:15, 2.59MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  17%|█▋        | 97.0M/577M [00:39<03:13, 2.61MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  17%|█▋        | 99.0M/577M [00:39<02:58, 2.81MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  16%|█▋        | 95.0M/577M [00:39<03:14, 2.60MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  17%|█▋        | 98.0M/577M [00:39<03:13, 2.60MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  17%|█▋        | 100M/577M [00:39<02:52, 2.91MB/s] [A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  17%|█▋        | 96.0M/577M [00:40<03:14, 2.59MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  17%|█▋        | 99.0M/577M [00:40<03:13, 2.59MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  17%|█▋        | 101M/577M [00:40<02:41, 3.09MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  17%|█▋        | 97.0M/577M [00:40<03:16, 2.56MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  18%|█▊        | 102M/577M [00:40<02:42, 3.06MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  17%|█▋        | 100M/577M [00:40<03:15, 2.55MB/s] [A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  17%|█▋        | 98.0M/577M [00:40<03:04, 2.73MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  18%|█▊        | 103M/577M [00:40<02:49, 2.93MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  18%|█▊        | 101M/577M [00:41<03:10, 2.62MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  17%|█▋        | 99.0M/577M [00:41<03:06, 2.68MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  18%|█▊        | 102M/577M [00:41<03:10, 2.62MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  18%|█▊        | 104M/577M [00:41<02:58, 2.78MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  18%|█▊        | 105M/577M [00:41<02:45, 2.99MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  17%|█▋        | 100M/577M [00:41<03:09, 2.64MB/s] [A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  18%|█▊        | 103M/577M [00:41<03:11, 2.59MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  17%|█▋        | 101M/577M [00:42<03:04, 2.71MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  18%|█▊        | 106M/577M [00:42<02:50, 2.90MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  18%|█▊        | 104M/577M [00:42<03:09, 2.62MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  18%|█▊        | 102M/577M [00:42<03:01, 2.74MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  19%|█▊        | 107M/577M [00:42<02:53, 2.84MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  18%|█▊        | 105M/577M [00:42<03:07, 2.64MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  18%|█▊        | 103M/577M [00:42<02:59, 2.77MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  19%|█▊        | 108M/577M [00:42<02:55, 2.80MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  18%|█▊        | 106M/577M [00:43<03:00, 2.73MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  18%|█▊        | 104M/577M [00:43<03:04, 2.69MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  19%|█▉        | 109M/577M [00:43<03:00, 2.72MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  19%|█▊        | 107M/577M [00:43<03:00, 2.74MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  19%|█▉        | 110M/577M [00:43<02:55, 2.79MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  18%|█▊        | 105M/577M [00:43<03:05, 2.67MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  19%|█▊        | 108M/577M [00:43<02:56, 2.78MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  19%|█▉        | 111M/577M [00:43<02:56, 2.77MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  18%|█▊        | 106M/577M [00:44<03:03, 2.70MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  19%|█▉        | 109M/577M [00:44<02:50, 2.87MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  19%|█▉        | 112M/577M [00:44<02:55, 2.78MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  19%|█▊        | 107M/577M [00:44<03:06, 2.64MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  19%|█▉        | 110M/577M [00:44<02:54, 2.80MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  20%|█▉        | 113M/577M [00:44<02:47, 2.91MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  19%|█▊        | 108M/577M [00:44<03:02, 2.70MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  19%|█▉        | 111M/577M [00:44<02:57, 2.75MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  20%|█▉        | 114M/577M [00:45<02:54, 2.78MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  19%|█▉        | 112M/577M [00:45<02:52, 2.83MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  19%|█▉        | 109M/577M [00:45<03:06, 2.63MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  20%|█▉        | 115M/577M [00:45<02:58, 2.71MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  20%|█▉        | 113M/577M [00:45<02:50, 2.85MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  19%|█▉        | 110M/577M [00:45<03:02, 2.68MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  20%|██        | 116M/577M [00:45<03:00, 2.68MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  19%|█▉        | 111M/577M [00:46<02:55, 2.79MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  20%|█▉        | 114M/577M [00:46<02:55, 2.76MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  19%|█▉        | 112M/577M [00:46<02:51, 2.84MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  20%|██        | 117M/577M [00:46<02:59, 2.69MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  20%|█▉        | 115M/577M [00:46<02:59, 2.70MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  20%|██        | 118M/577M [00:46<02:55, 2.74MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  20%|██        | 116M/577M [00:46<02:55, 2.75MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  20%|█▉        | 113M/577M [00:46<02:59, 2.71MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  21%|██        | 119M/577M [00:47<02:56, 2.72MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  20%|█▉        | 114M/577M [00:47<02:56, 2.75MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  20%|██        | 117M/577M [00:47<02:55, 2.74MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  21%|██        | 120M/577M [00:47<02:58, 2.69MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  20%|██        | 118M/577M [00:47<02:58, 2.70MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  20%|█▉        | 115M/577M [00:47<03:05, 2.61MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  21%|██        | 119M/577M [00:47<02:56, 2.72MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  21%|██        | 121M/577M [00:47<02:59, 2.66MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  20%|██        | 116M/577M [00:48<03:02, 2.65MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  21%|██        | 122M/577M [00:48<02:55, 2.71MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  21%|██        | 120M/577M [00:48<02:58, 2.69MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  20%|██        | 117M/577M [00:48<03:01, 2.66MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  21%|██▏       | 123M/577M [00:48<02:51, 2.78MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  21%|██        | 121M/577M [00:48<02:58, 2.68MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  20%|██        | 118M/577M [00:48<03:03, 2.63MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  21%|██▏       | 124M/577M [00:48<02:54, 2.73MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  21%|██        | 122M/577M [00:49<02:58, 2.67MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  21%|██        | 119M/577M [00:49<03:02, 2.63MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  22%|██▏       | 125M/577M [00:49<02:49, 2.80MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  21%|██▏       | 123M/577M [00:49<02:51, 2.78MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  21%|██        | 120M/577M [00:49<03:00, 2.66MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  22%|██▏       | 126M/577M [00:49<02:53, 2.74MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  21%|██▏       | 124M/577M [00:49<02:55, 2.71MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  21%|██        | 121M/577M [00:50<03:02, 2.62MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  22%|██▏       | 127M/577M [00:50<02:47, 2.82MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  22%|██▏       | 125M/577M [00:50<02:58, 2.65MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  21%|██        | 122M/577M [00:50<03:02, 2.61MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  22%|██▏       | 128M/577M [00:50<02:51, 2.75MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  22%|██▏       | 126M/577M [00:50<02:55, 2.70MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  21%|██▏       | 123M/577M [00:50<02:56, 2.70MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  22%|██▏       | 129M/577M [00:50<02:48, 2.78MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  22%|██▏       | 127M/577M [00:51<02:57, 2.67MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  21%|██▏       | 124M/577M [00:51<02:53, 2.74MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  23%|██▎       | 130M/577M [00:51<02:49, 2.76MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  22%|██▏       | 128M/577M [00:51<02:51, 2.75MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  22%|██▏       | 125M/577M [00:51<03:00, 2.62MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  23%|██▎       | 131M/577M [00:51<02:52, 2.72MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  22%|██▏       | 129M/577M [00:51<02:52, 2.72MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  22%|██▏       | 126M/577M [00:51<03:01, 2.61MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  23%|██▎       | 132M/577M [00:52<02:57, 2.63MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  23%|██▎       | 130M/577M [00:52<02:54, 2.69MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  22%|██▏       | 127M/577M [00:52<02:53, 2.72MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  23%|██▎       | 133M/577M [00:52<02:48, 2.76MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  23%|██▎       | 131M/577M [00:52<02:58, 2.62MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  22%|██▏       | 128M/577M [00:52<02:59, 2.63MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  23%|██▎       | 134M/577M [00:52<02:48, 2.76MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  23%|██▎       | 132M/577M [00:53<02:54, 2.68MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  22%|██▏       | 129M/577M [00:53<02:55, 2.67MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  23%|██▎       | 135M/577M [00:53<02:53, 2.67MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  23%|██▎       | 133M/577M [00:53<02:51, 2.72MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  23%|██▎       | 130M/577M [00:53<02:47, 2.80MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  24%|██▎       | 136M/577M [00:53<02:51, 2.71MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  23%|██▎       | 134M/577M [00:53<02:52, 2.70MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  23%|██▎       | 131M/577M [00:53<02:53, 2.69MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  24%|██▎       | 137M/577M [00:53<02:47, 2.76MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  23%|██▎       | 135M/577M [00:54<02:52, 2.68MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  23%|██▎       | 132M/577M [00:54<02:52, 2.70MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  24%|██▍       | 138M/577M [00:54<02:51, 2.68MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  24%|██▎       | 136M/577M [00:54<02:44, 2.82MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  23%|██▎       | 133M/577M [00:54<02:49, 2.74MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  24%|██▍       | 139M/577M [00:54<02:51, 2.68MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  24%|██▎       | 137M/577M [00:54<02:45, 2.79MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  23%|██▎       | 134M/577M [00:55<02:54, 2.66MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  24%|██▍       | 140M/577M [00:55<02:47, 2.74MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  24%|██▍       | 138M/577M [00:55<02:44, 2.80MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  23%|██▎       | 135M/577M [00:55<02:45, 2.80MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  24%|██▍       | 141M/577M [00:55<02:51, 2.66MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  24%|██▍       | 139M/577M [00:55<02:46, 2.76MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  24%|██▎       | 136M/577M [00:55<02:39, 2.90MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  25%|██▍       | 142M/577M [00:55<02:50, 2.68MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  24%|██▍       | 140M/577M [00:56<02:45, 2.78MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  24%|██▎       | 137M/577M [00:56<02:38, 2.92MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  24%|██▍       | 141M/577M [00:56<02:39, 2.87MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  25%|██▍       | 143M/577M [00:56<02:50, 2.67MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  24%|██▍       | 138M/577M [00:56<02:44, 2.79MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  25%|██▍       | 144M/577M [00:56<02:42, 2.80MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  25%|██▍       | 142M/577M [00:56<02:42, 2.81MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  24%|██▍       | 139M/577M [00:56<02:47, 2.74MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  25%|██▌       | 145M/577M [00:56<02:40, 2.82MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  25%|██▍       | 143M/577M [00:57<02:42, 2.81MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  24%|██▍       | 140M/577M [00:57<02:45, 2.76MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  25%|██▌       | 146M/577M [00:57<02:35, 2.90MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  25%|██▍       | 144M/577M [00:57<02:46, 2.73MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  24%|██▍       | 141M/577M [00:57<02:46, 2.75MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  25%|██▌       | 147M/577M [00:57<02:39, 2.82MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  25%|██▌       | 145M/577M [00:57<02:49, 2.68MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  25%|██▍       | 142M/577M [00:58<02:44, 2.78MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  26%|██▌       | 148M/577M [00:58<02:46, 2.70MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  25%|██▌       | 146M/577M [00:58<02:40, 2.82MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  25%|██▍       | 143M/577M [00:58<02:46, 2.74MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  26%|██▌       | 149M/577M [00:58<02:43, 2.75MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  25%|██▌       | 147M/577M [00:58<02:38, 2.84MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  25%|██▍       | 144M/577M [00:58<02:51, 2.65MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  26%|██▌       | 148M/577M [00:58<02:32, 2.95MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  26%|██▌       | 150M/577M [00:58<02:48, 2.67MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  25%|██▌       | 145M/577M [00:59<02:54, 2.59MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  26%|██▌       | 149M/577M [00:59<02:36, 2.87MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  26%|██▌       | 151M/577M [00:59<02:45, 2.70MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  25%|██▌       | 146M/577M [00:59<02:53, 2.61MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  26%|██▌       | 150M/577M [00:59<02:37, 2.84MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  26%|██▋       | 152M/577M [00:59<02:46, 2.67MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  25%|██▌       | 147M/577M [01:00<02:57, 2.55MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  26%|██▌       | 151M/577M [01:00<02:35, 2.87MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  26%|██▋       | 153M/577M [01:00<02:46, 2.68MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  26%|██▋       | 152M/577M [01:00<02:38, 2.81MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  26%|██▌       | 148M/577M [01:00<02:58, 2.52MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  27%|██▋       | 154M/577M [01:00<02:44, 2.70MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  27%|██▋       | 153M/577M [01:00<02:30, 2.95MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  26%|██▌       | 149M/577M [01:00<02:54, 2.57MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  27%|██▋       | 155M/577M [01:00<02:46, 2.66MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  27%|██▋       | 154M/577M [01:01<02:32, 2.90MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  26%|██▌       | 150M/577M [01:01<02:55, 2.55MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  27%|██▋       | 156M/577M [01:01<02:43, 2.70MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  27%|██▋       | 155M/577M [01:01<02:38, 2.79MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  26%|██▌       | 151M/577M [01:01<02:57, 2.51MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  27%|██▋       | 157M/577M [01:01<02:42, 2.71MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  27%|██▋       | 156M/577M [01:01<02:36, 2.83MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  27%|██▋       | 158M/577M [01:02<02:41, 2.73MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  26%|██▋       | 152M/577M [01:02<02:56, 2.52MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  27%|██▋       | 157M/577M [01:02<02:35, 2.83MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  28%|██▊       | 159M/577M [01:02<02:42, 2.69MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  27%|██▋       | 153M/577M [01:02<02:55, 2.53MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  27%|██▋       | 158M/577M [01:02<02:31, 2.90MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  27%|██▋       | 154M/577M [01:02<02:45, 2.68MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  28%|██▊       | 160M/577M [01:02<02:40, 2.73MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  28%|██▊       | 159M/577M [01:03<02:36, 2.80MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  28%|██▊       | 161M/577M [01:03<02:35, 2.82MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  27%|██▋       | 155M/577M [01:03<02:46, 2.66MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  28%|██▊       | 160M/577M [01:03<02:32, 2.87MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  28%|██▊       | 162M/577M [01:03<02:32, 2.86MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  27%|██▋       | 156M/577M [01:03<02:44, 2.68MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  28%|██▊       | 161M/577M [01:03<02:34, 2.83MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  28%|██▊       | 163M/577M [01:03<02:34, 2.81MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  28%|██▊       | 162M/577M [01:04<02:27, 2.96MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  27%|██▋       | 157M/577M [01:04<02:47, 2.63MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  28%|██▊       | 164M/577M [01:04<02:37, 2.75MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  28%|██▊       | 163M/577M [01:04<02:25, 2.98MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  27%|██▋       | 158M/577M [01:04<02:49, 2.60MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  29%|██▊       | 165M/577M [01:04<02:38, 2.73MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  28%|██▊       | 164M/577M [01:04<02:30, 2.87MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  28%|██▊       | 159M/577M [01:04<02:44, 2.66MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  29%|██▊       | 166M/577M [01:04<02:27, 2.93MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  29%|██▊       | 165M/577M [01:05<02:30, 2.87MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  28%|██▊       | 160M/577M [01:05<02:51, 2.55MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  29%|██▉       | 167M/577M [01:05<02:33, 2.80MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  29%|██▉       | 166M/577M [01:05<02:34, 2.78MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  28%|██▊       | 161M/577M [01:05<02:52, 2.53MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  29%|██▉       | 168M/577M [01:05<02:32, 2.81MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  29%|██▉       | 167M/577M [01:06<02:35, 2.76MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  28%|██▊       | 162M/577M [01:06<02:47, 2.59MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  29%|██▉       | 169M/577M [01:06<02:30, 2.85MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  29%|██▉       | 168M/577M [01:06<02:35, 2.76MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  28%|██▊       | 163M/577M [01:06<02:42, 2.67MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  29%|██▉       | 170M/577M [01:06<02:36, 2.74MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  29%|██▉       | 169M/577M [01:06<02:36, 2.74MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  28%|██▊       | 164M/577M [01:06<02:44, 2.64MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  30%|██▉       | 171M/577M [01:06<02:36, 2.72MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  29%|██▉       | 170M/577M [01:07<02:32, 2.80MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  29%|██▊       | 165M/577M [01:07<02:43, 2.64MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  30%|██▉       | 172M/577M [01:07<02:37, 2.69MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  30%|██▉       | 171M/577M [01:07<02:33, 2.77MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  29%|██▉       | 166M/577M [01:07<02:39, 2.70MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  30%|██▉       | 173M/577M [01:07<02:36, 2.72MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  30%|██▉       | 172M/577M [01:07<02:25, 2.92MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  29%|██▉       | 167M/577M [01:08<02:32, 2.82MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  30%|███       | 174M/577M [01:08<02:33, 2.75MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  30%|██▉       | 173M/577M [01:08<02:32, 2.79MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  29%|██▉       | 168M/577M [01:08<02:38, 2.71MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  30%|███       | 175M/577M [01:08<02:36, 2.70MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  30%|███       | 174M/577M [01:08<02:34, 2.74MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  29%|██▉       | 169M/577M [01:08<02:42, 2.64MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  30%|███       | 176M/577M [01:08<02:37, 2.67MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  30%|███       | 175M/577M [01:09<02:33, 2.74MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  29%|██▉       | 170M/577M [01:09<02:35, 2.74MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  30%|███       | 176M/577M [01:09<02:32, 2.76MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  31%|███       | 177M/577M [01:09<02:42, 2.59MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  30%|██▉       | 171M/577M [01:09<02:34, 2.75MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  31%|███       | 177M/577M [01:09<02:30, 2.78MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  31%|███       | 178M/577M [01:09<02:42, 2.57MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  30%|██▉       | 172M/577M [01:10<02:36, 2.72MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  31%|███       | 178M/577M [01:10<02:32, 2.75MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  31%|███       | 179M/577M [01:10<02:33, 2.72MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  30%|██▉       | 173M/577M [01:10<02:41, 2.63MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  31%|███       | 179M/577M [01:10<02:30, 2.78MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  31%|███       | 180M/577M [01:10<02:30, 2.77MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  30%|███       | 174M/577M [01:10<02:42, 2.61MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  31%|███▏      | 181M/577M [01:10<02:27, 2.83MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  31%|███       | 180M/577M [01:10<02:28, 2.80MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  30%|███       | 175M/577M [01:11<02:33, 2.74MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  31%|███▏      | 181M/577M [01:11<02:31, 2.74MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  32%|███▏      | 182M/577M [01:11<02:31, 2.74MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  30%|███       | 176M/577M [01:11<02:31, 2.78MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  32%|███▏      | 182M/577M [01:11<02:29, 2.77MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  32%|███▏      | 183M/577M [01:11<02:37, 2.63MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  31%|███       | 177M/577M [01:11<02:32, 2.75MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  32%|███▏      | 183M/577M [01:12<02:30, 2.75MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  32%|███▏      | 184M/577M [01:11<02:32, 2.70MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  31%|███       | 178M/577M [01:12<02:36, 2.67MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  32%|███▏      | 184M/577M [01:12<02:28, 2.77MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  32%|███▏      | 185M/577M [01:12<02:35, 2.65MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  31%|███       | 179M/577M [01:12<02:29, 2.79MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  32%|███▏      | 185M/577M [01:12<02:17, 2.99MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  32%|███▏      | 186M/577M [01:12<02:27, 2.78MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  32%|███▏      | 186M/577M [01:13<02:06, 3.23MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  31%|███       | 180M/577M [01:13<02:28, 2.81MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  32%|███▏      | 187M/577M [01:13<02:26, 2.79MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  32%|███▏      | 187M/577M [01:13<02:12, 3.09MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  31%|███▏      | 181M/577M [01:13<02:28, 2.81MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  33%|███▎      | 188M/577M [01:13<02:31, 2.70MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  33%|███▎      | 188M/577M [01:13<02:13, 3.06MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  32%|███▏      | 182M/577M [01:13<02:31, 2.74MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  33%|███▎      | 189M/577M [01:14<02:09, 3.14MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  33%|███▎      | 189M/577M [01:13<02:32, 2.66MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  32%|███▏      | 183M/577M [01:14<02:32, 2.71MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  33%|███▎      | 190M/577M [01:14<02:15, 3.00MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  33%|███▎      | 190M/577M [01:14<02:34, 2.63MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  32%|███▏      | 184M/577M [01:14<02:23, 2.88MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  33%|███▎      | 191M/577M [01:14<02:21, 2.87MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  33%|███▎      | 191M/577M [01:14<02:30, 2.69MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  32%|███▏      | 185M/577M [01:14<02:28, 2.78MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  33%|███▎      | 192M/577M [01:15<02:14, 3.00MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  33%|███▎      | 192M/577M [01:15<02:29, 2.70MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  32%|███▏      | 186M/577M [01:15<02:30, 2.72MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  33%|███▎      | 193M/577M [01:15<02:19, 2.89MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  33%|███▎      | 193M/577M [01:15<02:25, 2.78MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  32%|███▏      | 187M/577M [01:15<02:36, 2.62MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  34%|███▎      | 194M/577M [01:15<02:19, 2.88MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  34%|███▎      | 194M/577M [01:15<02:22, 2.81MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  33%|███▎      | 188M/577M [01:16<02:27, 2.76MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  34%|███▍      | 195M/577M [01:16<02:21, 2.84MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  34%|███▍      | 195M/577M [01:16<02:26, 2.73MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  33%|███▎      | 189M/577M [01:16<02:33, 2.65MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  34%|███▍      | 196M/577M [01:16<02:23, 2.78MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  34%|███▍      | 196M/577M [01:16<02:24, 2.77MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  33%|███▎      | 190M/577M [01:16<02:27, 2.75MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  34%|███▍      | 197M/577M [01:16<02:18, 2.89MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  34%|███▍      | 197M/577M [01:17<02:25, 2.74MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  33%|███▎      | 191M/577M [01:17<02:33, 2.64MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  34%|███▍      | 198M/577M [01:17<02:22, 2.80MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  34%|███▍      | 198M/577M [01:17<02:22, 2.78MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  33%|███▎      | 192M/577M [01:17<02:31, 2.67MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  34%|███▍      | 199M/577M [01:17<02:23, 2.77MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  34%|███▍      | 199M/577M [01:17<02:24, 2.75MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  33%|███▎      | 193M/577M [01:18<02:28, 2.71MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  35%|███▍      | 200M/577M [01:18<02:21, 2.80MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  35%|███▍      | 200M/577M [01:18<02:25, 2.71MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  35%|███▍      | 201M/577M [01:18<02:19, 2.83MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  34%|███▎      | 194M/577M [01:18<02:34, 2.60MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  35%|███▍      | 201M/577M [01:18<02:20, 2.81MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  35%|███▍      | 202M/577M [01:18<02:16, 2.88MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  34%|███▍      | 195M/577M [01:18<02:36, 2.57MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  35%|███▌      | 202M/577M [01:19<02:25, 2.71MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  35%|███▌      | 203M/577M [01:19<02:19, 2.82MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  34%|███▍      | 196M/577M [01:19<02:36, 2.56MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  35%|███▌      | 203M/577M [01:19<02:23, 2.73MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  35%|███▌      | 204M/577M [01:19<02:19, 2.81MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  34%|███▍      | 197M/577M [01:19<02:31, 2.63MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  35%|███▌      | 204M/577M [01:19<02:24, 2.72MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  35%|███▌      | 205M/577M [01:19<02:10, 2.99MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  36%|███▌      | 205M/577M [01:20<02:22, 2.74MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  34%|███▍      | 198M/577M [01:20<02:32, 2.61MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  36%|███▌      | 206M/577M [01:20<02:10, 2.98MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  34%|███▍      | 199M/577M [01:20<02:30, 2.64MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  36%|███▌      | 206M/577M [01:20<02:26, 2.66MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  36%|███▌      | 207M/577M [01:20<02:15, 2.86MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  35%|███▍      | 200M/577M [01:20<02:27, 2.68MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  36%|███▌      | 207M/577M [01:21<02:30, 2.59MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  36%|███▌      | 208M/577M [01:20<02:15, 2.86MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  35%|███▍      | 201M/577M [01:21<02:23, 2.74MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  36%|███▌      | 208M/577M [01:21<02:28, 2.61MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  36%|███▌      | 209M/577M [01:21<02:14, 2.88MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  35%|███▍      | 202M/577M [01:21<02:21, 2.78MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  36%|███▌      | 209M/577M [01:21<02:25, 2.65MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  36%|███▋      | 210M/577M [01:21<02:13, 2.89MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  35%|███▌      | 203M/577M [01:22<02:20, 2.79MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  36%|███▋      | 210M/577M [01:22<02:20, 2.74MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  37%|███▋      | 211M/577M [01:22<02:11, 2.92MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  35%|███▌      | 204M/577M [01:22<02:26, 2.68MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  37%|███▋      | 211M/577M [01:22<02:14, 2.85MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  37%|███▋      | 212M/577M [01:22<02:14, 2.84MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  36%|███▌      | 205M/577M [01:22<02:24, 2.70MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  37%|███▋      | 212M/577M [01:22<02:13, 2.86MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  37%|███▋      | 213M/577M [01:22<02:13, 2.87MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  37%|███▋      | 213M/577M [01:23<02:05, 3.03MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  36%|███▌      | 206M/577M [01:23<02:29, 2.61MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  37%|███▋      | 214M/577M [01:23<02:17, 2.77MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  37%|███▋      | 214M/577M [01:23<02:11, 2.90MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  37%|███▋      | 215M/577M [01:23<02:11, 2.89MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  36%|███▌      | 207M/577M [01:23<02:28, 2.62MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  37%|███▋      | 215M/577M [01:23<02:12, 2.87MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  36%|███▌      | 208M/577M [01:23<02:20, 2.75MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  37%|███▋      | 216M/577M [01:23<02:16, 2.79MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  37%|███▋      | 216M/577M [01:24<02:17, 2.75MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  38%|███▊      | 217M/577M [01:24<02:10, 2.91MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  36%|███▌      | 209M/577M [01:24<02:21, 2.73MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  38%|███▊      | 217M/577M [01:24<02:18, 2.73MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  38%|███▊      | 218M/577M [01:24<02:11, 2.86MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  36%|███▋      | 210M/577M [01:24<02:19, 2.75MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  38%|███▊      | 218M/577M [01:25<02:14, 2.79MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  38%|███▊      | 219M/577M [01:25<02:15, 2.77MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  37%|███▋      | 211M/577M [01:25<02:22, 2.69MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  38%|███▊      | 219M/577M [01:25<02:15, 2.77MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  38%|███▊      | 220M/577M [01:25<02:17, 2.72MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  37%|███▋      | 212M/577M [01:25<02:25, 2.62MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  38%|███▊      | 220M/577M [01:25<02:12, 2.82MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  38%|███▊      | 221M/577M [01:25<02:15, 2.76MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  37%|███▋      | 213M/577M [01:26<02:28, 2.57MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  38%|███▊      | 221M/577M [01:26<02:09, 2.88MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  38%|███▊      | 222M/577M [01:26<02:18, 2.69MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  37%|███▋      | 214M/577M [01:26<02:33, 2.49MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  38%|███▊      | 222M/577M [01:26<02:10, 2.85MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  39%|███▊      | 223M/577M [01:26<02:19, 2.67MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  37%|███▋      | 215M/577M [01:26<02:28, 2.56MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  39%|███▊      | 223M/577M [01:26<02:14, 2.77MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  39%|███▉      | 224M/577M [01:26<02:15, 2.74MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  37%|███▋      | 216M/577M [01:27<02:27, 2.56MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  39%|███▉      | 224M/577M [01:27<02:11, 2.82MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  39%|███▉      | 225M/577M [01:27<02:12, 2.79MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  38%|███▊      | 217M/577M [01:27<02:23, 2.63MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  39%|███▉      | 225M/577M [01:27<02:17, 2.69MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  39%|███▉      | 226M/577M [01:27<02:16, 2.70MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  38%|███▊      | 218M/577M [01:28<02:22, 2.65MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  39%|███▉      | 226M/577M [01:28<02:15, 2.72MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  39%|███▉      | 227M/577M [01:28<02:19, 2.64MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  38%|███▊      | 219M/577M [01:28<02:22, 2.63MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  39%|███▉      | 227M/577M [01:28<02:14, 2.72MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  39%|███▉      | 228M/577M [01:28<02:19, 2.63MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  40%|███▉      | 228M/577M [01:28<02:12, 2.76MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  38%|███▊      | 220M/577M [01:28<02:27, 2.53MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  40%|███▉      | 229M/577M [01:28<02:14, 2.72MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  40%|███▉      | 229M/577M [01:29<02:10, 2.80MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  38%|███▊      | 221M/577M [01:29<02:30, 2.48MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  40%|███▉      | 230M/577M [01:29<02:15, 2.70MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  40%|███▉      | 230M/577M [01:29<02:10, 2.79MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  38%|███▊      | 222M/577M [01:29<02:26, 2.55MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  40%|████      | 231M/577M [01:29<02:16, 2.66MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  40%|████      | 231M/577M [01:29<02:13, 2.72MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  39%|███▊      | 223M/577M [01:29<02:12, 2.79MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  40%|████      | 232M/577M [01:30<02:20, 2.58MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  40%|████      | 232M/577M [01:30<02:09, 2.79MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  39%|███▉      | 224M/577M [01:30<02:14, 2.75MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  40%|████      | 233M/577M [01:30<02:18, 2.62MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  40%|████      | 233M/577M [01:30<02:14, 2.69MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  39%|███▉      | 225M/577M [01:30<02:17, 2.69MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  41%|████      | 234M/577M [01:30<02:13, 2.71MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  41%|████      | 234M/577M [01:31<02:15, 2.66MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  39%|███▉      | 226M/577M [01:31<02:24, 2.55MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  41%|████      | 235M/577M [01:31<02:07, 2.82MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  41%|████      | 235M/577M [01:31<02:14, 2.67MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  39%|███▉      | 227M/577M [01:31<02:25, 2.53MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  41%|████      | 236M/577M [01:31<02:10, 2.74MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  41%|████      | 236M/577M [01:31<02:10, 2.73MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  40%|███▉      | 228M/577M [01:32<02:18, 2.64MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  41%|████      | 237M/577M [01:31<02:04, 2.87MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  41%|████      | 237M/577M [01:32<02:09, 2.76MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  41%|████      | 238M/577M [01:32<02:04, 2.86MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  40%|███▉      | 229M/577M [01:32<02:22, 2.56MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  41%|████      | 238M/577M [01:32<02:06, 2.80MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  41%|████▏     | 239M/577M [01:32<02:03, 2.88MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  40%|███▉      | 230M/577M [01:32<02:20, 2.60MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  41%|████▏     | 239M/577M [01:33<02:10, 2.71MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  42%|████▏     | 240M/577M [01:33<02:00, 2.94MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  40%|████      | 231M/577M [01:33<02:15, 2.67MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  42%|████▏     | 240M/577M [01:33<02:06, 2.80MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  42%|████▏     | 241M/577M [01:33<02:00, 2.93MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  40%|████      | 232M/577M [01:33<02:15, 2.67MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  42%|████▏     | 241M/577M [01:33<02:04, 2.83MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  42%|████▏     | 242M/577M [01:33<02:06, 2.79MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  40%|████      | 233M/577M [01:34<02:15, 2.66MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  42%|████▏     | 242M/577M [01:34<02:10, 2.70MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  42%|████▏     | 243M/577M [01:34<02:04, 2.83MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  41%|████      | 234M/577M [01:34<02:14, 2.67MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  42%|████▏     | 243M/577M [01:34<02:10, 2.68MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  42%|████▏     | 244M/577M [01:34<02:04, 2.81MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  41%|████      | 235M/577M [01:34<02:18, 2.60MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  42%|████▏     | 244M/577M [01:34<02:07, 2.74MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  42%|████▏     | 245M/577M [01:34<02:07, 2.74MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  41%|████      | 236M/577M [01:35<02:15, 2.65MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  42%|████▏     | 245M/577M [01:35<02:07, 2.74MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  43%|████▎     | 246M/577M [01:35<02:06, 2.75MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  41%|████      | 237M/577M [01:35<02:16, 2.62MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  43%|████▎     | 247M/577M [01:35<01:58, 2.93MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  43%|████▎     | 246M/577M [01:35<02:12, 2.62MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  41%|████      | 238M/577M [01:35<02:11, 2.71MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  43%|████▎     | 248M/577M [01:35<01:59, 2.90MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  43%|████▎     | 247M/577M [01:36<02:07, 2.71MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  41%|████▏     | 239M/577M [01:36<02:16, 2.60MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  43%|████▎     | 249M/577M [01:36<01:58, 2.90MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  43%|████▎     | 248M/577M [01:36<02:06, 2.74MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  42%|████▏     | 240M/577M [01:36<02:17, 2.57MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  43%|████▎     | 250M/577M [01:36<02:04, 2.77MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  43%|████▎     | 249M/577M [01:36<02:10, 2.65MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  42%|████▏     | 241M/577M [01:37<02:12, 2.66MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  43%|████▎     | 251M/577M [01:37<02:00, 2.84MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  43%|████▎     | 250M/577M [01:37<02:09, 2.66MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  44%|████▎     | 252M/577M [01:37<01:57, 2.90MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  42%|████▏     | 242M/577M [01:37<02:16, 2.58MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  43%|████▎     | 251M/577M [01:37<02:04, 2.74MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  44%|████▍     | 253M/577M [01:37<02:00, 2.83MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  42%|████▏     | 243M/577M [01:38<02:17, 2.54MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  44%|████▎     | 252M/577M [01:38<02:05, 2.71MB/s][A[A[A
+
+
+Downloading [flax_model.msgpack]:  44%|████▍     | 253M/577M [01:38<01:59, 2.84MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  44%|████▍     | 254M/577M [01:38<02:07, 2.66MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  42%|████▏     | 244M/577M [01:38<02:14, 2.59MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  44%|████▍     | 254M/577M [01:38<01:58, 2.85MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  44%|████▍     | 255M/577M [01:38<02:03, 2.74MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  42%|████▏     | 245M/577M [01:38<02:13, 2.61MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  44%|████▍     | 255M/577M [01:39<01:55, 2.92MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  43%|████▎     | 246M/577M [01:39<02:07, 2.72MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  44%|████▍     | 256M/577M [01:39<02:07, 2.64MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  44%|████▍     | 256M/577M [01:39<01:54, 2.93MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  43%|████▎     | 247M/577M [01:39<02:04, 2.77MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  45%|████▍     | 257M/577M [01:39<02:10, 2.58MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  45%|████▍     | 257M/577M [01:39<01:53, 2.96MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  43%|████▎     | 248M/577M [01:40<02:10, 2.64MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  45%|████▍     | 258M/577M [01:39<02:09, 2.59MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  45%|████▍     | 258M/577M [01:40<01:53, 2.94MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  43%|████▎     | 249M/577M [01:40<02:07, 2.69MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  45%|████▍     | 259M/577M [01:40<02:06, 2.64MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  45%|████▍     | 259M/577M [01:40<01:57, 2.83MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  43%|████▎     | 250M/577M [01:40<02:08, 2.68MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  45%|████▌     | 260M/577M [01:40<02:04, 2.68MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  45%|████▌     | 260M/577M [01:40<02:00, 2.76MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  43%|████▎     | 251M/577M [01:41<02:07, 2.68MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  45%|████▌     | 261M/577M [01:41<02:03, 2.70MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  45%|████▌     | 261M/577M [01:41<01:56, 2.84MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  45%|████▌     | 262M/577M [01:41<01:58, 2.79MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  44%|████▎     | 252M/577M [01:41<02:07, 2.68MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  45%|████▌     | 262M/577M [01:41<01:57, 2.80MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  46%|████▌     | 263M/577M [01:41<01:56, 2.83MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  44%|████▍     | 253M/577M [01:41<02:09, 2.62MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  46%|████▌     | 263M/577M [01:42<01:54, 2.88MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  46%|████▌     | 264M/577M [01:42<01:49, 3.01MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  44%|████▍     | 254M/577M [01:42<02:08, 2.64MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  46%|████▌     | 264M/577M [01:42<01:57, 2.79MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  46%|████▌     | 265M/577M [01:42<01:46, 3.08MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  44%|████▍     | 255M/577M [01:42<02:12, 2.55MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  46%|████▌     | 265M/577M [01:42<01:58, 2.77MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  46%|████▌     | 266M/577M [01:42<01:46, 3.07MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  46%|████▌     | 267M/577M [01:43<01:44, 3.11MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  44%|████▍     | 256M/577M [01:43<02:10, 2.58MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  46%|████▌     | 266M/577M [01:43<01:58, 2.76MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  46%|████▋     | 268M/577M [01:43<01:48, 3.00MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  45%|████▍     | 257M/577M [01:43<02:07, 2.63MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  46%|████▋     | 267M/577M [01:43<02:00, 2.69MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  47%|████▋     | 269M/577M [01:43<01:49, 2.95MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  45%|████▍     | 258M/577M [01:43<02:05, 2.67MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  46%|████▋     | 268M/577M [01:44<02:03, 2.62MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  47%|████▋     | 270M/577M [01:44<01:49, 2.95MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  45%|████▍     | 259M/577M [01:44<02:08, 2.59MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  47%|████▋     | 269M/577M [01:44<02:01, 2.65MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  47%|████▋     | 271M/577M [01:44<01:46, 3.01MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  45%|████▌     | 260M/577M [01:44<02:08, 2.59MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  47%|████▋     | 270M/577M [01:44<02:01, 2.66MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  47%|████▋     | 272M/577M [01:44<01:44, 3.07MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  45%|████▌     | 261M/577M [01:45<02:05, 2.64MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  47%|████▋     | 271M/577M [01:45<02:01, 2.65MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  47%|████▋     | 273M/577M [01:45<01:46, 3.00MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  45%|████▌     | 262M/577M [01:45<02:08, 2.57MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  47%|████▋     | 272M/577M [01:45<01:58, 2.70MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  47%|████▋     | 274M/577M [01:45<01:48, 2.93MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  46%|████▌     | 263M/577M [01:46<02:06, 2.60MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  48%|████▊     | 275M/577M [01:45<01:45, 3.00MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  47%|████▋     | 273M/577M [01:46<01:59, 2.66MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  48%|████▊     | 276M/577M [01:46<01:44, 3.03MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  47%|████▋     | 274M/577M [01:46<01:57, 2.69MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  46%|████▌     | 264M/577M [01:46<02:08, 2.56MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  48%|████▊     | 277M/577M [01:46<01:49, 2.89MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  46%|████▌     | 265M/577M [01:46<02:05, 2.60MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  48%|████▊     | 275M/577M [01:46<02:01, 2.61MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  48%|████▊     | 278M/577M [01:47<01:53, 2.77MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  46%|████▌     | 266M/577M [01:47<02:03, 2.64MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  48%|████▊     | 276M/577M [01:47<01:59, 2.64MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  48%|████▊     | 279M/577M [01:47<01:55, 2.72MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  48%|████▊     | 277M/577M [01:47<02:00, 2.60MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  46%|████▋     | 267M/577M [01:47<02:06, 2.56MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  48%|████▊     | 280M/577M [01:47<01:54, 2.72MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  46%|████▋     | 268M/577M [01:48<02:05, 2.59MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  48%|████▊     | 278M/577M [01:48<02:01, 2.59MB/s][A[A[A
+
+
+Downloading [flax_model.msgpack]:  48%|████▊     | 279M/577M [01:48<01:54, 2.74MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  49%|████▊     | 281M/577M [01:48<01:56, 2.67MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  47%|████▋     | 269M/577M [01:48<02:02, 2.65MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  49%|████▉     | 282M/577M [01:48<01:55, 2.69MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  49%|████▊     | 280M/577M [01:48<01:55, 2.69MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  47%|████▋     | 270M/577M [01:48<01:59, 2.69MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  49%|████▉     | 283M/577M [01:49<01:55, 2.68MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  49%|████▊     | 281M/577M [01:49<01:54, 2.71MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  47%|████▋     | 271M/577M [01:49<01:58, 2.71MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  49%|████▉     | 284M/577M [01:49<01:53, 2.72MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  49%|████▉     | 282M/577M [01:49<01:55, 2.67MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  47%|████▋     | 272M/577M [01:49<02:00, 2.66MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  49%|████▉     | 285M/577M [01:49<01:52, 2.72MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  49%|████▉     | 283M/577M [01:49<01:51, 2.78MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  47%|████▋     | 273M/577M [01:49<02:01, 2.62MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  49%|████▉     | 284M/577M [01:50<01:52, 2.72MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  50%|████▉     | 286M/577M [01:50<01:54, 2.67MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  47%|████▋     | 274M/577M [01:50<02:04, 2.54MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  50%|████▉     | 287M/577M [01:50<01:47, 2.83MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  49%|████▉     | 285M/577M [01:50<01:52, 2.71MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  48%|████▊     | 275M/577M [01:50<02:02, 2.59MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  50%|████▉     | 288M/577M [01:50<01:49, 2.77MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  50%|████▉     | 286M/577M [01:51<01:54, 2.67MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  48%|████▊     | 276M/577M [01:51<02:03, 2.55MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  50%|█████     | 289M/577M [01:51<01:53, 2.67MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  50%|████▉     | 287M/577M [01:51<01:51, 2.73MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  48%|████▊     | 277M/577M [01:51<02:00, 2.61MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  50%|████▉     | 288M/577M [01:51<01:47, 2.81MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  50%|█████     | 290M/577M [01:51<01:52, 2.69MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  48%|████▊     | 278M/577M [01:52<02:01, 2.58MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  50%|█████     | 291M/577M [01:52<01:46, 2.83MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  50%|█████     | 289M/577M [01:52<01:47, 2.81MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  48%|████▊     | 279M/577M [01:52<01:58, 2.64MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  51%|█████     | 292M/577M [01:52<01:43, 2.91MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  50%|█████     | 290M/577M [01:52<01:48, 2.77MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  49%|████▊     | 280M/577M [01:52<01:58, 2.63MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  51%|█████     | 293M/577M [01:52<01:41, 2.94MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  50%|█████     | 291M/577M [01:52<01:48, 2.78MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  49%|████▊     | 281M/577M [01:53<01:56, 2.66MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  51%|█████     | 294M/577M [01:53<01:40, 2.97MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  51%|█████     | 292M/577M [01:53<01:48, 2.76MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  49%|████▉     | 282M/577M [01:53<01:54, 2.71MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  51%|█████     | 295M/577M [01:53<01:42, 2.90MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  51%|█████     | 293M/577M [01:53<01:49, 2.73MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  49%|████▉     | 283M/577M [01:53<01:54, 2.70MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  51%|█████▏    | 296M/577M [01:53<01:44, 2.82MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  51%|█████     | 294M/577M [01:54<01:49, 2.72MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  51%|█████▏    | 297M/577M [01:54<01:44, 2.83MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  49%|████▉     | 284M/577M [01:54<01:56, 2.65MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  51%|█████     | 295M/577M [01:54<01:46, 2.77MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  52%|█████▏    | 298M/577M [01:54<01:40, 2.93MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  49%|████▉     | 285M/577M [01:54<01:55, 2.65MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  51%|█████▏    | 296M/577M [01:54<01:47, 2.75MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  52%|█████▏    | 299M/577M [01:54<01:42, 2.84MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  50%|████▉     | 286M/577M [01:55<01:52, 2.72MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  51%|█████▏    | 297M/577M [01:55<01:43, 2.84MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  52%|█████▏    | 300M/577M [01:55<01:41, 2.85MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  50%|████▉     | 287M/577M [01:55<01:49, 2.79MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  52%|█████▏    | 298M/577M [01:55<01:44, 2.80MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  52%|█████▏    | 301M/577M [01:55<01:43, 2.80MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  50%|████▉     | 288M/577M [01:55<01:49, 2.78MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  52%|█████▏    | 299M/577M [01:56<01:47, 2.72MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  50%|█████     | 289M/577M [01:56<01:45, 2.87MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  52%|█████▏    | 302M/577M [01:56<01:44, 2.77MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  52%|█████▏    | 300M/577M [01:56<01:47, 2.71MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  52%|█████▏    | 303M/577M [01:56<01:38, 2.93MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  50%|█████     | 290M/577M [01:56<01:45, 2.85MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  52%|█████▏    | 301M/577M [01:56<01:45, 2.73MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  53%|█████▎    | 304M/577M [01:56<01:42, 2.81MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  50%|█████     | 291M/577M [01:56<01:45, 2.83MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  52%|█████▏    | 302M/577M [01:57<01:47, 2.67MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  53%|█████▎    | 305M/577M [01:57<01:40, 2.85MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  51%|█████     | 292M/577M [01:57<01:48, 2.76MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  53%|█████▎    | 303M/577M [01:57<01:44, 2.74MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  53%|█████▎    | 306M/577M [01:57<01:40, 2.84MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  51%|█████     | 293M/577M [01:57<01:48, 2.76MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  53%|█████▎    | 304M/577M [01:57<01:44, 2.73MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  53%|█████▎    | 307M/577M [01:57<01:40, 2.83MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  51%|█████     | 294M/577M [01:58<01:50, 2.70MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  53%|█████▎    | 305M/577M [01:58<01:43, 2.74MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  53%|█████▎    | 308M/577M [01:58<01:43, 2.73MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  51%|█████     | 295M/577M [01:58<01:52, 2.62MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  53%|█████▎    | 306M/577M [01:58<01:39, 2.85MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  54%|█████▎    | 309M/577M [01:58<01:35, 2.95MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  51%|█████▏    | 296M/577M [01:58<01:49, 2.68MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  53%|█████▎    | 307M/577M [01:59<01:41, 2.80MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  54%|█████▎    | 310M/577M [01:58<01:38, 2.86MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  51%|█████▏    | 297M/577M [01:59<01:52, 2.61MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  53%|█████▎    | 308M/577M [01:59<01:43, 2.72MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  54%|█████▍    | 311M/577M [01:59<01:37, 2.87MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  52%|█████▏    | 298M/577M [01:59<01:47, 2.72MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  54%|█████▎    | 309M/577M [01:59<01:42, 2.75MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  54%|█████▍    | 312M/577M [01:59<01:36, 2.87MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  52%|█████▏    | 299M/577M [02:00<01:48, 2.70MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  54%|█████▎    | 310M/577M [02:00<01:41, 2.77MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  54%|█████▍    | 313M/577M [02:00<01:35, 2.91MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  52%|█████▏    | 300M/577M [02:00<01:44, 2.77MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  54%|█████▍    | 314M/577M [02:00<01:37, 2.83MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  54%|█████▍    | 311M/577M [02:00<01:44, 2.68MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  52%|█████▏    | 301M/577M [02:00<01:43, 2.79MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  55%|█████▍    | 315M/577M [02:00<01:41, 2.71MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  54%|█████▍    | 312M/577M [02:01<01:44, 2.66MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  52%|█████▏    | 302M/577M [02:01<01:45, 2.74MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  55%|█████▍    | 316M/577M [02:01<01:38, 2.79MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  54%|█████▍    | 313M/577M [02:01<01:46, 2.60MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  52%|█████▏    | 303M/577M [02:01<01:50, 2.61MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  55%|█████▍    | 317M/577M [02:01<01:38, 2.76MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  54%|█████▍    | 314M/577M [02:01<01:44, 2.64MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  53%|█████▎    | 304M/577M [02:02<01:53, 2.52MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  55%|█████▌    | 318M/577M [02:02<01:37, 2.78MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  55%|█████▍    | 315M/577M [02:02<01:43, 2.67MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  55%|█████▌    | 319M/577M [02:02<01:38, 2.75MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  53%|█████▎    | 305M/577M [02:02<01:52, 2.54MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  55%|█████▍    | 316M/577M [02:02<01:42, 2.67MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  55%|█████▌    | 320M/577M [02:02<01:38, 2.73MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  53%|█████▎    | 306M/577M [02:02<01:48, 2.61MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  55%|█████▍    | 317M/577M [02:02<01:40, 2.71MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  56%|█████▌    | 321M/577M [02:03<01:37, 2.75MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  53%|█████▎    | 307M/577M [02:03<01:50, 2.56MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  55%|█████▌    | 318M/577M [02:03<01:39, 2.74MB/s][A[A[A
+
+
+Downloading [flax_model.msgpack]:  55%|█████▌    | 319M/577M [02:03<01:34, 2.85MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  56%|█████▌    | 322M/577M [02:03<01:39, 2.69MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  53%|█████▎    | 308M/577M [02:03<01:52, 2.52MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  56%|█████▌    | 323M/577M [02:03<01:36, 2.76MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  55%|█████▌    | 320M/577M [02:04<01:38, 2.75MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  54%|█████▎    | 309M/577M [02:04<01:47, 2.62MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  56%|█████▌    | 324M/577M [02:04<01:32, 2.88MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  56%|█████▌    | 321M/577M [02:04<01:37, 2.74MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  54%|█████▎    | 310M/577M [02:04<01:50, 2.55MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  56%|█████▋    | 325M/577M [02:04<01:34, 2.81MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  56%|█████▌    | 322M/577M [02:04<01:37, 2.73MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  54%|█████▍    | 311M/577M [02:04<01:47, 2.60MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  56%|█████▋    | 326M/577M [02:05<01:32, 2.84MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  56%|█████▌    | 323M/577M [02:05<01:36, 2.76MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  54%|█████▍    | 312M/577M [02:05<01:47, 2.58MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  57%|█████▋    | 327M/577M [02:05<01:34, 2.79MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  56%|█████▌    | 324M/577M [02:05<01:33, 2.83MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  54%|█████▍    | 313M/577M [02:05<01:46, 2.60MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  57%|█████▋    | 328M/577M [02:05<01:32, 2.83MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  56%|█████▋    | 325M/577M [02:05<01:35, 2.77MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  54%|█████▍    | 314M/577M [02:06<01:44, 2.65MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  57%|█████▋    | 329M/577M [02:06<01:33, 2.79MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  56%|█████▋    | 326M/577M [02:06<01:35, 2.75MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  55%|█████▍    | 315M/577M [02:06<01:44, 2.64MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  57%|█████▋    | 330M/577M [02:06<01:29, 2.92MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  57%|█████▋    | 327M/577M [02:06<01:37, 2.69MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  55%|█████▍    | 316M/577M [02:06<01:37, 2.81MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  57%|█████▋    | 331M/577M [02:06<01:31, 2.82MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  57%|█████▋    | 328M/577M [02:07<01:40, 2.60MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  55%|█████▍    | 317M/577M [02:07<01:40, 2.72MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  57%|█████▋    | 332M/577M [02:07<01:29, 2.87MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  57%|█████▋    | 329M/577M [02:07<01:41, 2.55MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  58%|█████▊    | 333M/577M [02:07<01:28, 2.90MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  55%|█████▌    | 318M/577M [02:07<01:44, 2.61MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  58%|█████▊    | 334M/577M [02:07<01:26, 2.94MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  57%|█████▋    | 330M/577M [02:08<01:41, 2.56MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  55%|█████▌    | 319M/577M [02:08<01:44, 2.59MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  57%|█████▋    | 331M/577M [02:08<01:37, 2.65MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  58%|█████▊    | 335M/577M [02:08<01:29, 2.85MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  55%|█████▌    | 320M/577M [02:08<01:41, 2.67MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  58%|█████▊    | 336M/577M [02:08<01:27, 2.88MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  58%|█████▊    | 332M/577M [02:08<01:36, 2.67MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  56%|█████▌    | 321M/577M [02:08<01:38, 2.71MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  58%|█████▊    | 337M/577M [02:09<01:26, 2.91MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  58%|█████▊    | 333M/577M [02:09<01:37, 2.63MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  56%|█████▌    | 322M/577M [02:09<01:37, 2.74MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  59%|█████▊    | 338M/577M [02:09<01:24, 2.96MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  58%|█████▊    | 334M/577M [02:09<01:34, 2.71MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  56%|█████▌    | 323M/577M [02:09<01:36, 2.77MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  59%|█████▊    | 339M/577M [02:09<01:26, 2.89MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  58%|█████▊    | 335M/577M [02:09<01:34, 2.68MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  56%|█████▌    | 324M/577M [02:10<01:38, 2.70MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  59%|█████▉    | 340M/577M [02:10<01:27, 2.83MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  58%|█████▊    | 336M/577M [02:10<01:33, 2.70MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  56%|█████▋    | 325M/577M [02:10<01:38, 2.68MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  59%|█████▉    | 341M/577M [02:10<01:30, 2.74MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  58%|█████▊    | 337M/577M [02:10<01:29, 2.81MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  56%|█████▋    | 326M/577M [02:10<01:34, 2.79MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  59%|█████▊    | 338M/577M [02:11<01:28, 2.84MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  59%|█████▉    | 342M/577M [02:10<01:32, 2.67MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  57%|█████▋    | 327M/577M [02:11<01:37, 2.69MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  59%|█████▊    | 339M/577M [02:11<01:30, 2.76MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  59%|█████▉    | 343M/577M [02:11<01:31, 2.69MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  57%|█████▋    | 328M/577M [02:11<01:40, 2.61MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  59%|█████▉    | 340M/577M [02:11<01:29, 2.78MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  60%|█████▉    | 344M/577M [02:11<01:32, 2.66MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  57%|█████▋    | 329M/577M [02:11<01:37, 2.66MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  59%|█████▉    | 341M/577M [02:12<01:31, 2.71MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  60%|█████▉    | 345M/577M [02:12<01:30, 2.70MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  57%|█████▋    | 330M/577M [02:12<01:34, 2.74MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  59%|█████▉    | 342M/577M [02:12<01:24, 2.93MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  60%|█████▉    | 346M/577M [02:12<01:30, 2.68MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  57%|█████▋    | 331M/577M [02:12<01:32, 2.78MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  60%|██████    | 347M/577M [02:12<01:25, 2.84MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  59%|█████▉    | 343M/577M [02:12<01:29, 2.75MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  58%|█████▊    | 332M/577M [02:13<01:35, 2.70MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  60%|██████    | 348M/577M [02:13<01:24, 2.85MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  60%|█████▉    | 344M/577M [02:13<01:30, 2.69MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  58%|█████▊    | 333M/577M [02:13<01:36, 2.66MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  60%|██████    | 349M/577M [02:13<01:24, 2.85MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  60%|█████▉    | 345M/577M [02:13<01:26, 2.81MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  58%|█████▊    | 334M/577M [02:13<01:37, 2.61MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  60%|█████▉    | 346M/577M [02:14<01:24, 2.87MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  61%|██████    | 350M/577M [02:13<01:24, 2.82MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  60%|██████    | 347M/577M [02:14<01:20, 3.00MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  58%|█████▊    | 335M/577M [02:14<01:40, 2.54MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  61%|██████    | 351M/577M [02:14<01:22, 2.89MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  60%|██████    | 348M/577M [02:14<01:22, 2.91MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  61%|██████    | 352M/577M [02:14<01:21, 2.90MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  58%|█████▊    | 336M/577M [02:14<01:38, 2.57MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  60%|██████    | 349M/577M [02:15<01:19, 3.00MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  61%|██████    | 353M/577M [02:15<01:21, 2.89MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  58%|█████▊    | 337M/577M [02:15<01:39, 2.54MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  61%|██████    | 350M/577M [02:15<01:22, 2.89MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  61%|██████▏   | 354M/577M [02:15<01:21, 2.86MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  59%|█████▊    | 338M/577M [02:15<01:38, 2.56MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  61%|██████    | 351M/577M [02:15<01:24, 2.80MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  61%|██████▏   | 355M/577M [02:15<01:21, 2.87MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  59%|█████▊    | 339M/577M [02:16<01:39, 2.51MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  61%|██████    | 352M/577M [02:16<01:19, 2.96MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  62%|██████▏   | 356M/577M [02:16<01:21, 2.85MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  59%|█████▉    | 340M/577M [02:16<01:38, 2.54MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  62%|██████▏   | 357M/577M [02:16<01:15, 3.05MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  61%|██████    | 353M/577M [02:16<01:21, 2.88MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  59%|█████▉    | 341M/577M [02:16<01:36, 2.56MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  61%|██████▏   | 354M/577M [02:16<01:18, 3.00MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  62%|██████▏   | 358M/577M [02:16<01:16, 3.00MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  59%|█████▉    | 342M/577M [02:17<01:32, 2.66MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  62%|██████▏   | 359M/577M [02:17<01:16, 2.98MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  62%|██████▏   | 355M/577M [02:17<01:19, 2.92MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  59%|█████▉    | 343M/577M [02:17<01:30, 2.70MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  62%|██████▏   | 356M/577M [02:17<01:17, 2.98MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  62%|██████▏   | 360M/577M [02:17<01:18, 2.91MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  60%|█████▉    | 344M/577M [02:17<01:27, 2.80MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  62%|██████▏   | 357M/577M [02:17<01:18, 2.94MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  63%|██████▎   | 361M/577M [02:17<01:18, 2.90MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  60%|█████▉    | 345M/577M [02:18<01:27, 2.79MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  62%|██████▏   | 358M/577M [02:18<01:19, 2.89MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  63%|██████▎   | 362M/577M [02:18<01:20, 2.81MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  62%|██████▏   | 359M/577M [02:18<01:18, 2.90MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  60%|█████▉    | 346M/577M [02:18<01:28, 2.74MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  63%|██████▎   | 363M/577M [02:18<01:21, 2.76MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  60%|██████    | 347M/577M [02:19<01:27, 2.76MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  62%|██████▏   | 360M/577M [02:19<01:20, 2.84MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  63%|██████▎   | 364M/577M [02:19<01:23, 2.69MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  63%|██████▎   | 361M/577M [02:19<01:19, 2.87MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  60%|██████    | 348M/577M [02:19<01:29, 2.70MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  63%|██████▎   | 365M/577M [02:19<01:21, 2.72MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  63%|██████▎   | 362M/577M [02:19<01:21, 2.77MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  60%|██████    | 349M/577M [02:19<01:27, 2.72MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  63%|██████▎   | 366M/577M [02:19<01:19, 2.78MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  63%|██████▎   | 363M/577M [02:20<01:19, 2.81MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  61%|██████    | 350M/577M [02:20<01:28, 2.68MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  64%|██████▎   | 367M/577M [02:20<01:18, 2.81MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  63%|██████▎   | 364M/577M [02:20<01:17, 2.88MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  61%|██████    | 351M/577M [02:20<01:30, 2.63MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  64%|██████▎   | 368M/577M [02:20<01:19, 2.77MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  63%|██████▎   | 365M/577M [02:20<01:15, 2.94MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  61%|██████    | 352M/577M [02:21<01:28, 2.67MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  64%|██████▍   | 369M/577M [02:20<01:18, 2.78MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  63%|██████▎   | 366M/577M [02:21<01:15, 2.94MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  64%|██████▍   | 370M/577M [02:21<01:17, 2.81MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  61%|██████    | 353M/577M [02:21<01:28, 2.64MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  64%|██████▎   | 367M/577M [02:21<01:15, 2.91MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  64%|██████▍   | 371M/577M [02:21<01:17, 2.80MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  61%|██████▏   | 354M/577M [02:21<01:28, 2.64MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  64%|██████▍   | 368M/577M [02:22<01:17, 2.82MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  64%|██████▍   | 372M/577M [02:22<01:17, 2.79MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  62%|██████▏   | 355M/577M [02:22<01:29, 2.61MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  64%|██████▍   | 369M/577M [02:22<01:17, 2.80MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  65%|██████▍   | 373M/577M [02:22<01:17, 2.76MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  62%|██████▏   | 356M/577M [02:22<01:28, 2.62MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  64%|██████▍   | 370M/577M [02:22<01:16, 2.83MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  65%|██████▍   | 374M/577M [02:22<01:16, 2.80MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  62%|██████▏   | 357M/577M [02:23<01:29, 2.59MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  64%|██████▍   | 371M/577M [02:23<01:16, 2.83MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  65%|██████▍   | 375M/577M [02:23<01:11, 2.96MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  62%|██████▏   | 358M/577M [02:23<01:29, 2.56MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  64%|██████▍   | 372M/577M [02:23<01:18, 2.74MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  65%|██████▌   | 376M/577M [02:23<01:14, 2.83MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  62%|██████▏   | 359M/577M [02:23<01:29, 2.56MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  65%|██████▍   | 373M/577M [02:23<01:20, 2.65MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  65%|██████▌   | 377M/577M [02:23<01:13, 2.86MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  62%|██████▏   | 360M/577M [02:24<01:28, 2.58MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  65%|██████▍   | 374M/577M [02:24<01:19, 2.69MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  65%|██████▌   | 378M/577M [02:24<01:14, 2.82MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  66%|██████▌   | 379M/577M [02:24<01:10, 2.96MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  65%|██████▍   | 375M/577M [02:24<01:19, 2.65MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  63%|██████▎   | 361M/577M [02:24<01:29, 2.52MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  65%|██████▌   | 376M/577M [02:25<01:16, 2.75MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  66%|██████▌   | 380M/577M [02:24<01:12, 2.86MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  63%|██████▎   | 362M/577M [02:25<01:30, 2.50MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  66%|██████▌   | 381M/577M [02:25<01:10, 2.92MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  65%|██████▌   | 377M/577M [02:25<01:16, 2.74MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  63%|██████▎   | 363M/577M [02:25<01:29, 2.52MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  66%|██████▌   | 382M/577M [02:25<01:12, 2.82MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  66%|██████▌   | 378M/577M [02:25<01:18, 2.67MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  63%|██████▎   | 364M/577M [02:25<01:25, 2.62MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  66%|██████▋   | 383M/577M [02:26<01:13, 2.77MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  66%|██████▌   | 379M/577M [02:26<01:17, 2.68MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  63%|██████▎   | 365M/577M [02:26<01:22, 2.70MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  66%|██████▌   | 380M/577M [02:26<01:15, 2.75MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  66%|██████▋   | 384M/577M [02:26<01:16, 2.66MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  63%|██████▎   | 366M/577M [02:26<01:20, 2.74MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  66%|██████▌   | 381M/577M [02:27<01:15, 2.72MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  67%|██████▋   | 385M/577M [02:26<01:14, 2.70MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  64%|██████▎   | 367M/577M [02:27<01:24, 2.62MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  66%|██████▌   | 382M/577M [02:27<01:16, 2.66MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  67%|██████▋   | 386M/577M [02:27<01:16, 2.63MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  64%|██████▍   | 368M/577M [02:27<01:22, 2.65MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  66%|██████▋   | 383M/577M [02:27<01:14, 2.74MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  67%|██████▋   | 387M/577M [02:27<01:16, 2.60MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  64%|██████▍   | 369M/577M [02:27<01:20, 2.70MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  67%|██████▋   | 384M/577M [02:28<01:16, 2.66MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  67%|██████▋   | 388M/577M [02:28<01:15, 2.62MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  64%|██████▍   | 370M/577M [02:28<01:20, 2.69MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  67%|██████▋   | 385M/577M [02:28<01:17, 2.61MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  67%|██████▋   | 389M/577M [02:28<01:14, 2.65MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  64%|██████▍   | 371M/577M [02:28<01:22, 2.62MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  68%|██████▊   | 390M/577M [02:28<01:13, 2.68MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  67%|██████▋   | 386M/577M [02:29<01:16, 2.62MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  64%|██████▍   | 372M/577M [02:29<01:22, 2.60MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  67%|██████▋   | 387M/577M [02:29<01:15, 2.65MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  68%|██████▊   | 391M/577M [02:29<01:12, 2.68MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  65%|██████▍   | 373M/577M [02:29<01:21, 2.62MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  68%|██████▊   | 392M/577M [02:29<01:10, 2.74MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  67%|██████▋   | 388M/577M [02:29<01:13, 2.70MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  65%|██████▍   | 374M/577M [02:29<01:21, 2.60MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  68%|██████▊   | 393M/577M [02:30<01:11, 2.71MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  67%|██████▋   | 389M/577M [02:30<01:15, 2.61MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  65%|██████▍   | 375M/577M [02:30<01:23, 2.55MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  68%|██████▊   | 394M/577M [02:30<01:09, 2.76MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  68%|██████▊   | 390M/577M [02:30<01:13, 2.67MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  65%|██████▌   | 376M/577M [02:30<01:21, 2.58MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  68%|██████▊   | 395M/577M [02:30<01:09, 2.74MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  68%|██████▊   | 391M/577M [02:30<01:12, 2.71MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  65%|██████▌   | 377M/577M [02:31<01:18, 2.66MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  69%|██████▊   | 396M/577M [02:31<01:09, 2.73MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  68%|██████▊   | 392M/577M [02:31<01:10, 2.75MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  65%|██████▌   | 378M/577M [02:31<01:23, 2.50MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  69%|██████▊   | 397M/577M [02:31<01:10, 2.68MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  68%|██████▊   | 393M/577M [02:31<01:10, 2.73MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  66%|██████▌   | 379M/577M [02:31<01:20, 2.57MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  69%|██████▉   | 398M/577M [02:31<01:09, 2.70MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  68%|██████▊   | 394M/577M [02:32<01:10, 2.71MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  66%|██████▌   | 380M/577M [02:32<01:21, 2.53MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  69%|██████▉   | 399M/577M [02:32<01:06, 2.80MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  68%|██████▊   | 395M/577M [02:32<01:09, 2.75MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  66%|██████▌   | 381M/577M [02:32<01:16, 2.68MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  69%|██████▉   | 400M/577M [02:32<01:07, 2.74MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  69%|██████▊   | 396M/577M [02:32<01:08, 2.79MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  66%|██████▌   | 382M/577M [02:33<01:18, 2.61MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  69%|██████▉   | 397M/577M [02:33<01:04, 2.93MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  69%|██████▉   | 401M/577M [02:33<01:05, 2.82MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  69%|██████▉   | 398M/577M [02:33<01:04, 2.89MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  70%|██████▉   | 402M/577M [02:33<01:04, 2.84MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  66%|██████▋   | 383M/577M [02:33<01:19, 2.57MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  69%|██████▉   | 399M/577M [02:33<01:05, 2.86MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  67%|██████▋   | 384M/577M [02:33<01:16, 2.65MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  70%|██████▉   | 403M/577M [02:33<01:06, 2.77MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  69%|██████▉   | 400M/577M [02:34<01:06, 2.79MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  70%|██████▉   | 404M/577M [02:34<01:05, 2.79MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  67%|██████▋   | 385M/577M [02:34<01:17, 2.59MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  69%|██████▉   | 401M/577M [02:34<01:04, 2.85MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  70%|███████   | 405M/577M [02:34<01:04, 2.80MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  67%|██████▋   | 386M/577M [02:34<01:16, 2.63MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  70%|███████   | 406M/577M [02:34<01:00, 2.98MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  70%|██████▉   | 402M/577M [02:35<01:06, 2.76MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  67%|██████▋   | 387M/577M [02:35<01:12, 2.74MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  70%|███████   | 407M/577M [02:35<01:00, 2.97MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  70%|██████▉   | 403M/577M [02:35<01:07, 2.72MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  67%|██████▋   | 388M/577M [02:35<01:12, 2.72MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  71%|███████   | 408M/577M [02:35<00:59, 2.97MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  70%|███████   | 404M/577M [02:35<01:05, 2.78MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  67%|██████▋   | 389M/577M [02:35<01:11, 2.75MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  71%|███████   | 409M/577M [02:36<01:01, 2.85MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  68%|██████▊   | 390M/577M [02:36<01:07, 2.90MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  70%|███████   | 405M/577M [02:36<01:05, 2.75MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  71%|███████   | 410M/577M [02:36<01:03, 2.76MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  70%|███████   | 406M/577M [02:36<01:02, 2.89MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  68%|██████▊   | 391M/577M [02:36<01:08, 2.86MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  71%|███████   | 411M/577M [02:36<00:59, 2.94MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  71%|███████   | 407M/577M [02:36<01:03, 2.79MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  68%|██████▊   | 392M/577M [02:36<01:10, 2.77MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  71%|███████▏  | 412M/577M [02:37<01:01, 2.80MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  68%|██████▊   | 393M/577M [02:37<01:07, 2.85MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  71%|███████   | 408M/577M [02:37<01:04, 2.76MB/s][A[A[A
+
+
+Downloading [flax_model.msgpack]:  71%|███████   | 409M/577M [02:37<00:58, 3.01MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  72%|███████▏  | 413M/577M [02:37<01:01, 2.80MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  68%|██████▊   | 394M/577M [02:37<01:09, 2.76MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  71%|███████   | 410M/577M [02:37<00:58, 3.01MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  72%|███████▏  | 414M/577M [02:37<01:02, 2.73MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  68%|██████▊   | 395M/577M [02:38<01:09, 2.74MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  71%|███████   | 411M/577M [02:38<00:56, 3.11MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  72%|███████▏  | 415M/577M [02:38<01:03, 2.69MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  69%|██████▊   | 396M/577M [02:38<01:10, 2.71MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  71%|███████▏  | 412M/577M [02:38<00:58, 2.96MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  72%|███████▏  | 416M/577M [02:38<00:59, 2.83MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  69%|██████▉   | 397M/577M [02:38<01:11, 2.65MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  72%|███████▏  | 413M/577M [02:39<00:58, 2.96MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  72%|███████▏  | 417M/577M [02:39<00:59, 2.83MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  69%|██████▉   | 398M/577M [02:39<01:10, 2.67MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  72%|███████▏  | 414M/577M [02:39<00:55, 3.09MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  72%|███████▏  | 418M/577M [02:39<00:59, 2.81MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  69%|██████▉   | 399M/577M [02:39<01:09, 2.68MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  72%|███████▏  | 415M/577M [02:39<00:57, 2.97MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  73%|███████▎  | 419M/577M [02:39<01:01, 2.72MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  69%|██████▉   | 400M/577M [02:40<01:08, 2.73MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  72%|███████▏  | 416M/577M [02:40<00:59, 2.85MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  73%|███████▎  | 420M/577M [02:40<01:02, 2.64MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  72%|███████▏  | 417M/577M [02:40<00:59, 2.83MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  69%|██████▉   | 401M/577M [02:40<01:10, 2.61MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  73%|███████▎  | 421M/577M [02:40<00:58, 2.81MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  70%|██████▉   | 402M/577M [02:40<01:05, 2.79MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  72%|███████▏  | 418M/577M [02:40<01:00, 2.76MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  73%|███████▎  | 422M/577M [02:40<00:59, 2.75MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  70%|██████▉   | 403M/577M [02:41<01:05, 2.79MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  73%|███████▎  | 419M/577M [02:41<00:57, 2.86MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  73%|███████▎  | 423M/577M [02:41<00:57, 2.80MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  70%|██████▉   | 404M/577M [02:41<01:03, 2.87MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  73%|███████▎  | 420M/577M [02:41<00:56, 2.91MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  73%|███████▎  | 424M/577M [02:41<00:58, 2.77MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  70%|███████   | 405M/577M [02:41<01:03, 2.82MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  73%|███████▎  | 421M/577M [02:41<00:56, 2.88MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  74%|███████▎  | 425M/577M [02:42<00:58, 2.72MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  70%|███████   | 406M/577M [02:42<01:05, 2.76MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  73%|███████▎  | 422M/577M [02:42<00:58, 2.79MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  74%|███████▍  | 426M/577M [02:42<00:59, 2.65MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  73%|███████▎  | 423M/577M [02:42<00:56, 2.87MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  71%|███████   | 407M/577M [02:42<01:04, 2.75MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  74%|███████▍  | 427M/577M [02:42<00:56, 2.78MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  73%|███████▎  | 424M/577M [02:43<00:54, 2.95MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  71%|███████   | 408M/577M [02:43<01:07, 2.61MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  74%|███████▍  | 428M/577M [02:43<00:57, 2.74MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  74%|███████▎  | 425M/577M [02:43<00:54, 2.93MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  71%|███████   | 409M/577M [02:43<01:06, 2.64MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  74%|███████▍  | 429M/577M [02:43<00:55, 2.80MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  74%|███████▍  | 426M/577M [02:43<00:55, 2.88MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  71%|███████   | 410M/577M [02:43<01:06, 2.65MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  74%|███████▍  | 430M/577M [02:43<00:54, 2.81MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  74%|███████▍  | 427M/577M [02:44<00:55, 2.83MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  71%|███████   | 411M/577M [02:44<01:04, 2.70MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  75%|███████▍  | 431M/577M [02:44<00:55, 2.75MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  74%|███████▍  | 428M/577M [02:44<00:56, 2.75MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  71%|███████▏  | 412M/577M [02:44<01:05, 2.64MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  75%|███████▍  | 432M/577M [02:44<00:52, 2.90MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  74%|███████▍  | 429M/577M [02:44<00:56, 2.76MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  72%|███████▏  | 413M/577M [02:45<01:06, 2.61MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  75%|███████▍  | 433M/577M [02:45<00:53, 2.84MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  75%|███████▍  | 430M/577M [02:45<00:56, 2.74MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  75%|███████▌  | 434M/577M [02:45<00:52, 2.88MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  72%|███████▏  | 414M/577M [02:45<01:07, 2.54MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  75%|███████▍  | 431M/577M [02:45<00:56, 2.73MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  72%|███████▏  | 415M/577M [02:45<01:05, 2.61MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  75%|███████▌  | 435M/577M [02:45<00:54, 2.76MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  75%|███████▍  | 432M/577M [02:46<00:55, 2.74MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  72%|███████▏  | 416M/577M [02:46<01:04, 2.62MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  75%|███████▌  | 436M/577M [02:46<00:55, 2.68MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  75%|███████▌  | 433M/577M [02:46<00:54, 2.77MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  72%|███████▏  | 417M/577M [02:46<01:03, 2.66MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  76%|███████▌  | 437M/577M [02:46<00:53, 2.74MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  75%|███████▌  | 434M/577M [02:46<00:53, 2.82MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  72%|███████▏  | 418M/577M [02:47<01:01, 2.73MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  76%|███████▌  | 438M/577M [02:46<00:52, 2.78MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  75%|███████▌  | 435M/577M [02:47<00:53, 2.77MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  73%|███████▎  | 419M/577M [02:47<01:00, 2.75MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  76%|███████▌  | 439M/577M [02:47<00:51, 2.82MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  76%|███████▌  | 436M/577M [02:47<00:54, 2.73MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  73%|███████▎  | 420M/577M [02:47<00:59, 2.79MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  76%|███████▌  | 440M/577M [02:47<00:53, 2.70MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  76%|███████▌  | 437M/577M [02:47<00:52, 2.80MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  73%|███████▎  | 421M/577M [02:48<00:59, 2.75MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  76%|███████▋  | 441M/577M [02:48<00:53, 2.69MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  76%|███████▌  | 438M/577M [02:48<00:52, 2.76MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  77%|███████▋  | 442M/577M [02:48<00:50, 2.80MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  73%|███████▎  | 422M/577M [02:48<01:02, 2.61MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  76%|███████▌  | 439M/577M [02:48<00:52, 2.74MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  77%|███████▋  | 443M/577M [02:48<00:49, 2.83MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  73%|███████▎  | 423M/577M [02:49<01:01, 2.64MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  76%|███████▌  | 440M/577M [02:49<00:52, 2.76MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  77%|███████▋  | 444M/577M [02:49<00:51, 2.74MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  73%|███████▎  | 424M/577M [02:49<00:59, 2.69MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  76%|███████▋  | 441M/577M [02:49<00:52, 2.73MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  77%|███████▋  | 445M/577M [02:49<00:51, 2.72MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  74%|███████▎  | 425M/577M [02:49<01:00, 2.63MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  77%|███████▋  | 442M/577M [02:49<00:51, 2.77MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  77%|███████▋  | 446M/577M [02:49<00:48, 2.87MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  74%|███████▍  | 426M/577M [02:50<01:01, 2.58MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  77%|███████▋  | 443M/577M [02:50<00:51, 2.73MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  77%|███████▋  | 447M/577M [02:50<00:48, 2.80MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  74%|███████▍  | 427M/577M [02:50<01:01, 2.57MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  77%|███████▋  | 444M/577M [02:50<00:52, 2.68MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  78%|███████▊  | 448M/577M [02:50<00:45, 2.97MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  77%|███████▋  | 445M/577M [02:51<00:51, 2.71MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  74%|███████▍  | 428M/577M [02:51<00:59, 2.62MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  78%|███████▊  | 449M/577M [02:51<00:45, 2.98MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  74%|███████▍  | 429M/577M [02:51<00:57, 2.72MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  77%|███████▋  | 446M/577M [02:51<00:49, 2.75MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  78%|███████▊  | 450M/577M [02:51<00:45, 2.92MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  77%|███████▋  | 447M/577M [02:51<00:46, 2.91MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  74%|███████▍  | 430M/577M [02:51<01:00, 2.57MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  78%|███████▊  | 451M/577M [02:51<00:45, 2.93MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  78%|███████▊  | 448M/577M [02:52<00:44, 3.03MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  78%|███████▊  | 452M/577M [02:52<00:45, 2.90MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  75%|███████▍  | 431M/577M [02:52<00:59, 2.58MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  78%|███████▊  | 449M/577M [02:52<00:46, 2.88MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  78%|███████▊  | 453M/577M [02:52<00:44, 2.91MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  75%|███████▍  | 432M/577M [02:52<00:57, 2.66MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  78%|███████▊  | 450M/577M [02:52<00:46, 2.84MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  79%|███████▊  | 454M/577M [02:52<00:43, 2.96MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  75%|███████▌  | 433M/577M [02:53<00:57, 2.61MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  78%|███████▊  | 451M/577M [02:53<00:45, 2.91MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  79%|███████▉  | 455M/577M [02:53<00:42, 3.01MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  75%|███████▌  | 434M/577M [02:53<00:57, 2.60MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  78%|███████▊  | 452M/577M [02:53<00:43, 3.03MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  79%|███████▉  | 456M/577M [02:53<00:43, 2.96MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  75%|███████▌  | 435M/577M [02:53<00:56, 2.62MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  78%|███████▊  | 453M/577M [02:53<00:45, 2.88MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  79%|███████▉  | 457M/577M [02:53<00:45, 2.77MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  76%|███████▌  | 436M/577M [02:54<00:55, 2.67MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  79%|███████▊  | 454M/577M [02:54<00:46, 2.80MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  79%|███████▉  | 458M/577M [02:54<00:46, 2.69MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  76%|███████▌  | 437M/577M [02:54<00:54, 2.69MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  79%|███████▉  | 455M/577M [02:54<00:44, 2.89MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  76%|███████▌  | 438M/577M [02:54<00:49, 2.96MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  79%|███████▉  | 459M/577M [02:54<00:47, 2.64MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  79%|███████▉  | 456M/577M [02:55<00:45, 2.80MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  76%|███████▌  | 439M/577M [02:55<00:50, 2.85MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  80%|███████▉  | 460M/577M [02:55<00:46, 2.64MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  79%|███████▉  | 457M/577M [02:55<00:45, 2.77MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  76%|███████▌  | 440M/577M [02:55<00:52, 2.77MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  80%|███████▉  | 461M/577M [02:55<00:46, 2.65MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  79%|███████▉  | 458M/577M [02:55<00:43, 2.87MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  76%|███████▋  | 441M/577M [02:56<00:48, 2.93MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  80%|████████  | 462M/577M [02:55<00:45, 2.67MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  80%|███████▉  | 459M/577M [02:56<00:42, 2.89MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  77%|███████▋  | 442M/577M [02:56<00:47, 3.01MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  80%|████████  | 463M/577M [02:56<00:45, 2.63MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  80%|███████▉  | 460M/577M [02:56<00:43, 2.83MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  77%|███████▋  | 443M/577M [02:56<00:49, 2.87MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  80%|████████  | 464M/577M [02:56<00:42, 2.81MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  80%|███████▉  | 461M/577M [02:56<00:43, 2.80MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  77%|███████▋  | 444M/577M [02:57<00:51, 2.73MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  81%|████████  | 465M/577M [02:57<00:42, 2.80MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  80%|████████  | 462M/577M [02:57<00:42, 2.83MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  81%|████████  | 466M/577M [02:57<00:41, 2.85MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  77%|███████▋  | 445M/577M [02:57<00:51, 2.70MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  80%|████████  | 463M/577M [02:57<00:41, 2.88MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  81%|████████  | 467M/577M [02:57<00:40, 2.90MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  80%|████████  | 464M/577M [02:57<00:41, 2.89MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  77%|███████▋  | 446M/577M [02:58<00:52, 2.63MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  81%|████████  | 468M/577M [02:58<00:39, 2.87MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  81%|████████  | 465M/577M [02:58<00:41, 2.81MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  77%|███████▋  | 447M/577M [02:58<00:51, 2.65MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  81%|████████  | 469M/577M [02:58<00:39, 2.90MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  81%|████████  | 466M/577M [02:58<00:43, 2.68MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  78%|███████▊  | 448M/577M [02:58<00:51, 2.61MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  81%|████████▏ | 470M/577M [02:58<00:37, 3.01MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  78%|███████▊  | 449M/577M [02:59<00:50, 2.66MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  81%|████████  | 467M/577M [02:59<00:42, 2.70MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  82%|████████▏ | 471M/577M [02:59<00:38, 2.91MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  81%|████████  | 468M/577M [02:59<00:42, 2.69MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  78%|███████▊  | 450M/577M [02:59<00:52, 2.56MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  82%|████████▏ | 472M/577M [02:59<00:38, 2.85MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  78%|███████▊  | 451M/577M [02:59<00:49, 2.65MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  81%|████████▏ | 469M/577M [03:00<00:43, 2.63MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  82%|████████▏ | 473M/577M [02:59<00:39, 2.78MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  81%|████████▏ | 470M/577M [03:00<00:40, 2.80MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  78%|███████▊  | 452M/577M [03:00<00:50, 2.60MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  82%|████████▏ | 474M/577M [03:00<00:39, 2.76MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  82%|████████▏ | 471M/577M [03:00<00:39, 2.85MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  78%|███████▊  | 453M/577M [03:00<00:49, 2.61MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  82%|████████▏ | 475M/577M [03:00<00:39, 2.72MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  82%|████████▏ | 472M/577M [03:01<00:40, 2.74MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  79%|███████▊  | 454M/577M [03:01<00:47, 2.73MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  82%|████████▏ | 476M/577M [03:01<00:39, 2.70MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  82%|████████▏ | 473M/577M [03:01<00:39, 2.76MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  79%|███████▉  | 455M/577M [03:01<00:48, 2.64MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  83%|████████▎ | 477M/577M [03:01<00:40, 2.59MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  82%|████████▏ | 474M/577M [03:01<00:40, 2.69MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  79%|███████▉  | 456M/577M [03:01<00:45, 2.77MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  83%|████████▎ | 478M/577M [03:02<00:40, 2.59MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  82%|████████▏ | 475M/577M [03:02<00:37, 2.88MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  79%|███████▉  | 457M/577M [03:02<00:47, 2.63MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  82%|████████▏ | 476M/577M [03:02<00:36, 2.94MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  83%|████████▎ | 479M/577M [03:02<00:40, 2.55MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  79%|███████▉  | 458M/577M [03:02<00:46, 2.67MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  83%|████████▎ | 480M/577M [03:02<00:37, 2.75MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  83%|████████▎ | 477M/577M [03:02<00:37, 2.83MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  80%|███████▉  | 459M/577M [03:03<00:46, 2.67MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  83%|████████▎ | 481M/577M [03:03<00:36, 2.76MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  83%|████████▎ | 478M/577M [03:03<00:36, 2.83MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  80%|███████▉  | 460M/577M [03:03<00:46, 2.65MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  83%|████████▎ | 482M/577M [03:03<00:35, 2.84MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  83%|████████▎ | 479M/577M [03:03<00:35, 2.86MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  80%|███████▉  | 461M/577M [03:03<00:45, 2.65MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  84%|████████▎ | 483M/577M [03:03<00:34, 2.89MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  83%|████████▎ | 480M/577M [03:03<00:34, 2.92MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  84%|████████▍ | 484M/577M [03:04<00:34, 2.83MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  80%|████████  | 462M/577M [03:04<00:46, 2.62MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  83%|████████▎ | 481M/577M [03:04<00:35, 2.80MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  84%|████████▍ | 485M/577M [03:04<00:32, 2.95MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  84%|████████▎ | 482M/577M [03:04<00:35, 2.79MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  80%|████████  | 463M/577M [03:04<00:46, 2.57MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  84%|████████▍ | 486M/577M [03:04<00:31, 3.02MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  84%|████████▎ | 483M/577M [03:05<00:34, 2.85MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  80%|████████  | 464M/577M [03:05<00:44, 2.67MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  84%|████████▍ | 487M/577M [03:05<00:32, 2.93MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  84%|████████▍ | 484M/577M [03:05<00:34, 2.83MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  81%|████████  | 465M/577M [03:05<00:44, 2.67MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  85%|████████▍ | 488M/577M [03:05<00:33, 2.82MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  84%|████████▍ | 485M/577M [03:05<00:34, 2.80MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  81%|████████  | 466M/577M [03:05<00:44, 2.62MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  85%|████████▍ | 489M/577M [03:06<00:32, 2.81MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  84%|████████▍ | 486M/577M [03:06<00:34, 2.78MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  81%|████████  | 467M/577M [03:06<00:42, 2.71MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  85%|████████▍ | 490M/577M [03:06<00:33, 2.76MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  84%|████████▍ | 487M/577M [03:06<00:32, 2.87MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  81%|████████  | 468M/577M [03:06<00:42, 2.69MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  85%|████████▌ | 491M/577M [03:06<00:32, 2.81MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  85%|████████▍ | 488M/577M [03:06<00:32, 2.89MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  81%|████████▏ | 469M/577M [03:07<00:43, 2.62MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  85%|████████▌ | 492M/577M [03:07<00:31, 2.85MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  85%|████████▍ | 489M/577M [03:07<00:32, 2.84MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  81%|████████▏ | 470M/577M [03:07<00:41, 2.70MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  85%|████████▌ | 493M/577M [03:07<00:31, 2.83MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  85%|████████▍ | 490M/577M [03:07<00:31, 2.89MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  82%|████████▏ | 471M/577M [03:07<00:41, 2.65MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  86%|████████▌ | 494M/577M [03:07<00:31, 2.82MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  85%|████████▌ | 491M/577M [03:08<00:31, 2.84MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  82%|████████▏ | 472M/577M [03:08<00:41, 2.64MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  86%|████████▌ | 495M/577M [03:08<00:30, 2.80MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  85%|████████▌ | 492M/577M [03:08<00:30, 2.92MB/s][A[A[A
+
+
+Downloading [flax_model.msgpack]:  85%|████████▌ | 493M/577M [03:08<00:27, 3.18MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  82%|████████▏ | 473M/577M [03:08<00:41, 2.64MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  86%|████████▌ | 496M/577M [03:08<00:30, 2.79MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  86%|████████▌ | 494M/577M [03:09<00:28, 3.06MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  82%|████████▏ | 474M/577M [03:09<00:41, 2.61MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  86%|████████▌ | 497M/577M [03:09<00:30, 2.75MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  86%|████████▌ | 495M/577M [03:09<00:27, 3.15MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  82%|████████▏ | 475M/577M [03:09<00:40, 2.64MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  86%|████████▌ | 498M/577M [03:09<00:29, 2.78MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  86%|████████▌ | 496M/577M [03:09<00:28, 3.01MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  82%|████████▏ | 476M/577M [03:09<00:39, 2.67MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  86%|████████▋ | 499M/577M [03:09<00:29, 2.84MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  86%|████████▌ | 497M/577M [03:10<00:27, 3.09MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  87%|████████▋ | 500M/577M [03:10<00:28, 2.82MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  83%|████████▎ | 477M/577M [03:10<00:39, 2.65MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  86%|████████▋ | 498M/577M [03:10<00:28, 2.90MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  83%|████████▎ | 478M/577M [03:10<00:37, 2.78MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  87%|████████▋ | 501M/577M [03:10<00:28, 2.78MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  86%|████████▋ | 499M/577M [03:10<00:30, 2.72MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  83%|████████▎ | 479M/577M [03:10<00:37, 2.75MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  87%|████████▋ | 502M/577M [03:10<00:28, 2.81MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  87%|████████▋ | 500M/577M [03:11<00:29, 2.70MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  83%|████████▎ | 480M/577M [03:11<00:38, 2.62MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  87%|████████▋ | 503M/577M [03:11<00:29, 2.69MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  87%|████████▋ | 501M/577M [03:11<00:29, 2.70MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  83%|████████▎ | 481M/577M [03:11<00:38, 2.65MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  87%|████████▋ | 504M/577M [03:11<00:28, 2.70MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  87%|████████▋ | 502M/577M [03:12<00:30, 2.61MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  87%|████████▋ | 505M/577M [03:12<00:28, 2.69MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  84%|████████▎ | 482M/577M [03:12<00:38, 2.62MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  87%|████████▋ | 503M/577M [03:12<00:29, 2.63MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  84%|████████▎ | 483M/577M [03:12<00:36, 2.70MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  88%|████████▊ | 506M/577M [03:12<00:28, 2.62MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  87%|████████▋ | 504M/577M [03:12<00:29, 2.63MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  84%|████████▍ | 484M/577M [03:12<00:35, 2.79MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  88%|████████▊ | 507M/577M [03:12<00:27, 2.65MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  88%|████████▊ | 505M/577M [03:13<00:27, 2.78MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  84%|████████▍ | 485M/577M [03:13<00:34, 2.84MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  88%|████████▊ | 508M/577M [03:13<00:27, 2.65MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  84%|████████▍ | 486M/577M [03:13<00:32, 2.95MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  88%|████████▊ | 506M/577M [03:13<00:27, 2.72MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  88%|████████▊ | 509M/577M [03:13<00:25, 2.78MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  88%|████████▊ | 507M/577M [03:14<00:27, 2.71MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  84%|████████▍ | 487M/577M [03:14<00:34, 2.73MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  88%|████████▊ | 510M/577M [03:14<00:25, 2.80MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  88%|████████▊ | 508M/577M [03:14<00:25, 2.83MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  88%|████████▊ | 511M/577M [03:14<00:24, 2.87MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  85%|████████▍ | 488M/577M [03:14<00:35, 2.65MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  88%|████████▊ | 509M/577M [03:14<00:24, 2.86MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  89%|████████▊ | 512M/577M [03:14<00:24, 2.80MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  85%|████████▍ | 489M/577M [03:14<00:34, 2.67MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  88%|████████▊ | 510M/577M [03:15<00:24, 2.84MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  89%|████████▉ | 513M/577M [03:15<00:23, 2.82MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  85%|████████▍ | 490M/577M [03:15<00:34, 2.68MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  89%|████████▊ | 511M/577M [03:15<00:23, 2.90MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  89%|████████▉ | 514M/577M [03:15<00:23, 2.87MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  85%|████████▌ | 491M/577M [03:15<00:34, 2.66MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  89%|████████▊ | 512M/577M [03:15<00:23, 2.85MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  89%|████████▉ | 515M/577M [03:15<00:23, 2.83MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  85%|████████▌ | 492M/577M [03:16<00:33, 2.70MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  89%|████████▉ | 513M/577M [03:16<00:22, 2.93MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  85%|████████▌ | 493M/577M [03:16<00:32, 2.75MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  89%|████████▉ | 516M/577M [03:16<00:24, 2.64MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  89%|████████▉ | 514M/577M [03:16<00:21, 3.02MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  86%|████████▌ | 494M/577M [03:16<00:31, 2.76MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  90%|████████▉ | 517M/577M [03:16<00:24, 2.59MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  89%|████████▉ | 515M/577M [03:16<00:22, 2.93MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  90%|████████▉ | 518M/577M [03:17<00:22, 2.78MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  86%|████████▌ | 495M/577M [03:17<00:31, 2.71MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  89%|████████▉ | 516M/577M [03:17<00:22, 2.79MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  86%|████████▌ | 496M/577M [03:17<00:30, 2.78MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  90%|████████▉ | 519M/577M [03:17<00:22, 2.73MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  90%|████████▉ | 517M/577M [03:17<00:23, 2.73MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  90%|█████████ | 520M/577M [03:17<00:21, 2.83MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  86%|████████▌ | 497M/577M [03:17<00:30, 2.78MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  90%|████████▉ | 518M/577M [03:18<00:23, 2.66MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  90%|█████████ | 521M/577M [03:18<00:21, 2.78MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  86%|████████▋ | 498M/577M [03:18<00:30, 2.74MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  90%|████████▉ | 519M/577M [03:18<00:22, 2.68MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  90%|█████████ | 522M/577M [03:18<00:20, 2.78MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  86%|████████▋ | 499M/577M [03:18<00:30, 2.71MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  90%|█████████ | 520M/577M [03:18<00:22, 2.61MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  91%|█████████ | 523M/577M [03:18<00:21, 2.66MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  87%|████████▋ | 500M/577M [03:19<00:30, 2.64MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  90%|█████████ | 521M/577M [03:19<00:21, 2.73MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  91%|█████████ | 524M/577M [03:19<00:20, 2.77MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  87%|████████▋ | 501M/577M [03:19<00:30, 2.63MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  90%|█████████ | 522M/577M [03:19<00:20, 2.75MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  91%|█████████ | 525M/577M [03:19<00:19, 2.81MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  87%|████████▋ | 502M/577M [03:19<00:30, 2.62MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  91%|█████████ | 523M/577M [03:19<00:19, 2.85MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  91%|█████████ | 526M/577M [03:20<00:19, 2.84MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  87%|████████▋ | 503M/577M [03:20<00:29, 2.67MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  91%|█████████ | 524M/577M [03:20<00:20, 2.77MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  91%|█████████▏| 527M/577M [03:20<00:18, 2.86MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  87%|████████▋ | 504M/577M [03:20<00:28, 2.67MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  91%|█████████ | 525M/577M [03:20<00:20, 2.72MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  91%|█████████▏| 528M/577M [03:20<00:18, 2.85MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  87%|████████▋ | 505M/577M [03:21<00:28, 2.65MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  91%|█████████ | 526M/577M [03:21<00:19, 2.71MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  92%|█████████▏| 529M/577M [03:21<00:17, 2.83MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  88%|████████▊ | 506M/577M [03:21<00:28, 2.58MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  91%|█████████▏| 527M/577M [03:21<00:19, 2.69MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  92%|█████████▏| 530M/577M [03:21<00:17, 2.79MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  88%|████████▊ | 507M/577M [03:21<00:27, 2.65MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  91%|█████████▏| 528M/577M [03:21<00:18, 2.71MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  92%|█████████▏| 531M/577M [03:21<00:17, 2.77MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  88%|████████▊ | 508M/577M [03:22<00:27, 2.63MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  92%|█████████▏| 529M/577M [03:22<00:18, 2.74MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  92%|█████████▏| 532M/577M [03:22<00:17, 2.74MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  88%|████████▊ | 509M/577M [03:22<00:27, 2.63MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  92%|█████████▏| 530M/577M [03:22<00:18, 2.72MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  92%|█████████▏| 533M/577M [03:22<00:17, 2.74MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  92%|█████████▏| 531M/577M [03:23<00:17, 2.71MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  88%|████████▊ | 510M/577M [03:23<00:27, 2.58MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  92%|█████████▏| 534M/577M [03:23<00:16, 2.77MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  92%|█████████▏| 532M/577M [03:23<00:16, 2.78MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  89%|████████▊ | 511M/577M [03:23<00:27, 2.56MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  93%|█████████▎| 535M/577M [03:23<00:16, 2.72MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  92%|█████████▏| 533M/577M [03:23<00:16, 2.77MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  93%|█████████▎| 536M/577M [03:23<00:15, 2.73MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  89%|████████▊ | 512M/577M [03:23<00:27, 2.52MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  93%|█████████▎| 534M/577M [03:24<00:16, 2.72MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  93%|█████████▎| 537M/577M [03:24<00:15, 2.80MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  89%|████████▉ | 513M/577M [03:24<00:26, 2.56MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  93%|█████████▎| 535M/577M [03:24<00:16, 2.72MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  93%|█████████▎| 538M/577M [03:24<00:14, 2.77MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  89%|████████▉ | 514M/577M [03:24<00:26, 2.54MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  93%|█████████▎| 536M/577M [03:25<00:15, 2.71MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  93%|█████████▎| 539M/577M [03:25<00:15, 2.68MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  89%|████████▉ | 515M/577M [03:25<00:26, 2.48MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  93%|█████████▎| 537M/577M [03:25<00:15, 2.72MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  94%|█████████▎| 540M/577M [03:25<00:13, 2.85MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  89%|████████▉ | 516M/577M [03:25<00:26, 2.47MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  93%|█████████▎| 538M/577M [03:25<00:14, 2.75MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  94%|█████████▎| 541M/577M [03:25<00:13, 2.84MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  90%|████████▉ | 517M/577M [03:26<00:24, 2.53MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  93%|█████████▎| 539M/577M [03:26<00:14, 2.76MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  94%|█████████▍| 542M/577M [03:26<00:13, 2.78MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  90%|████████▉ | 518M/577M [03:26<00:23, 2.59MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  94%|█████████▎| 540M/577M [03:26<00:13, 2.78MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  94%|█████████▍| 543M/577M [03:26<00:13, 2.74MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  90%|████████▉ | 519M/577M [03:26<00:23, 2.63MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  94%|█████████▎| 541M/577M [03:26<00:13, 2.78MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  94%|█████████▍| 544M/577M [03:26<00:13, 2.68MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  90%|█████████ | 520M/577M [03:27<00:21, 2.77MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  94%|█████████▍| 542M/577M [03:27<00:13, 2.68MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  94%|█████████▍| 545M/577M [03:27<00:13, 2.61MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  90%|█████████ | 521M/577M [03:27<00:21, 2.70MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  94%|█████████▍| 543M/577M [03:27<00:13, 2.69MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  95%|█████████▍| 546M/577M [03:27<00:12, 2.64MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  90%|█████████ | 522M/577M [03:28<00:22, 2.62MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  94%|█████████▍| 544M/577M [03:28<00:12, 2.77MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  95%|█████████▍| 547M/577M [03:28<00:11, 2.67MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  91%|█████████ | 523M/577M [03:28<00:21, 2.60MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  94%|█████████▍| 545M/577M [03:28<00:12, 2.73MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  95%|█████████▍| 548M/577M [03:28<00:11, 2.69MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  91%|█████████ | 524M/577M [03:28<00:21, 2.54MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  95%|█████████▍| 546M/577M [03:28<00:12, 2.71MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  95%|█████████▌| 549M/577M [03:28<00:10, 2.78MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  95%|█████████▍| 547M/577M [03:29<00:11, 2.71MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  91%|█████████ | 525M/577M [03:29<00:21, 2.51MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  95%|█████████▌| 550M/577M [03:29<00:10, 2.76MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  95%|█████████▍| 548M/577M [03:29<00:11, 2.71MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  91%|█████████ | 526M/577M [03:29<00:21, 2.55MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  95%|█████████▌| 551M/577M [03:29<00:10, 2.69MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  95%|█████████▌| 549M/577M [03:30<00:10, 2.72MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  91%|█████████▏| 527M/577M [03:30<00:19, 2.64MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  96%|█████████▌| 552M/577M [03:29<00:09, 2.74MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  95%|█████████▌| 550M/577M [03:30<00:10, 2.61MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  91%|█████████▏| 528M/577M [03:30<00:19, 2.62MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  96%|█████████▌| 553M/577M [03:30<00:09, 2.79MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  92%|█████████▏| 529M/577M [03:30<00:19, 2.62MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  96%|█████████▌| 554M/577M [03:30<00:08, 2.78MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  95%|█████████▌| 551M/577M [03:30<00:10, 2.57MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  92%|█████████▏| 530M/577M [03:31<00:17, 2.80MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  96%|█████████▌| 552M/577M [03:31<00:09, 2.72MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  96%|█████████▌| 555M/577M [03:31<00:08, 2.72MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  92%|█████████▏| 531M/577M [03:31<00:16, 2.86MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  96%|█████████▌| 553M/577M [03:31<00:09, 2.71MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  96%|█████████▋| 556M/577M [03:31<00:08, 2.76MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  92%|█████████▏| 532M/577M [03:31<00:17, 2.78MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  96%|█████████▌| 554M/577M [03:31<00:08, 2.78MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  96%|█████████▋| 557M/577M [03:31<00:07, 2.82MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  96%|█████████▌| 555M/577M [03:32<00:08, 2.86MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  92%|█████████▏| 533M/577M [03:32<00:17, 2.70MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  97%|█████████▋| 558M/577M [03:32<00:07, 2.75MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  93%|█████████▎| 534M/577M [03:32<00:16, 2.69MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  96%|█████████▋| 556M/577M [03:32<00:08, 2.68MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  97%|█████████▋| 559M/577M [03:32<00:06, 2.78MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  97%|█████████▋| 560M/577M [03:32<00:06, 2.79MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  97%|█████████▋| 557M/577M [03:33<00:07, 2.67MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  93%|█████████▎| 535M/577M [03:33<00:17, 2.60MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  97%|█████████▋| 558M/577M [03:33<00:06, 2.91MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  97%|█████████▋| 561M/577M [03:33<00:06, 2.79MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  93%|█████████▎| 536M/577M [03:33<00:17, 2.50MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  97%|█████████▋| 559M/577M [03:33<00:06, 2.87MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  97%|█████████▋| 562M/577M [03:33<00:06, 2.68MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  93%|█████████▎| 537M/577M [03:34<00:16, 2.56MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  97%|█████████▋| 560M/577M [03:34<00:06, 2.85MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  97%|█████████▋| 563M/577M [03:34<00:05, 2.68MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  93%|█████████▎| 538M/577M [03:34<00:15, 2.59MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  97%|█████████▋| 561M/577M [03:34<00:06, 2.81MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  98%|█████████▊| 564M/577M [03:34<00:05, 2.82MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  93%|█████████▎| 539M/577M [03:34<00:16, 2.47MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  97%|█████████▋| 562M/577M [03:34<00:05, 2.85MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  98%|█████████▊| 565M/577M [03:34<00:04, 2.78MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  94%|█████████▎| 540M/577M [03:35<00:15, 2.54MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  98%|█████████▊| 563M/577M [03:35<00:05, 2.87MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  98%|█████████▊| 566M/577M [03:35<00:04, 2.79MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  98%|█████████▊| 564M/577M [03:35<00:04, 2.79MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  94%|█████████▎| 541M/577M [03:35<00:15, 2.48MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  98%|█████████▊| 567M/577M [03:35<00:03, 2.81MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  98%|█████████▊| 565M/577M [03:36<00:04, 2.75MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  94%|█████████▍| 542M/577M [03:36<00:14, 2.51MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  98%|█████████▊| 568M/577M [03:36<00:03, 2.84MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  98%|█████████▊| 566M/577M [03:36<00:04, 2.85MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  94%|█████████▍| 543M/577M [03:36<00:14, 2.54MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  99%|█████████▊| 569M/577M [03:36<00:03, 2.80MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  98%|█████████▊| 567M/577M [03:36<00:03, 2.89MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  99%|█████████▊| 570M/577M [03:36<00:02, 2.80MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  94%|█████████▍| 544M/577M [03:36<00:13, 2.51MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  98%|█████████▊| 568M/577M [03:37<00:03, 2.80MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  99%|█████████▉| 571M/577M [03:37<00:02, 2.80MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  94%|█████████▍| 545M/577M [03:37<00:12, 2.62MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  99%|█████████▊| 569M/577M [03:37<00:03, 2.72MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  99%|█████████▉| 572M/577M [03:37<00:02, 2.80MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  95%|█████████▍| 546M/577M [03:37<00:12, 2.63MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  99%|█████████▉| 573M/577M [03:37<00:01, 2.90MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  99%|█████████▉| 570M/577M [03:38<00:02, 2.64MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  95%|█████████▍| 547M/577M [03:38<00:12, 2.54MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]:  99%|█████████▉| 574M/577M [03:38<00:01, 2.92MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  99%|█████████▉| 571M/577M [03:38<00:02, 2.64MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  95%|█████████▍| 548M/577M [03:38<00:12, 2.51MB/s][A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]: 100%|█████████▉| 575M/577M [03:38<00:00, 2.88MB/s][A[A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  99%|█████████▉| 572M/577M [03:38<00:01, 2.76MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  95%|█████████▌| 549M/577M [03:38<00:11, 2.58MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  99%|█████████▉| 573M/577M [03:39<00:01, 2.79MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]: 100%|█████████▉| 576M/577M [03:39<00:00, 2.74MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  95%|█████████▌| 550M/577M [03:39<00:11, 2.57MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]:  99%|█████████▉| 574M/577M [03:39<00:01, 3.05MB/s][A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]: 100%|█████████▉| 577M/577M [03:39<00:00, 2.65MB/s][A[A[A[A[A[A[A
+
+
+
+
+
+
+Downloading [tf_model.h5]: 100%|██████████| 577M/577M [03:39<00:00, 2.78MB/s][A[A[A[A[A[A[ADownloading [tf_model.h5]: 100%|██████████| 577M/577M [03:39<00:00, 2.76MB/s]
+Processing 12 items:  83%|████████▎ | 10.0/12.0 [03:39<01:12, 36.2s/it]
+
+
+Downloading [flax_model.msgpack]: 100%|█████████▉| 575M/577M [03:39<00:00, 3.01MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  95%|█████████▌| 551M/577M [03:39<00:10, 2.61MB/s][A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  96%|█████████▌| 552M/577M [03:40<00:09, 2.83MB/s][A[A[A[A[A[A
+
+
+Downloading [flax_model.msgpack]: 100%|█████████▉| 576M/577M [03:40<00:00, 3.10MB/s][A[A[A
+
+
+Downloading [flax_model.msgpack]: 100%|█████████▉| 577M/577M [03:40<00:00, 3.26MB/s][A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  96%|█████████▌| 553M/577M [03:40<00:09, 2.76MB/s][A[A[A[A[A[ADownloading [flax_model.msgpack]: 100%|██████████| 577M/577M [03:40<00:00, 2.74MB/s]
+Processing 12 items:  92%|█████████▏| 11.0/12.0 [03:40<00:29, 29.3s/it]
+
+
+
+
+
+Downloading [pytorch_model.bin]:  96%|█████████▌| 554M/577M [03:40<00:07, 3.11MB/s][A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  96%|█████████▌| 555M/577M [03:40<00:07, 3.22MB/s][A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  96%|█████████▋| 556M/577M [03:41<00:06, 3.19MB/s][A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  96%|█████████▋| 557M/577M [03:41<00:06, 3.26MB/s][A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  97%|█████████▋| 558M/577M [03:41<00:06, 3.24MB/s][A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  97%|█████████▋| 559M/577M [03:42<00:05, 3.40MB/s][A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  97%|█████████▋| 560M/577M [03:42<00:05, 3.44MB/s][A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  97%|█████████▋| 561M/577M [03:42<00:04, 3.55MB/s][A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  97%|█████████▋| 562M/577M [03:43<00:04, 3.60MB/s][A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  98%|█████████▊| 563M/577M [03:43<00:03, 3.76MB/s][A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  98%|█████████▊| 564M/577M [03:43<00:03, 3.73MB/s][A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  98%|█████████▊| 565M/577M [03:43<00:03, 3.76MB/s][A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  98%|█████████▊| 566M/577M [03:44<00:03, 3.53MB/s][A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  98%|█████████▊| 567M/577M [03:44<00:03, 3.54MB/s][A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  98%|█████████▊| 568M/577M [03:44<00:02, 3.57MB/s][A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  99%|█████████▊| 569M/577M [03:45<00:02, 3.46MB/s][A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  99%|█████████▉| 570M/577M [03:45<00:02, 3.30MB/s][A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  99%|█████████▉| 571M/577M [03:45<00:01, 3.29MB/s][A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  99%|█████████▉| 572M/577M [03:46<00:01, 3.25MB/s][A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  99%|█████████▉| 573M/577M [03:46<00:01, 3.26MB/s][A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]:  99%|█████████▉| 574M/577M [03:46<00:00, 3.61MB/s][A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]: 100%|█████████▉| 575M/577M [03:46<00:00, 3.58MB/s][A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]: 100%|█████████▉| 576M/577M [03:47<00:00, 3.68MB/s][A[A[A[A[A[A
+
+
+
+
+
+Downloading [pytorch_model.bin]: 100%|█████████▉| 577M/577M [03:47<00:00, 3.82MB/s][A[A[A[A[A[ADownloading [pytorch_model.bin]: 100%|██████████| 577M/577M [03:47<00:00, 2.66MB/s]
+Processing 12 items: 100%|██████████| 12.0/12.0 [03:47<00:00, 19.0s/it]
+
+Successfully Downloaded from model openai-mirror/clip-vit-base-patch32.
+

@@ -1,0 +1,33 @@
+# Model configuration
+
+pretrained:
+  # Fast validation / debugging (fallback to main if not downloaded)
+  validation: /mnt/nfs/young/VLM4reasoning/models/pretrained/Qwen3-VL-8B-Instruct
+  # Main experiment model (大体积放 NFS 共享存储)
+  main: /mnt/nfs/young/VLM4reasoning/models/pretrained/Qwen3-VL-8B-Instruct
+
+lora:
+  r: 32
+  lora_alpha: 64
+  target_modules:
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+    - visual_merger.mlp.0
+    - visual_merger.mlp.2
+  lora_dropout: 0.05
+  bias: none
+
+generation:
+  max_new_tokens: 512
+  do_sample: false
+  temperature: 1.0   # Only used during RL rollout
+  top_p: 1.0
+
+rag:
+  confidence_threshold: 0.85
+  top_k_visual: 3
+  top_k_text: 3
+  clip_model: models/pretrained/clip-vit-base-patch32
+  bge_model: models/pretrained/bge-m3

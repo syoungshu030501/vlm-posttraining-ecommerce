@@ -1,0 +1,22 @@
+# Models
+models/
+*.pt
+*.pth
+*.bin
+*.safetensors
+
+# Large datasets
+data/sft/triplets.parquet
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+venv/
+.venv/
+env/
+.pytest_cache/
+
+# OS
+.DS_Store

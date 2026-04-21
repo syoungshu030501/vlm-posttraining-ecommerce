@@ -1,0 +1,52 @@
+# Training hyperparameters
+
+sft:
+  epochs: 3
+  batch_size: 1          # Single RTX 4090; increase for multi-GPU
+  grad_accum: 16         # Effective batch = 16
+  lr: 2.0e-4
+  max_prompt_len: 1024
+  max_response_len: 512
+  supcon_weight: 0.05
+  triplet_weight: 0.03
+  flash_attn: true
+
+rm:
+  epochs: 3
+  batch_size: 2
+  lr: 1.0e-4
+
+fipo:
+  # FIPO core
+  loss_mode: future_kl
+  decay_rate: 12.0
+  chunk_size: 64
+  future_kl_start: include_current
+  future_kl_window: -1
+  future_kl_average: false
+  future_kl_clip_ratio: 0.2
+  future_kl_clip_high_only: true
+  safety_thresh: 5.0
+
+  # Advantage estimator (grpo, unchanged by FIPO)
+  adv_estimator: grpo
+
+  # KL (internalised by FIPO; external KL off)
+  use_kl_in_reward: false
+  kl_coef: 0.0
+
+  # PPO clipping
+  clip_ratio_low: 0.2
+  clip_ratio_high: 0.28
+  clip_ratio_c: 10.0
+
+  # Rollout
+  n_resp_per_prompt: 8
+  max_prompt_length: 1024
+  max_response_length: 512
+
+  # Optimiser
+  lr: 1.0e-6
+  epochs: 8
+  train_batch_size: 32
+  mini_batch_size: 4
