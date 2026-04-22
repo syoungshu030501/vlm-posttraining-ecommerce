@@ -433,26 +433,30 @@ Guard 全绿 + 下列可量化指标达到训练准入线：
 - **SupCon**：在 [src/stage1_sft/train.py](src/stage1_sft/train.py) 增加 memory bank（默认 64 条），每个 micro-batch 把 detached EOS embedding 入队，凑齐两个类别后才计算对比损失，**无需调大 batch_size**
 - **Triplet**：新增 [src/stage1_sft/triplet_dataset.py](src/stage1_sft/triplet_dataset.py) + 在每个 optimizer step 末从 `triplets.parquet` 抽 (image, pos_attr, neg_attr)，用 `F.triplet_margin_with_distance_loss(distance=cosine, margin=0.3)` 算 anchor-pos vs anchor-neg 的边际，乘 0.03 加权
 
-实测（`vlm-posttraining-ecommerce-SFT-aux`）：`supcon_loss=4.13`、`triplet_loss=0.30`（之前都是 0），`total = ce + 0.05·supcon + 0.03·triplet` 算式吻合 ✓
+实测（`vlm-posttraining-ecommerce-SFT-aux-resume`，2026-04-22 完成）：训练 2 epoch 收敛于 `avg_total=0.3545 (ce=0.1785, supcon=3.5203, triplet=0.0074)`，`total = ce + 0.05·supcon + 0.03·triplet` 算式吻合 ✓
 
-### P0.5 · RM backbone 当前用 base，**不是 SFT-merged**（架构性，待 SFT 完成）
+**下游 eval（664 样本 test set）**：
 
-`scripts/run_pipeline.sh:153` 和当前手动启动命令都用：
-```
-MODEL_PATH=/mnt/nfs/young/VLM4reasoning/models/pretrained/Qwen3-VL-8B-Instruct  # 裸 base
-```
-不是 SFT 后 merge 出来的 `sft_merged`。在当前"frozen backbone + 4097 参数 linear head"配置下，head 表达力上限就是 backbone features 的判别力——base 的 EOS embedding 没见过电商 violation 任务格式，导致 RM acc 摆在 ~0.74-0.78（理论上限）。
+| 指标 | A: CE only (baseline) | B: CE + SupCon + Triplet | Δ |
+|---|---:|---:|---:|
+| violation_f1 | **0.9883** | 0.9844 | -0.39 pp |
+| precision | 0.9806 | 0.9767 | -0.39 pp |
+| recall | 0.9961 | 0.9921 | -0.40 pp |
+| hallucination_rate | 0.3072 | **0.3027** | -0.45 pp ✓ |
+| json_format_acc | 1.000 | 1.000 | 0 |
 
-**正确顺序**：
-```
-SFT(running) → merge LoRA → 用 sft_merged 重跑 RM → Stage 3
-```
+**结论**：辅助损失基本 **中性**（差异都在噪声范围内 ~2.6 个样本）。原因：(1) CE 已收敛到 0.18，主任务接近饱和；(2) Triplet loss 早期 collapse 到 0（margin=0.3 太松）；(3) SupCon 用 EOS hidden state 做 anchor，被 JSON 格式收尾 token 主导，语义信号不足。**但 SupCon 对 embedding 几何的塑形对下游 RM 反而有正面作用（见 P1.5 v2 结果）**。
 
-**修复方案**：等 SFT 收尾后立即起 **RM-v2**：
-- backbone 改用 `models/sft_merged`
-- 同时打开 backbone LoRA（`apply_lora=True`），让 backbone features 进一步与 reward 任务对齐
-- 预期把 train acc 抬到 0.80-0.85，held-out acc ≥ 0.75
-- 与下面 §P1 的 held-out 评估一起做
+下次实验改进方向：anchor 换成 `"violation"` value token、bank size 降到 16、Triplet margin 提到 0.7+、或加 momentum encoder。
+
+### P0.5 · RM backbone 用 SFT-merged（**已修复，2026-04-23**）
+
+历史问题：之前两个 RM 用的都是裸 base Qwen3-VL，head 表达力上限被 backbone 限制。
+
+**修复**：
+- 用 `src/utils/merge_lora.py` 把 LoRA 合并到 base，得到 `models/sft_baseline_merged` 和 `models/sft_aux_merged`（各 17.5GB）
+- RM 训练 `--model_path` 指向 merged ckpt
+- 同时跑两个 backbone × 同 head 的对照（见 §P1.5）
 
 ### P1 · RM held-out 验证集（**已修复，2026-04-22**）
 
@@ -470,7 +474,7 @@ SFT(running) → merge LoRA → 用 sft_merged 重跑 RM → Stage 3
 
 **已知偏差**：这两个 ckpt 是在 2000 对全集（含 holdout 200 对）上训出来的，holdout 评估是乐观估计；新一轮（v2）会先训再评，干净对比。
 
-### P1.5 · RM head 架构消融（**v0/v1 已跑，v2 待训**）
+### P1.5 · RM head 架构消融（**v0/v1/v2 已跑**）
 
 **架构选项**（[src/stage2_rm/model.py](src/stage2_rm/model.py)）：
 
@@ -482,22 +486,33 @@ SFT(running) → merge LoRA → 用 sft_merged 重跑 RM → Stage 3
 
 v2 增加非线性表达力，同时通过 `--head_dropout` 控制小数据集（1800 对）过拟合风险。
 
-**v0 vs v1 holdout pair-acc**（base backbone）：80.5% vs 80.5%，差距 < 1 pp → **head 升级边际效用低**，性能瓶颈在 backbone（见 P0.5）。
+**holdout pair-acc + mean_margin 对比**（200 pair）：
 
-**v2 待训**：等 SFT-aux 完成后用 `models/sft_aux_ckpt` merge 出的 backbone 一起跑（exp 名 `vlm-posttraining-ecommerce-RM-mlp-sftaux`）。
+| RM | head | backbone | pair_acc | mean_margin | swanlab |
+|---|---|---|---:|---:|---|
+| v0 | Linear | base Qwen3-VL | 0.825 | 4.00 | — |
+| v1 | LN+bias | base Qwen3-VL | 0.810 | 3.30 | — |
+| **v2-aux** | MLP+LN+bias+dropout | **sft_aux_merged** | 0.82 (ep1, 训练中) | **9.38** | [`seo506w0x25krfs0luypf`](https://swanlab.cn/@killua/vlm-posttraining-ecommerce/runs/seo506w0x25krfs0luypf) |
+| **v2-baseline** | MLP+LN+bias+dropout | **sft_baseline_merged** | 训练中 | 训练中 | [`97ynxnsj07bdhqks6j468`](https://swanlab.cn/@killua/vlm-posttraining-ecommerce/runs/97ynxnsj07bdhqks6j468) |
 
-### P2 · Stage 1 辅助损失消融实验（**进行中**）
+> v0/v1 的 pair_acc 包含 holdout 在训练集中的乐观偏差；v2 是干净 train/holdout 切分后的真实指标。
+
+**关键观察**：v2-aux 的 mean_margin 比 v0/v1 高 **2.3-2.8×**——backbone 换成 SFT-merged 后 reward signal 信噪比显著提升，对后续 RL 阶段有利。`pair_acc` 提升不明显说明 holdout 已逼近 200 样本的 ceiling。v2-baseline 跑完后可严格分离 backbone 和 head 的贡献。
+
+⚠️ `len_shortcut`：chosen 比 rejected 平均长 31 token，需注意 RM 是否依赖长度捷径——可看 `by_strategy.api_weaker_missed_cue` 这种长度接近的子集判断。
+
+### P2 · Stage 1 辅助损失消融实验（**已完成，2026-04-23**）
 
 **目标**：验证 0.05·SupCon + 0.03·Triplet 是否真带来 ≥ 1 pp 的下游收益。
 
-| 实验 | 损失组合 | 实验名 | 状态 |
-|---|---|---|---|
-| A | CE only | `vlm-posttraining-ecommerce-SFT` | 已完成（`models/sft_ckpt/epoch-2`，原训练在 epoch 3 中段被中断，但 epoch-2 ckpt 完好可作 baseline） |
-| B | CE + SupCon + Triplet | `vlm-posttraining-ecommerce-SFT-aux` | 2026-04-22 起，单卡 GPU 4，~3h |
+| 实验 | 损失组合 | 实验名 | ckpt | violation_f1 | hallucination_rate |
+|---|---|---|---|---:|---:|
+| A | CE only | `vlm-posttraining-ecommerce-SFT` | `models/sft_ckpt/epoch-2` | **0.9883** | 0.3072 |
+| B | CE + SupCon + Triplet | `vlm-posttraining-ecommerce-SFT-aux-resume` | `models/sft_aux_ckpt/epoch-2` | 0.9844 | **0.3027** |
 
-**对比指标**：`violation_f1`（主） / `hallucination_rate`（triplet 目标）/ `json_format_acc`（监控）/ 按粗粒度品类桶分层。
+**结论**：辅助损失对 **下游 SFT 任务** 表现中性（差异 < 1 pp，单 seed 不显著）。但对 **下游 RM 任务** 有正面影响——SFT-aux merged backbone 训出来的 RM mean_margin 比 base backbone 高 ~2.3×（见 §P1.5）。
 
-**显著性判定**：单 seed 差值 ≥ 1 pp 视为有信号；< 1 pp 应跑 2 个 seed 才下结论。
+**深层原因**：CE loss 在 SFT 阶段已经收敛（0.18），主任务接近饱和，aux 损失再发力空间有限；但 SupCon 的 embedding-uniformity 性质塑造的 hidden state 对 reward head 的 pairwise 比较反而更友好。
 
 ### P3 · 速度优化（已应用）
 
