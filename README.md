@@ -425,25 +425,15 @@ Guard 全绿 + 下列可量化指标达到训练准入线：
 
 ## Part 7 · 待办（已发现但未修，按优先级）
 
-### P0 · Stage 1 辅助损失实际未生效（影响"模型有效性"判断）
+### P0 · Stage 1 辅助损失（**已修复，2026-04-22**）
 
-代码现状（[src/stage1_sft/train.py](src/stage1_sft/train.py)）：
+历史问题：原 SFT 跑的实际是 CE-only（SupCon 被 `batch_size>1` 守卫挡掉、Triplet 是占位 0）。
 
-| 损失 | 配置权重 | 实际生效 | 原因 |
-|---|---|---|---|
-| CE | 1.0 | ✅ | — |
-| SupCon | 0.05 | ❌ 等价 0 | `train.py` SupCon 路径有 `violation_labels.shape[0] > 1` 守卫；当前 `batch_size=1` 始终触发 0 分支 |
-| Triplet | 0.03 | ❌ 等价 0 | `train.py` 中 `tri_loss = torch.tensor(0.0)` 是占位，triplet parquet 加载后**未接进 loss** |
+**修复**（commit `576a3b8`）：
+- **SupCon**：在 [src/stage1_sft/train.py](src/stage1_sft/train.py) 增加 memory bank（默认 64 条），每个 micro-batch 把 detached EOS embedding 入队，凑齐两个类别后才计算对比损失，**无需调大 batch_size**
+- **Triplet**：新增 [src/stage1_sft/triplet_dataset.py](src/stage1_sft/triplet_dataset.py) + 在每个 optimizer step 末从 `triplets.parquet` 抽 (image, pos_attr, neg_attr)，用 `F.triplet_margin_with_distance_loss(distance=cosine, margin=0.3)` 算 anchor-pos vs anchor-neg 的边际，乘 0.03 加权
 
-→ 当前正在跑的 SFT 实质是 CE-only。STRATEGY.md / 旧 README 里"CE + 0.05·SupCon + 0.03·Triplet"的描述与代码不符。
-
-**修复方案**（三选一）：
-1. **接好辅助损失 + 消融**（首选）：
-   - SupCon：把 `batch_size` 提到 ≥ 2（或在 collate 内组合多 micro-batch 凑对比对），让 `violation_labels` 同时含 True/False
-   - Triplet：在 SFT loop 里加一个 secondary dataloader 从 `triplets.parquet` 抽 (anchor, pos, neg)，按 EOS embedding 算 `triplet_margin_loss` 并按 0.03 加权
-   - 修完后跑下面"§7.2 消融实验"
-2. **删除两个权重 + 文档**：承认只用 CE，把 README/STRATEGY.md 里的对应描述去掉
-3. **保留代码占位但 weight=0**：明确"已设计，未启用"，README 注脚说明
+实测（`vlm-posttraining-ecommerce-SFT-aux`）：`supcon_loss=4.13`、`triplet_loss=0.30`（之前都是 0），`total = ce + 0.05·supcon + 0.03·triplet` 算式吻合 ✓
 
 ### P0.5 · RM backbone 当前用 base，**不是 SFT-merged**（架构性，待 SFT 完成）
 
@@ -464,63 +454,61 @@ SFT(running) → merge LoRA → 用 sft_merged 重跑 RM → Stage 3
 - 预期把 train acc 抬到 0.80-0.85，held-out acc ≥ 0.75
 - 与下面 §P1 的 held-out 评估一起做
 
-### P1 · RM 没有 held-out 验证集
+### P1 · RM held-out 验证集（**已修复，2026-04-22**）
 
-`src/stage2_rm/train.py` 把 `preference.parquet` 全 2000 对当训练集，日志里的 `acc` 是 **running train accuracy**，不能验证泛化。当前跑的 RM 训练完后只能看 epoch_avg_loss，无独立指标。
+**实现**（commit `576a3b8`）：
+- 切分脚本 [src/stage2_rm/holdout_split.py](src/stage2_rm/holdout_split.py)：按 `image_file` 分组（与 SFT split 同逻辑）切 200 对到 `data/preference/preference_holdout.parquet`，1800 对到 `_train.parquet`，从 `preference.jsonl` 恢复 `pair_strategy` 用于分层
+- 评估脚本 [src/stage2_rm/evaluate.py](src/stage2_rm/evaluate.py)：offline pair-accuracy + 按 `pair_strategy` 分层指标 + 长度 shortcut（chosen vs rejected token 长度差）
+- [src/stage2_rm/train.py](src/stage2_rm/train.py) 增加 `--holdout_parquet`，每 epoch 末跑 holdout 评估并写入 swanlab（`holdout_pair_accuracy/by-strategy`）
 
-**修复方案**：
-- 训练前按 `image_file` 分组（保持与 SFT split 一致逻辑）切 200 对作为 holdout
-- 每 epoch 末用 RM 在 holdout 上计算 pair_acc + 按 `pair_strategy` 分层（weak_evidence / wrong_attribute / over_strict / missed_cue 四类）
-- 写 `results/stage2_rm.json` 并 swanlab `log_metrics`
+**已有 ckpt 在 holdout 上的成绩**（results/）：
 
-### P1.5 · RM head 架构消融（**正在进行**）
-
-**动机**：原 head 是 `Linear(4096, 1, bias=False)`，4097 参数。在 frozen backbone 下，加 `bias` 让 reward 有零点自由度，加 `LayerNorm` 稳定 features 尺度，理论上 +0.5-1.5 pp，**几乎零成本**（~8K 额外参数）。
-
-**架构改动**（[src/stage2_rm/model.py](src/stage2_rm/model.py)）：
-- 新增 CLI flag `--head_bias` / `--head_layernorm`（默认 False，保留 v0 行为不影响已有 ckpt）
-- 启用后 head = `LayerNorm(4096) → Linear(4096, 1, bias=True)`
-
-**消融矩阵**（在 SFT 等待期间跑完，同 backbone = base，同数据，只换 head）：
-
-| 实验 | head | exp_name | 状态 |
+| 模型 | head | pair_acc | 备注 |
 |---|---|---|---|
-| v0（基线）| `Linear(4096,1)` | `vlm-posttraining-ecommerce-RM` | 2026-04-21 19:57 起，正在跑 |
-| v1 | `LN(4096) → Linear(4096,1,bias=True)` | `vlm-posttraining-ecommerce-RM-headv1` | v0 跑完后自动接，由 [scripts/run_rm_head_ablation.sh](scripts/run_rm_head_ablation.sh) 守护 |
+| `models/rm_ckpt` (v0) | Linear | 80.5% | base backbone |
+| `models/rm_ckpt_headv1` (v1) | LN+bias | 80.5% | base backbone |
 
-**判定**：
-- v1 train acc 比 v0 高 **≥ 1 pp**：bias+LN 是有效升级，写进默认配置（开 flag 或改默认值）
-- v1 vs v0 差距 **< 1 pp**：信号在噪声内，head 升级边际效用低，专注做 P0.5 的 backbone 升级
-- 任一情况下，P0.5 的 RM-v2（sft_merged + LoRA）都要做，head 用 v0 还是 v1 取决于此次结果
+**已知偏差**：这两个 ckpt 是在 2000 对全集（含 holdout 200 对）上训出来的，holdout 评估是乐观估计；新一轮（v2）会先训再评，干净对比。
 
-**已知局限**：还是没有 held-out（同 P1），所以 v0/v1 比较只是 train acc 之差，泛化差距未知；但**消融对比仍有意义**，因为两边过拟合幅度相近。
+### P1.5 · RM head 架构消融（**v0/v1 已跑，v2 待训**）
 
-### P2 · Stage 1 辅助损失消融实验（依赖 P0 修复完成）
+**架构选项**（[src/stage2_rm/model.py](src/stage2_rm/model.py)）：
+
+| head | 参数量（额外） | flag |
+|---|---|---|
+| v0 `Linear(4096,1)` | 0 | （默认）|
+| v1 `LN → Linear(4096,1,bias=True)` | ~8K | `--head_layernorm --head_bias` |
+| **v2 `LN → Linear(4096,2048) → GELU → Dropout → Linear(2048,1)`** | **~10M** | `--head_mlp [--head_dropout 0.1]` |
+
+v2 增加非线性表达力，同时通过 `--head_dropout` 控制小数据集（1800 对）过拟合风险。
+
+**v0 vs v1 holdout pair-acc**（base backbone）：80.5% vs 80.5%，差距 < 1 pp → **head 升级边际效用低**，性能瓶颈在 backbone（见 P0.5）。
+
+**v2 待训**：等 SFT-aux 完成后用 `models/sft_aux_ckpt` merge 出的 backbone 一起跑（exp 名 `vlm-posttraining-ecommerce-RM-mlp-sftaux`）。
+
+### P2 · Stage 1 辅助损失消融实验（**进行中**）
 
 **目标**：验证 0.05·SupCon + 0.03·Triplet 是否真带来 ≥ 1 pp 的下游收益。
 
-**最小矩阵**（在 `data/sft/test.parquet` 上同分布评估）：
-
-| 实验 | 损失组合 | 实验名 | 数据点来源 |
+| 实验 | 损失组合 | 实验名 | 状态 |
 |---|---|---|---|
-| A | CE only | `vlm-posttraining-ecommerce-SFT` | 当前 2026-04-21 这次跑（白送） |
-| B | CE + SupCon + Triplet | `vlm-posttraining-ecommerce-SFT-aux` | P0 修完后新跑 1 次 |
+| A | CE only | `vlm-posttraining-ecommerce-SFT` | 已完成（`models/sft_ckpt/epoch-2`，原训练在 epoch 3 中段被中断，但 epoch-2 ckpt 完好可作 baseline） |
+| B | CE + SupCon + Triplet | `vlm-posttraining-ecommerce-SFT-aux` | 2026-04-22 起，单卡 GPU 4，~3h |
 
-可选 C：`CE + SupCon only` 进一步分离贡献，5K 数据信号可能淹没在噪声里，**非必需**。
-
-**对比指标**：
-- `violation_f1`（主指标）
-- `hallucination_rate`（triplet 的目标）
-- `json_format_acc`（应基本不变，监控用）
-- 按粗粒度品类桶分层
+**对比指标**：`violation_f1`（主） / `hallucination_rate`（triplet 目标）/ `json_format_acc`（监控）/ 按粗粒度品类桶分层。
 
 **显著性判定**：单 seed 差值 ≥ 1 pp 视为有信号；< 1 pp 应跑 2 个 seed 才下结论。
 
-### P3 · 其它（低优先）
+### P3 · 速度优化（已应用）
+
+- **flash-attention 已可用**：`flash_attn-2.8.3+cu12torch2.10cxx11abiTRUE-cp312-cp312-linux_x86_64.whl`（社区构建），attention 加速但**不是 SFT 主要瓶颈**
+- **单卡训练 vs `device_map="auto"` 多卡 pipeline**：8B BF16 + LoRA + grad-ckpt + flash-attn 单卡显存仅需 ~36GB（fits L20 45GB）。单卡每 optimizer step ~30s，多卡 4-GPU pipeline ~200s/step，**单卡快 6-7×**——pipeline 并行在 batch_size=1 + grad_accum=16 时大量 GPU stall
+- **结论**：除非显存装不下，**优先单卡 + grad-ckpt + flash-attn**
+
+### P3.5 · 其它（低优先）
 
 - LoRA 视觉 attn 启用：当前仅 LM + merger 加 LoRA。若评估发现细粒度视觉属性（颜色/材质）准确率掉，可白名单匹配 `visual.*qkv` / `visual.*proj`（注意视觉 encoder 默认冻结要先解冻或单独允许）
 - DDP/FSDP 入口：当前两阶段都只支持单进程 + `device_map="auto"` 的 model parallelism，吞吐受限于通信。若后续要扩 batch 或上更大模型，需改写训练入口
-- Flash-Attention 安装：torch 2.10/cu128 暂无现成 wheel，需 `nvcc + ninja` 本地编译 ~30 min；当前 SDPA 已能跑
 
 ---
 
