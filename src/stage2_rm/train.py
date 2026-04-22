@@ -19,6 +19,7 @@ import torch
 from torch.utils.data import DataLoader
 
 from src.stage2_rm.dataset import PreferenceDataset, preference_collate_fn
+from src.stage2_rm.evaluate import evaluate_holdout
 from src.stage2_rm.model import RewardModel, bradley_terry_loss
 from src.utils.model_loader import load_model_and_processor
 from src.utils.tracking import finish_run, init_swanlab, log_metrics
@@ -37,6 +38,9 @@ def train(args: argparse.Namespace) -> None:
         model,
         head_bias=args.head_bias,
         head_layernorm=args.head_layernorm,
+        head_mlp=args.head_mlp,
+        head_mlp_hidden=args.head_mlp_hidden,
+        head_dropout=args.head_dropout,
     ).to(device)
 
     dataset = PreferenceDataset(args.train_parquet, processor)
@@ -51,6 +55,27 @@ def train(args: argparse.Namespace) -> None:
         pin_memory=True,
         collate_fn=lambda b: preference_collate_fn(b, pad_token_id=pad_id or 0),
     )
+
+    holdout_loader = None
+    holdout_strategies: list[str] = []
+    if args.holdout_parquet and Path(args.holdout_parquet).exists():
+        import pandas as pd
+        holdout_df = pd.read_parquet(args.holdout_parquet)
+        holdout_strategies = (
+            holdout_df["pair_strategy"].astype(str).tolist()
+            if "pair_strategy" in holdout_df.columns
+            else ["unknown"] * len(holdout_df)
+        )
+        holdout_ds = PreferenceDataset(args.holdout_parquet, processor)
+        holdout_loader = DataLoader(
+            holdout_ds,
+            batch_size=args.batch_size,
+            shuffle=False,
+            num_workers=2,
+            pin_memory=True,
+            collate_fn=lambda b: preference_collate_fn(b, pad_token_id=pad_id or 0),
+        )
+        print(f"Loaded holdout: {len(holdout_ds)} pairs from {args.holdout_parquet}")
 
     optimizer = torch.optim.AdamW(rm.reward_head.parameters(), lr=args.lr)
     tracker = init_swanlab(
@@ -144,6 +169,24 @@ def train(args: argparse.Namespace) -> None:
             torch.save(rm.reward_head.state_dict(), out_dir / "reward_head_best.pt")
             print(f"  New best RM (loss={best_loss:.4f})")
 
+        if holdout_loader is not None:
+            ho_metrics = evaluate_holdout(rm, holdout_loader, holdout_strategies, device)
+            print(
+                f"  holdout @ epoch {epoch}: acc={ho_metrics['pair_accuracy']:.4f}  "
+                f"margin={ho_metrics['mean_margin']:.4f}  len_diff={ho_metrics['len_shortcut']:.2f}"
+            )
+            ho_log = {
+                "epoch": epoch,
+                "holdout_pair_accuracy": ho_metrics["pair_accuracy"],
+                "holdout_mean_margin": ho_metrics["mean_margin"],
+                "holdout_len_shortcut": ho_metrics["len_shortcut"],
+            }
+            for strat, vals in ho_metrics["by_strategy"].items():
+                ho_log[f"holdout_acc/{strat}"] = vals["accuracy"]
+                ho_log[f"holdout_n/{strat}"] = vals["n"]
+            log_metrics(tracker, ho_log)
+            rm.train()
+
         if should_stop:
             print(f"Reached max_steps={args.max_steps}, stopping early.")
             break
@@ -173,5 +216,27 @@ if __name__ == "__main__":
         "--head_layernorm",
         action="store_true",
         help="Insert LayerNorm before the scalar reward head (default off).",
+    )
+    parser.add_argument(
+        "--head_mlp",
+        action="store_true",
+        help="Use 2-layer MLP head (Linear→GELU→[Dropout]→Linear) instead of single Linear.",
+    )
+    parser.add_argument(
+        "--head_mlp_hidden",
+        type=int,
+        default=None,
+        help="Hidden dim for MLP head (default: hidden_size//2 ≈ 1024).",
+    )
+    parser.add_argument(
+        "--head_dropout",
+        type=float,
+        default=0.0,
+        help="Dropout inside MLP head (default 0.0; only active when --head_mlp).",
+    )
+    parser.add_argument(
+        "--holdout_parquet",
+        default=None,
+        help="Optional held-out preference parquet; when given, run pair-accuracy eval per epoch.",
     )
     train(parser.parse_args())

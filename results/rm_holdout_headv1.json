@@ -1,0 +1,41 @@
+{
+  "n_pairs": 200,
+  "pair_accuracy": 0.81,
+  "mean_margin": 3.298085459917784,
+  "len_shortcut": 31.245,
+  "by_strategy": {
+    "api_weaker_wrong_attribute": {
+      "n": 55,
+      "accuracy": 0.8181818181818182,
+      "mean_margin": 4.434604904868386
+    },
+    "api_weaker_over_strict": {
+      "n": 49,
+      "accuracy": 0.8367346938775511,
+      "mean_margin": 2.7566653392752825
+    },
+    "api_weaker_missed_cue": {
+      "n": 32,
+      "accuracy": 0.8125,
+      "mean_margin": 1.7341308584436774
+    },
+    "api_weaker_weak_evidence": {
+      "n": 64,
+      "accuracy": 0.78125,
+      "mean_margin": 3.5178911397233605
+    }
+  },
+  "meta": {
+    "model_path": "/mnt/nfs/young/VLM4reasoning/models/pretrained/Qwen3-VL-8B-Instruct",
+    "reward_head": "models/rm_ckpt_headv1/reward_head_best.pt",
+    "holdout_parquet": "data/preference/preference_holdout.parquet",
+    "head_bias": true,
+    "head_layernorm": true,
+    "strategy_distribution": {
+      "api_weaker_wrong_attribute": 55,
+      "api_weaker_over_strict": 49,
+      "api_weaker_missed_cue": 32,
+      "api_weaker_weak_evidence": 64
+    }
+  }
+}

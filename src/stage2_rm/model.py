@@ -16,6 +16,9 @@ class RewardModel(nn.Module):
         base_model: PreTrainedModel,
         head_bias: bool = False,
         head_layernorm: bool = False,
+        head_mlp: bool = False,
+        head_mlp_hidden: int | None = None,
+        head_dropout: float = 0.0,
     ):
         super().__init__()
         self.backbone = base_model
@@ -29,13 +32,26 @@ class RewardModel(nn.Module):
             raise ValueError(f"Could not infer hidden_size from {type(cfg).__name__}")
 
         # Head architecture is configurable for ablation. Defaults preserve the
-        # original behaviour (no LN, no bias) so existing checkpoints stay loadable.
+        # original behaviour (no LN, no bias, linear) so existing checkpoints
+        # stay loadable.
+        # v0: Linear (default)
+        # v1: LayerNorm + Linear(bias=True)         (head_layernorm + head_bias)
+        # v2: LayerNorm + Linear→GELU→Dropout→Linear  (head_mlp)
         self.head_bias = head_bias
         self.head_layernorm = head_layernorm
+        self.head_mlp = head_mlp
         head_layers: list[nn.Module] = []
         if head_layernorm:
             head_layers.append(nn.LayerNorm(hidden_size))
-        head_layers.append(nn.Linear(hidden_size, 1, bias=head_bias))
+        if head_mlp:
+            mlp_hidden = head_mlp_hidden or hidden_size // 2
+            head_layers.append(nn.Linear(hidden_size, mlp_hidden, bias=True))
+            head_layers.append(nn.GELU())
+            if head_dropout > 0:
+                head_layers.append(nn.Dropout(head_dropout))
+            head_layers.append(nn.Linear(mlp_hidden, 1, bias=head_bias))
+        else:
+            head_layers.append(nn.Linear(hidden_size, 1, bias=head_bias))
         self.reward_head = nn.Sequential(*head_layers) if len(head_layers) > 1 else head_layers[0]
 
         # Freeze backbone
