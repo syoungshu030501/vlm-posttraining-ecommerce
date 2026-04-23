@@ -50,15 +50,15 @@ def _row_to_verl(row, split: str, idx: int) -> dict:
     chosen_json = str(row["response"]).strip()
     image_blob = _ensure_image_object(row["image"])
 
-    # Qwen-VL chat template expects <image> placeholder; verl handles via images list
-    user_content = [
-        {"type": "image"},
-        {"type": "text", "text": f"商品描述：{title}"},
-    ]
+    # verl/RLDataset._build_messages expects content as a *string* with
+    # `<image>` / `<video>` placeholders (it re.splits on them). If we pass
+    # list-of-dicts (OpenAI/Qwen style), verl skips the message entirely and
+    # asserts image_offset==len(images), failing as 0 != 1.
+    user_content = f"<image>商品描述：{title}"
     return {
         "data_source": "vlm_audit",
         "prompt": [
-            {"role": "system", "content": [{"type": "text", "text": SYSTEM_PROMPT}]},
+            {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": user_content},
         ],
         "images": [image_blob],

@@ -12,7 +12,10 @@ import os
 import sys
 
 # Side-effect imports MUST happen before main() so that @register_policy_loss
-# and @register decorators populate the verl registries.
+# and @register decorators populate the verl registries (driver process).
+# Ray spawn workers inherit the driver's PYTHONPATH (set by run_fipo_v1.sh),
+# and Python's site machinery auto-imports sitecustomize.py from project root,
+# which re-imports future_kl_loss and registers it in every worker process.
 import src.stage3_fipo.verl_patches.future_kl_loss  # noqa: F401
 import src.stage3_fipo.verl_patches.reward_manager  # noqa: F401
 

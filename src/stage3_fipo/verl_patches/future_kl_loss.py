@@ -202,32 +202,35 @@ def compute_policy_loss_future_kl(
     valid_iw = influence_weights[valid_mask]
     valid_iw_raw = iw_raw[valid_mask]
 
+    # Note: keys MUST be identical across every DP rank, otherwise
+    # verl/utils/metric/utils.py:Metric.aggregate_dp raises
+    # `All Metric instances must have the same number of values`.
+    # Conditional fields (no positive/negative samples in this micro batch)
+    # default to 0.0 instead of being omitted.
     metrics: dict[str, Any] = {
         "actor/pg_clipfrac": pg_clipfrac.detach().item(),
         "actor/pg_clipfrac_lower": pg_clipfrac_lower.detach().item(),
         "actor/ppo_kl": ppo_kl.detach().item(),
         "actor/fipo/influence_weights_mean": influence_weights_mean.detach().item(),
         "actor/fipo/influence_weights_mean_raw": influence_weights_mean_raw.detach().item(),
+        "actor/fipo/influence_weights_min": valid_iw.min().item() if valid_iw.numel() > 0 else 0.0,
+        "actor/fipo/influence_weights_max": valid_iw.max().item() if valid_iw.numel() > 0 else 0.0,
+        "actor/fipo/influence_weights_max_raw": valid_iw_raw.max().item() if valid_iw_raw.numel() > 0 else 0.0,
     }
-    if valid_iw.numel() > 0:
-        metrics["actor/fipo/influence_weights_min"] = valid_iw.min().item()
-        metrics["actor/fipo/influence_weights_max"] = valid_iw.max().item()
-        metrics["actor/fipo/influence_weights_max_raw"] = valid_iw_raw.max().item()
 
-    # IS distribution by advantage sign
     neg_valid = ratio[(advantages < 0) & valid_mask]
     pos_valid = ratio[(advantages > 0) & valid_mask]
-    if neg_valid.numel() > 0:
-        metrics["actor/fipo/neg_is_max"] = neg_valid.max().item()
-        metrics["actor/fipo/neg_is_p995"] = torch.quantile(neg_valid, 0.995).item()
-    if pos_valid.numel() > 0:
-        metrics["actor/fipo/pos_is_min"] = pos_valid.min().item()
-        metrics["actor/fipo/pos_is_p005"] = torch.quantile(pos_valid, 0.005).item()
+    metrics["actor/fipo/neg_is_max"] = neg_valid.max().item() if neg_valid.numel() > 0 else 0.0
+    metrics["actor/fipo/neg_is_p995"] = (
+        torch.quantile(neg_valid, 0.995).item() if neg_valid.numel() > 0 else 0.0
+    )
+    metrics["actor/fipo/pos_is_min"] = pos_valid.min().item() if pos_valid.numel() > 0 else 0.0
+    metrics["actor/fipo/pos_is_p005"] = (
+        torch.quantile(pos_valid, 0.005).item() if pos_valid.numel() > 0 else 0.0
+    )
     metrics["actor/fipo/pos_mini_frac"] = verl_F.masked_mean(
         ((ratio < 1e-3) & (advantages > 0)).float(), response_mask
     ).item()
-
-    # clip statistics
     metrics["actor/fipo/clip_frac_upper"] = verl_F.masked_mean(
         (influence_weights >= upper_bound - 1e-7).float(), response_mask
     ).item()

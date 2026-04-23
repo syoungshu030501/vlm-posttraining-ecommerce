@@ -17,6 +17,15 @@
 
 set -euo pipefail
 
+# Always clean up our own ray/vLLM workers on exit, otherwise GPU residue
+# (e.g. a leaked VLLM::Worker holding 30GB) breaks the next launch with OOM.
+cleanup() {
+    pkill -9 -f VLLM 2>/dev/null || true
+    pkill -9 -f "ray::"  2>/dev/null || true
+    pkill -9 -P $$ 2>/dev/null || true
+}
+trap cleanup EXIT INT TERM
+
 # --------------------------------------------------------------------- env
 ENV_NAME="${ENV_NAME:-VLM}"
 CONDA_BASE="$(conda info --base)"
@@ -25,6 +34,15 @@ source "${CONDA_BASE}/etc/profile.d/conda.sh"
 conda activate "${ENV_NAME}"
 
 export HF_ENDPOINT="${HF_ENDPOINT:-https://hf-mirror.com}"
+
+# When CUDA_VISIBLE_DEVICES is explicitly set by the user (which we do for
+# multi-tenant GPU sharing), Ray will NOT auto-isolate per-actor GPUs.
+# Without this flag, all 6 actor workers see {0..5} and torch defaults each
+# rank to device 0 → NCCL "Duplicate GPU detected" at FSDP broadcast.
+# With this flag, verl's worker.py:_setup_env_cuda_visible_devices uses
+# ray.get_accelerator_ids() to pin each worker to its own physical GPU.
+# (Ref: vendor/verl-latest/verl/workers/rollout/sglang_rollout/sglang_rollout.py:213)
+export RAY_EXPERIMENTAL_NOSET_CUDA_VISIBLE_DEVICES="${RAY_EXPERIMENTAL_NOSET_CUDA_VISIBLE_DEVICES:-1}"
 export TOKENIZERS_PARALLELISM=false
 export PYTHONPATH="${PWD}:${PYTHONPATH:-}"
 export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0}"
@@ -42,7 +60,9 @@ N_GPUS="${N_GPUS:-1}"               # 1×L20 minimum (8B + LoRA-merged + vllm ro
 BATCH_SIZE="${BATCH_SIZE:-4}"        # train_prompt_bsz
 N_RESP="${N_RESP:-8}"                # rollouts per prompt
 MINI_BSZ="${MINI_BSZ:-2}"            # PPO mini-batch (prompts)
-MAX_PROMPT_LEN="${MAX_PROMPT_LEN:-1024}"
+MICRO_BSZ_PER_GPU="${MICRO_BSZ_PER_GPU:-1}"   # PPO micro-batch (per-GPU, conservative)
+MAX_PROMPT_LEN="${MAX_PROMPT_LEN:-8192}"   # Qwen3-VL: 1 image up to ~3k image tokens + text;
+                                           # image tokens cannot be truncated, so headroom matters
 MAX_RESP_LEN="${MAX_RESP_LEN:-1024}"
 GEN_TP="${GEN_TP:-1}"
 
@@ -83,6 +103,9 @@ python -m src.stage3_fipo.main_fipo \
     actor_rollout_ref.actor.optim.lr=1e-6 \
     actor_rollout_ref.actor.optim.lr_warmup_steps=10 \
     actor_rollout_ref.actor.ppo_mini_batch_size=${MINI_BSZ} \
+    actor_rollout_ref.actor.ppo_micro_batch_size_per_gpu=${MICRO_BSZ_PER_GPU} \
+    actor_rollout_ref.rollout.log_prob_micro_batch_size_per_gpu=${MICRO_BSZ_PER_GPU} \
+    actor_rollout_ref.ref.log_prob_micro_batch_size_per_gpu=${MICRO_BSZ_PER_GPU} \
     actor_rollout_ref.actor.entropy_coeff=0 \
     actor_rollout_ref.actor.grad_clip=1.0 \
     actor_rollout_ref.actor.use_kl_loss=False \
@@ -96,16 +119,21 @@ python -m src.stage3_fipo.main_fipo \
     actor_rollout_ref.rollout.n=${N_RESP} \
     actor_rollout_ref.rollout.temperature=1.0 \
     actor_rollout_ref.rollout.top_p=0.95 \
-    actor_rollout_ref.rollout.gpu_memory_utilization=0.55 \
+    actor_rollout_ref.rollout.gpu_memory_utilization=0.70 \
     actor_rollout_ref.rollout.tensor_model_parallel_size=${GEN_TP} \
     actor_rollout_ref.rollout.enable_chunked_prefill=True \
     actor_rollout_ref.rollout.max_num_batched_tokens=$((MAX_PROMPT_LEN + MAX_RESP_LEN)) \
+    actor_rollout_ref.rollout.max_model_len=$((MAX_PROMPT_LEN + MAX_RESP_LEN)) \
+    actor_rollout_ref.rollout.prompt_length=${MAX_PROMPT_LEN} \
+    actor_rollout_ref.rollout.response_length=${MAX_RESP_LEN} \
     actor_rollout_ref.ref.fsdp_config.param_offload=True \
     algorithm.adv_estimator=grpo \
     algorithm.use_kl_in_reward=False \
     algorithm.kl_ctrl.kl_coef=0.0 \
-    reward_model.reward_manager=vlm_audit_v2 \
-    reward_model.enable=False \
+    reward.reward_manager.source=importlib \
+    reward.reward_manager.name=VLMAuditRewardManager \
+    reward.reward_manager.module.path="${PWD}/src/stage3_fipo/verl_patches/reward_manager.py" \
+    reward.reward_model.enable=False \
     trainer.logger='["console"]' \
     trainer.project_name="${PROJECT_NAME}" \
     trainer.experiment_name="${EXP_NAME}" \
