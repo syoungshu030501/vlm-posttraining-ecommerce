@@ -46,20 +46,29 @@ export RAY_EXPERIMENTAL_NOSET_CUDA_VISIBLE_DEVICES="${RAY_EXPERIMENTAL_NOSET_CUD
 export TOKENIZERS_PARALLELISM=false
 export PYTHONPATH="${PWD}:${PYTHONPATH:-}"
 export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0}"
+# Activate sitecustomize's torch.cuda.set_device remap so that non-contiguous
+# CUDA_VISIBLE_DEVICES (e.g. "0,3,4,5,6,7" when GPU 1/2 are taken) works with
+# verl's worker.set_device(physical_id) call. Inherited by every Ray worker.
+export FIPO_PATCH_VERL="${FIPO_PATCH_VERL:-1}"
 
 # --------------------------------------------------------------------- paths
 PROJECT_NAME="${PROJECT_NAME:-vlm-posttraining-ecommerce}"
 EXP_NAME="${EXP_NAME:-FIPO-v1-rule-reward}"
+# verl supports console / wandb / swanlab / mlflow / tensorboard.
+# Override with LOGGERS=console,swanlab when running for-real experiments.
+LOGGERS="${LOGGERS:-console}"
 MODEL_PATH="${MODEL_PATH:-${PWD}/models/sft_aux_merged}"
 TRAIN_FILE="${TRAIN_FILE:-${PWD}/data/fipo/train.parquet}"
 VAL_FILE="${VAL_FILE:-${PWD}/data/fipo/val.parquet}"
-CKPTS_DIR="${CKPTS_DIR:-${PWD}/models/rl_ckpt/${EXP_NAME}}"
+# RL ckpts are large (~99GB each, FSDP shard + optim state + HF dump).
+# Default to NFS to avoid filling local SSD; override with CKPTS_DIR env var.
+CKPTS_DIR="${CKPTS_DIR:-/mnt/nfs/young/VLM4reasoning/rl_ckpt/${EXP_NAME}}"
 
 # --------------------------------------------------------------------- shape
 N_GPUS="${N_GPUS:-1}"               # 1×L20 minimum (8B + LoRA-merged + vllm rollout)
-BATCH_SIZE="${BATCH_SIZE:-4}"        # train_prompt_bsz
+BATCH_SIZE="${BATCH_SIZE:-6}"        # train_prompt_bsz; must satisfy (BATCH_SIZE * ROLLOUT_N) % (N_GPUS * MICRO_BSZ_PER_GPU) == 0
 N_RESP="${N_RESP:-8}"                # rollouts per prompt
-MINI_BSZ="${MINI_BSZ:-2}"            # PPO mini-batch (prompts)
+MINI_BSZ="${MINI_BSZ:-3}"            # PPO mini-batch (prompts); (MINI_BSZ * ROLLOUT_N) must also be divisible by minimal_bsz
 MICRO_BSZ_PER_GPU="${MICRO_BSZ_PER_GPU:-1}"   # PPO micro-batch (per-GPU, conservative)
 MAX_PROMPT_LEN="${MAX_PROMPT_LEN:-8192}"   # Qwen3-VL: 1 image up to ~3k image tokens + text;
                                            # image tokens cannot be truncated, so headroom matters
@@ -134,14 +143,15 @@ python -m src.stage3_fipo.main_fipo \
     reward.reward_manager.name=VLMAuditRewardManager \
     reward.reward_manager.module.path="${PWD}/src/stage3_fipo/verl_patches/reward_manager.py" \
     reward.reward_model.enable=False \
-    trainer.logger='["console"]' \
+    trainer.logger="$(python -c "import sys,json; print(json.dumps([s.strip() for s in sys.argv[1].split(',') if s.strip()]))" "${LOGGERS}")" \
     trainer.project_name="${PROJECT_NAME}" \
     trainer.experiment_name="${EXP_NAME}" \
     trainer.n_gpus_per_node=${N_GPUS} \
     trainer.nnodes=1 \
     trainer.val_before_train=True \
     trainer.test_freq=10 \
-    trainer.save_freq=20 \
+    trainer.save_freq=40 \
+    trainer.max_actor_ckpt_to_keep=2 \
     trainer.total_epochs=2 \
     trainer.default_local_dir="${CKPTS_DIR}" \
     trainer.resume_mode=auto \
