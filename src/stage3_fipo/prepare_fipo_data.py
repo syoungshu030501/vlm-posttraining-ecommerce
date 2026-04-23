@@ -58,7 +58,7 @@ def _row_to_verl(row, split: str, idx: int) -> dict:
     return {
         "data_source": "vlm_audit",
         "prompt": [
-            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "system", "content": [{"type": "text", "text": SYSTEM_PROMPT}]},
             {"role": "user", "content": user_content},
         ],
         "images": [image_blob],

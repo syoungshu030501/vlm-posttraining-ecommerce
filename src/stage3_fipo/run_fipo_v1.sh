@@ -2,7 +2,8 @@
 # FIPO v1 single-node launch script for VLM e-commerce audit.
 #
 # Prereqs (one-time):
-#     1. bash scripts/setup_fipo_env.sh                       (~30 min)
+#     1. (already done) verl-latest installed --no-deps into the VLM conda env;
+#        tensordict / codetiming / torchdata / pybind11 / pylatexenc added.
 #     2. python -m src.stage3_fipo.prepare_fipo_data \
 #            --in_train data/sft/train.parquet \
 #            --in_val   data/sft/val.parquet \
@@ -17,7 +18,7 @@
 set -euo pipefail
 
 # --------------------------------------------------------------------- env
-ENV_NAME="${ENV_NAME:-VLM_FIPO}"
+ENV_NAME="${ENV_NAME:-VLM}"
 CONDA_BASE="$(conda info --base)"
 # shellcheck source=/dev/null
 source "${CONDA_BASE}/etc/profile.d/conda.sh"
@@ -25,7 +26,8 @@ conda activate "${ENV_NAME}"
 
 export HF_ENDPOINT="${HF_ENDPOINT:-https://hf-mirror.com}"
 export TOKENIZERS_PARALLELISM=false
-export PYTHONPATH="${PWD}:${PWD}/vendor/verl-latest:${PYTHONPATH:-}"
+export PYTHONPATH="${PWD}:${PYTHONPATH:-}"
+export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0}"
 
 # --------------------------------------------------------------------- paths
 PROJECT_NAME="${PROJECT_NAME:-vlm-posttraining-ecommerce}"
@@ -44,13 +46,23 @@ MAX_PROMPT_LEN="${MAX_PROMPT_LEN:-1024}"
 MAX_RESP_LEN="${MAX_RESP_LEN:-1024}"
 GEN_TP="${GEN_TP:-1}"
 
+# --------------------------------------------------------------------- distributed strategy
+# verl-latest supports fsdp / fsdp2 / megatron. We use fsdp2 by default
+# (per-param sharding, better CPU offload, finer wrap for Qwen3-VL vision tower).
+# Drop to "fsdp" if FSDP2 hits DTensor/vLLM-swap edge cases.
+ACTOR_STRATEGY="${ACTOR_STRATEGY:-fsdp2}"
+REF_STRATEGY="${REF_STRATEGY:-fsdp2}"
+
 # --------------------------------------------------------------------- FIPO knobs
+# verl-latest's PolicyLossConfig is a strict dataclass and rejects unknown
+# Hydra fields, so future_kl knobs are passed via env vars (read inside
+# src/stage3_fipo/verl_patches/future_kl_loss.py).
 LOSS_MODE="${LOSS_MODE:-future_kl}"  # set to "vanilla" to ablate FIPO -> standard GRPO
-DECAY_RATE="${DECAY_RATE:-12.0}"     # smaller than 32B's 32.0 (shorter responses)
-CHUNK_SIZE="${CHUNK_SIZE:-128}"
-FKL_CLIP="${FKL_CLIP:-0.2}"
-FKL_CLIP_HIGH_ONLY="${FKL_CLIP_HIGH_ONLY:-false}"
-SAFETY_THRESH="${SAFETY_THRESH:-4.0}"
+export FIPO_DECAY_RATE="${FIPO_DECAY_RATE:-12.0}"
+export FIPO_CHUNK_SIZE="${FIPO_CHUNK_SIZE:-128}"
+export FIPO_FKL_CLIP_RATIO="${FIPO_FKL_CLIP_RATIO:-0.2}"
+export FIPO_FKL_CLIP_HIGH_ONLY="${FIPO_FKL_CLIP_HIGH_ONLY:-false}"
+export FIPO_SAFETY_THRESH="${FIPO_SAFETY_THRESH:-4.0}"
 
 # --------------------------------------------------------------------- launch
 mkdir -p "${CKPTS_DIR}"
@@ -66,6 +78,8 @@ python -m src.stage3_fipo.main_fipo \
     data.train_batch_size=${BATCH_SIZE} \
     actor_rollout_ref.model.path="${MODEL_PATH}" \
     actor_rollout_ref.model.enable_gradient_checkpointing=True \
+    actor_rollout_ref.actor.strategy=${ACTOR_STRATEGY} \
+    actor_rollout_ref.ref.strategy=${REF_STRATEGY} \
     actor_rollout_ref.actor.optim.lr=1e-6 \
     actor_rollout_ref.actor.optim.lr_warmup_steps=10 \
     actor_rollout_ref.actor.ppo_mini_batch_size=${MINI_BSZ} \
@@ -73,11 +87,6 @@ python -m src.stage3_fipo.main_fipo \
     actor_rollout_ref.actor.grad_clip=1.0 \
     actor_rollout_ref.actor.use_kl_loss=False \
     actor_rollout_ref.actor.policy_loss.loss_mode=${LOSS_MODE} \
-    +actor_rollout_ref.actor.policy_loss.decay_rate=${DECAY_RATE} \
-    +actor_rollout_ref.actor.policy_loss.chunk_size=${CHUNK_SIZE} \
-    +actor_rollout_ref.actor.policy_loss.future_kl_clip_ratio=${FKL_CLIP} \
-    +actor_rollout_ref.actor.policy_loss.future_kl_clip_high_only=${FKL_CLIP_HIGH_ONLY} \
-    +actor_rollout_ref.actor.policy_loss.safety_thresh=${SAFETY_THRESH} \
     actor_rollout_ref.actor.clip_ratio_low=0.2 \
     actor_rollout_ref.actor.clip_ratio_high=0.28 \
     actor_rollout_ref.actor.clip_ratio_c=10.0 \

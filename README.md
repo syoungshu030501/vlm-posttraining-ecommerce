@@ -606,6 +606,50 @@ bash src/stage3_fipo/run_fipo_v1.sh
 - **`reward_model.enable=False`**：用 reward_manager 而不是 verl 内置的 RM 模型，不加载额外的 reward backbone
 - **FSDP offload 全开 + grad-ckpt + n_resp=8**：单卡 L20（45GB）跑 8B 临界可行；如内存紧张把 `N_RESP` 降到 4 或 `MAX_RESP_LEN` 降到 768
 - **`LOSS_MODE=vanilla`** 切回标准 GRPO 用于 ablation——只改一个环境变量
+- **FIPO knobs 走环境变量**：verl-latest 的 `PolicyLossConfig` 是严格 dataclass、拒绝未声明字段，hydra `+actor.policy_loss.decay_rate=...` 会被 reject。改成在 `run_fipo_v1.sh` 里 `export FIPO_DECAY_RATE / FIPO_CHUNK_SIZE / FIPO_FKL_CLIP_RATIO / FIPO_FKL_CLIP_HIGH_ONLY / FIPO_SAFETY_THRESH`，由 `future_kl_loss.py` 内部 `os.environ.get()` 读取——零侵入 vendor
+
+**分布式策略：FSDP2 vs FSDP1 vs Megatron vs DeepSpeed**：
+
+verl-latest 内置只支持 `fsdp / fsdp2 / megatron`（搜 `verl/workers/config/{actor,critic,engine}.py`）；**DeepSpeed ZeRO-3 不在 verl 一等公民列表**——要自己接 hybrid-engine 与 vLLM 的显存切换逻辑，工程量大且没有官方测试，本项目不考虑。
+
+| 策略 | 我们场景下的判断 |
+|---|---|
+| Megatron | ❌ 8B 单节点用不上 TP/SP/PP；要装额外的 megatron-core，配置复杂 |
+| DeepSpeed ZeRO-3 | ❌ verl 不内置；与 vLLM rollout 切换显存的逻辑要自己实现 |
+| FSDP1 | ✅ verl 默认、最稳，作为 fallback |
+| **FSDP2** ✅ | **首选**。per-parameter 分片，CPU offload 比 FSDP1 更省显存；对 Qwen3-VL 这类含 vision tower 的多模态模型包装更细（不会重复包 vision encoder）；我们 `ulysses_sequence_parallel_size=1`，不会触发 verl 内部的 FSDP2→FSDP1 强制回退 |
+
+启动脚本默认配置：
+```bash
+actor_rollout_ref.actor.strategy=fsdp2          # actor 训练
+actor_rollout_ref.ref.strategy=fsdp2            # ref forward
+actor_rollout_ref.actor.fsdp_config.param_offload=True
+actor_rollout_ref.actor.fsdp_config.optimizer_offload=True
+actor_rollout_ref.ref.fsdp_config.param_offload=True
+```
+
+如果 FSDP2 在 vLLM 显存切换或 Qwen3-VL DTensor 上踩坑，**降级到 FSDP1** 只需一行环境变量：
+
+```bash
+ACTOR_STRATEGY=fsdp REF_STRATEGY=fsdp bash src/stage3_fipo/run_fipo_v1.sh
+```
+
+**单卡 L20 (45GB) 跑 8B FIPO 的可行性**：
+
+| 组件 | 显存占用 | 备注 |
+|---|---:|---|
+| Actor FSDP2（offload） | 2-4 GB | 训练时分片拉回 |
+| Ref FSDP2（offload） | 1-2 GB | forward only |
+| vLLM rollout engine | ~25 GB | `gpu_memory_utilization=0.55` |
+| Optimizer state | 0 GPU | offload 到 CPU |
+| activations + grad-ckpt | 10-15 GB | 取决于 batch×seq |
+| **峰值估计** | **~40-44 GB** | **临界**，可能 OOM |
+
+→ 单卡仅适合**烟测**（验证代码链路通畅、看真实显存峰值）。**正式训练用 4 卡 FSDP2**（actor 4 卡分片每卡 4GB 模型，vLLM 复用同 4 卡，速度快 4-5 倍，显存压力大幅缓解）：
+
+```bash
+N_GPUS=4 CUDA_VISIBLE_DEVICES=0,1,4,5 bash src/stage3_fipo/run_fipo_v1.sh
+```
 
 ### P3.5 · 其它（低优先）
 

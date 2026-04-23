@@ -51,9 +51,9 @@ import torch
 from omegaconf import DictConfig
 
 import verl.utils.torch_functional as verl_F
-from verl.trainer.config import ActorConfig
 from verl.trainer.config.algorithm import AlgoConfig
 from verl.trainer.ppo.core_algos import agg_loss, register_policy_loss
+from verl.workers.config import ActorConfig
 
 
 @register_policy_loss("future_kl")
@@ -102,8 +102,11 @@ def compute_policy_loss_future_kl(
     )
 
     # ------------------------------------------------------------------ FIPO core
-    chunk_size = config.policy_loss.get("chunk_size", 128)
-    decay_rate = config.policy_loss.get("decay_rate", 128.0)
+    # verl-latest's PolicyLossConfig is a strict dataclass that does not accept
+    # future_kl-specific fields. We read them from env vars to stay zero-intrusion.
+    import os as _os
+    chunk_size = int(_os.environ.get("FIPO_CHUNK_SIZE", "128"))
+    decay_rate = float(_os.environ.get("FIPO_DECAY_RATE", "12.0"))
     gamma = 2.0 ** (-1.0 / decay_rate)
 
     pos_i = torch.arange(response_len, device=device).unsqueeze(1)  # (L, 1)
@@ -129,9 +132,10 @@ def compute_policy_loss_future_kl(
         future_kl += contrib
 
     # ------------------------------------------------------------------ influence weight + clip
-    fkl_clip_ratio = config.policy_loss.get("future_kl_clip_ratio", 0.0)
+    fkl_clip_ratio = float(_os.environ.get("FIPO_FKL_CLIP_RATIO", "0.2"))
+    fkl_clip_high_only = _os.environ.get("FIPO_FKL_CLIP_HIGH_ONLY", "false").lower() == "true"
     if fkl_clip_ratio != 0.0:
-        if not config.policy_loss.get("future_kl_clip_high_only", False):
+        if not fkl_clip_high_only:
             upper_bound = 1.0 + fkl_clip_ratio
             lower_bound = 1.0 - fkl_clip_ratio
         else:
@@ -144,7 +148,7 @@ def compute_policy_loss_future_kl(
         influence_weights = torch.clamp(torch.exp(future_kl), max=10.0).detach()
 
     # safety threshold: cap influence on negative-adv high-IS tokens
-    safe_threshold = config.policy_loss.get("safety_thresh", 4.0)
+    safe_threshold = float(_os.environ.get("FIPO_SAFETY_THRESH", "4.0"))
     mask_neg_high_is = (advantages < 0) & (ratio > safe_threshold)
     influence_weights = torch.where(
         mask_neg_high_is,
