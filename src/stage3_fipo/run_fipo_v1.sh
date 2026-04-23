@@ -34,6 +34,12 @@ source "${CONDA_BASE}/etc/profile.d/conda.sh"
 conda activate "${ENV_NAME}"
 
 export HF_ENDPOINT="${HF_ENDPOINT:-https://hf-mirror.com}"
+# bge-small-zh-v1.5 (used by reward_fn v2 semantic alignment) is already
+# cached at ~/.cache/huggingface/hub. hf-mirror occasionally hangs on the
+# HEAD etag check, blocking every RewardLoopWorker for 5+ min of retries.
+# Force offline mode so we trust the local cache (one-time download done).
+export HF_HUB_OFFLINE="${HF_HUB_OFFLINE:-1}"
+export TRANSFORMERS_OFFLINE="${TRANSFORMERS_OFFLINE:-1}"
 
 # When CUDA_VISIBLE_DEVICES is explicitly set by the user (which we do for
 # multi-tenant GPU sharing), Ray will NOT auto-isolate per-actor GPUs.

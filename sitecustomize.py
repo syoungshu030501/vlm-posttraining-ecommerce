@@ -30,55 +30,84 @@ except Exception:  # noqa: BLE001 - never break interpreter startup
 # the sentence-encoder.
 
 
-def _install_cuda_set_device_remap() -> None:
+def _install_verl_worker_gpu_remap() -> None:
     """
-    Patch torch.cuda.set_device to accept the *physical* GPU id reported by
-    ray.get_runtime_context().get_accelerator_ids() even when CUDA_VISIBLE_DEVICES
-    is non-contiguous or doesn't start at 0.
+    Patch verl.single_controller.base.worker.Worker._setup_env_cuda_visible_devices
+    so each Ray actor pins itself to the correct **torch-relative** GPU index
+    when CUDA_VISIBLE_DEVICES is non-contiguous (e.g. "1,2,3,4,5,6" to skip a
+    flaky GPU 0).
 
-    Why:
-        verl/single_controller/base/worker.py:281 calls
+    Why this exists:
+        Upstream calls
             get_torch_device().set_device(int(local_rank))
-        where `local_rank` is the physical GPU id (e.g. "7") reported by ray.
-        torch.cuda only sees indices 0..N-1 *inside* the CUDA_VISIBLE_DEVICES
-        mask, so set_device(7) raises "invalid device ordinal" whenever
-        CUDA_VISIBLE_DEVICES="0,3,4,5,6,7" or similar.
+        where `local_rank` is the *physical* GPU id reported by
+        ray.get_runtime_context().get_accelerator_ids()["GPU"][0] (e.g. "6").
+        torch.cuda only sees indices 0..N-1 inside the CUDA_VISIBLE_DEVICES
+        mask, so set_device(6) either:
+          - raises "invalid device ordinal" when 6 >= device_count, or worse
+          - silently lands on the wrong physical card when 6 < device_count,
+            causing two ranks to collide on the same GPU
+            (NCCL "Duplicate GPU detected").
 
-    The patch is a no-op for the common case (idx already in [0, device_count)),
-    so it cannot break vanilla code paths.
+    The fix maps physical id -> torch index via CUDA_VISIBLE_DEVICES.split(","),
+    leaving the rest of the upstream logic untouched. Only the `set_device`
+    call site changes, so it cannot regress single-tenant runs where
+    CVD="0,1,...,N-1" is already aligned.
 
-    Only activated when FIPO_PATCH_VERL=1 (set by run_fipo_v1.sh) to avoid
-    surprising other Python processes on the box.
+    Activated only when FIPO_PATCH_VERL=1 (set by run_fipo_v1.sh) so other
+    Python processes on the box don't pay the verl-import cost.
     """
     import os
 
     if os.environ.get("FIPO_PATCH_VERL", "0") != "1":
         return
+
     try:
-        import torch
-    except ImportError:
+        import ray
+        from verl.single_controller.base.worker import Worker
+        from verl.utils.device import get_torch_device, is_npu_available
+        from verl.utils.ray_utils import ray_noset_visible_devices
+    except Exception:  # noqa: BLE001 - never break interpreter startup
         return
-    if getattr(torch.cuda, "_fipo_set_device_remapped", False):
+
+    if getattr(Worker, "_fipo_gpu_remap_patched", False):
         return
 
-    _orig = torch.cuda.set_device
+    def _patched(self):  # type: ignore[no-untyped-def]
+        rocr_val = os.environ.get("ROCR_VISIBLE_DEVICES", None)
+        hip_val = os.environ.get("HIP_VISIBLE_DEVICES", None)
+        cuda_val = os.environ.get("CUDA_VISIBLE_DEVICES", None)
+        if hip_val:
+            val = os.environ.pop("HIP_VISIBLE_DEVICES")
+            if cuda_val:
+                assert val == cuda_val, (
+                    f"HIP_VISIBLE_DEVICES={val} disagrees with CUDA_VISIBLE_DEVICES={cuda_val}"
+                )
+            else:
+                cuda_val = val
+                os.environ["CUDA_VISIBLE_DEVICES"] = val
+        if rocr_val:
+            if cuda_val:
+                raise ValueError(
+                    "Don't set ROCR_VISIBLE_DEVICES alongside HIP/CUDA_VISIBLE_DEVICES."
+                )
+            cuda_val = os.environ.pop("ROCR_VISIBLE_DEVICES")
+            os.environ["CUDA_VISIBLE_DEVICES"] = cuda_val
 
-    def _safe_set_device(device):  # noqa: ANN001 - matches torch signature
-        if isinstance(device, torch.device):
-            idx = device.index
-        else:
-            idx = int(device)
-        n = torch.cuda.device_count()
-        if idx is None or 0 <= idx < n:
-            return _orig(device)
-        cvd = os.environ.get("CUDA_VISIBLE_DEVICES", "")
-        ids = [int(x) for x in cvd.split(",") if x.strip()]
-        if idx in ids:
-            return _orig(ids.index(idx))
-        return _orig(device)
+        if ray_noset_visible_devices():
+            device_name = "NPU" if is_npu_available else "GPU"
+            local_rank = ray.get_runtime_context().get_accelerator_ids()[device_name][0]
+            os.environ["LOCAL_RANK"] = local_rank
+            physical_id = int(local_rank)
+            cvd = os.environ.get("CUDA_VISIBLE_DEVICES", "")
+            ids = [int(x) for x in cvd.split(",") if x.strip()]
+            # Remap physical -> torch index. Falls back to identity when CVD
+            # is unset (= same as upstream behaviour).
+            torch_idx = ids.index(physical_id) if (ids and physical_id in ids) else physical_id
+            get_torch_device().set_device(torch_idx)
 
-    torch.cuda.set_device = _safe_set_device
-    torch.cuda._fipo_set_device_remapped = True
+    Worker._setup_env_cuda_visible_devices = _patched
+    Worker._fipo_gpu_remap_patched = True
 
 
-_install_cuda_set_device_remap()
+_install_verl_worker_gpu_remap()
