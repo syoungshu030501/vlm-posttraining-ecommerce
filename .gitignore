@@ -27,3 +27,6 @@ env/
 # Training logs and SwanLab local cache
 logs/
 swanlog/
+
+# Vendored verl-latest (cloned for reference, ~250MB; project ships only patches)
+vendor/verl-latest/
