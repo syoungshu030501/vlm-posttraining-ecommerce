@@ -929,6 +929,37 @@ disown
 | `val_before_train`（200 条） | ~5-8 min | `[validate]` log 块结束 |
 | 第一个 `train_step` | **总 ~12-18 min** 后开始 | `actor/loss` 第一次出现非零 |
 
+#### 决策记录：为什么用 RL 而不是继续 SFT 修难例（**2026-04-24**）
+
+挖矿后我们问过这个问题：既然 SFT-aux 已 98.8% 正确，剩下 351 条难例能不能直接用 SFT 续训解决？答：**`label_wrong` 那一类能，但占大头的 `align_low` 不能**——这恰好是为什么 v2 选 RL。
+
+**按难例类型分别分析**
+
+| 难例类型 | 数量 | SFT 续训能解？ | 关键约束 |
+|---|---:|---|---|
+| `label_wrong` | 24 (1.2%) | **能** | 二分类决策，GT 唯一，加进 SFT 数据 1 epoch 即可 |
+| `lexicon_contradict` | 6 (0.3%) | **能** | 同上 |
+| `align_low` | 254 (12.7%) | **不能（只能 50-70%）** | reason 是开放生成，GT 只是众多正确答案之一 |
+
+**SFT 治不了 `align_low` 的 4 个本质原因**
+
+1. **NLL 是 token-level**：模型生成「图中可见锋利金属边缘」与 GT「画面包含明显刀刃」语义对齐 0.85（reward_fn v2 给高分），但 SFT loss **每个 token 都罚**——把多种正确答案的多样性磨平
+2. **没有"近似奖励"概念**：BGE 语义对齐分数 = 0.7 还能拿 1.05/1.5 reward，SFT 没有"差不多对"这一档
+3. **5 个 reward 分量无法显式权衡**：v2 weights 是 `format=0.2, violation_match=2.0, semantic_align=1.5, lexicon_match=0.5, lexicon_contradict=-0.3`。SFT 只能隐式学到加权和，**没有调节旋钮**
+4. **Distribution shift**：SFT 在 GT 训练，infer 在 self-sample。RL 直接在 self-sample 上学，**不存在这个 gap**
+
+**佐证**：P2 段 Stage 1 消融已经验证过这个思路——`baseline (NLL)` vs `aux (SupCon+Triplet)` RM acc `+0.018`，证明 token-level NLL 不足以充分利用 reason 文本质量信号。当前问题同构。
+
+**反直觉的观察**：v1 reward saturation 的真正原因，**恰好是 SFT-aux 已经把所有"SFT 范式能解决的"都解决了**。剩下的难例正好就是「SFT 解不了，RL 才有空间」的那一类。SFT-aux 太强反而成了 RL 的前提。
+
+**建议的完整流水线（v3 之后再考虑）**
+
+```
+SFT baseline → SFT-aux → [可选 SFT v3：补 24 + 6 = 30 条 label_wrong/contradict 修死硬错] → FIPO v2 (hard-mined RL)
+```
+
+即「先 SFT 把硬错纠完，再 RL 把开放生成的文本质量推上去」。当前 v2 直接跳过 SFT v3，因为 30 条样本对 SFT 优化来说太少（容易过拟合），且 RL 的 `violation_match` 权重 2.0 也能间接解决判错；只在 v2 收敛后若 `label_wrong` 仍未消失才回补 SFT v3。
+
 ### P6 · Stage 4 RAG：置信度门控重设计 + 索引补强（**2026-04-24**）
 
 #### 原实现的 3 个核心问题
