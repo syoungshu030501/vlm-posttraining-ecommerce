@@ -743,6 +743,118 @@ ACTOR_STRATEGY=fsdp REF_STRATEGY=fsdp bash src/stage3_fipo/run_fipo_v1.sh
 
 **核心经验**：verl 0.8 + Ray + vLLM 这套技术栈对**字段一致性**（reward extra info / loss metrics 字段集需在所有 DP rank 间相同）和**进程隔离**（policy_loss/reward_manager 注册是 per-process 状态）有强假设；自定义 reward / loss 上手时几乎一定会撞上一次 `KeyError` 和一次 "Unsupported loss"，记住 sitecustomize + 固定 schema 两个套路就能少绕弯子。
 
+### P5 · FIPO v1 跑通后的 Reward Saturation 诊断（**2026-04-24**）
+
+#### 现象
+
+打通 FIPO 后稳定跑了 240 → 309 共 **69 步**（中间因 vLLM 多模态 `masked_scatter` 偶发 bug 崩溃，与 RL 算法无关）。但 **val 曲线几乎不动**：
+
+| step | val/total | Δ vs step 240 | 备注 |
+|---|---|---|---|
+| 240 | 4.7122 | — | resume 起点 |
+| 250 | 4.7123 | +0.0001 | |
+| 270 | 4.7130 | +0.0008 | |
+| 290 | 4.7071 | -0.0051 | |
+| 300 | 4.7097 | -0.0025 | |
+
+#### 根因：组内 reward 方差崩塌
+
+GRPO 用同 prompt 的 n=8 个 rollout 计算 advantage：`A = (r - mean(r)) / std(r)`。当训练样本"太简单"，所有 rollout 都拿到接近满分的 reward → `std → 0 → A → 0 → policy gradient = 0`。
+
+实测 19 个观察 step：
+
+| 指标 | 数值 |
+|---|---|
+| `critic/score/min` | 19/19 step 都是 4.5 |
+| `critic/score/max` | 19/19 step 都是 5.0 |
+| 组内 reward 跨度 | **始终 ≤ 0.5**（满分 5.0 的 10%） |
+| `actor/loss = 0` 的 step 比例 | **8/9 = 89%** |
+| `actor/grad_norm = 0` 的 step 比例 | **8/9 = 89%** |
+
+也就是说 `sft_aux_merged` 已经把当前 `train.parquet` 上的 reward 拉满，**RL 没有 informative sample 可学**。
+
+#### Reward 各分量饱和度（val 集）
+
+| 分量 | 当前 | 满分 | 饱和度 | 是否仍有 RL 学习空间 |
+|---|---|---|---|---|
+| `format_base` | 1.000 | 1.0 | 100% | 无 |
+| `violation_match` | 1.985 | 2.0 | 99.25% | 极小 |
+| `semantic_align` (cos sim 0.774) | 1.499 | 1.5 | 99.9% | 无 |
+| `lexicon` | 0.225 | 1.0 | 22.5% | **有空间但权重小（10%）** |
+| `reason_length` | 0.000 | 中性 | — | — |
+
+#### Reward Hacking 分析：**没发生**
+
+判定方法：观察 hacking 的 4 个典型信号是否在 step 240→309 出现漂移。
+
+| 信号 | step 240 | step 309 | 漂移 | 解读 |
+|---|---|---|---|---|
+| `response_length/mean` | 108 | 104 | -3.7% | 无堆词 / 无截断 |
+| `val/lexicon` | 0.2275 | 0.225 | -0.001 | 词表用法稳定 |
+| `val/violation_match` | 1.985 | 1.985 | 0 | 二分类无漂移 |
+| `val/semantic_align` | 1.4997 | 1.4997 | 0 | reason 与属性对齐稳定 |
+
+但 hacking 没发生的真正原因是 **策略权重几乎没动**（`grad_norm=0` 占 89%），不是模型"自觉守规矩"。
+
+#### 解决方案：困难样本重采样
+
+唯一可行路径是改变训练分布，让 GRPO 组内方差恢复。脚本：
+
+| 脚本 | 作用 |
+|---|---|
+| `src/stage3_fipo/mine_hard_samples.py` | 用 `sft_aux_merged` 在 `train.parquet` 全量 greedy 推理，调 `reward_fn v2` 离线打分，输出 `data/fipo/sft_aux_train_scores.jsonl`（含 reward + breakdown） |
+| `src/stage3_fipo/build_rl_train.py` | 从 jsonl 按 6 条规则（label_wrong / lexicon_contradict / align_low / length_bad / total_low / parse_failed）筛困难池，与原始 easy 池按 70/30 混合，输出 `rl_train.parquet` |
+
+困难样本判定规则（任一触发即归入 hard pool）：
+
+| 规则 | 触发条件 | 物理含义 |
+|---|---|---|
+| `label_wrong` | `breakdown.violation_match < 0` | 二分类预测与 GT 不符 |
+| `lexicon_contradict` | `breakdown.lexicon < 0` | reason 用词与 violation 标签自相矛盾 |
+| `align_low` | `breakdown.semantic_align_sim < 0.5` | reason 与商品属性语义偏离（潜在幻觉） |
+| `length_bad` | `breakdown.reason_length < 0` | reason 太短或太长 |
+| `total_low` | `reward < 4.5` | 综合得分明显低于 batch 平均 |
+| `parse_failed` | breakdown 中出现 `parse_failure` 或 `missing_fields` | JSON 解析失败 |
+
+#### 启动命令（等 GPU 空闲）
+
+```bash
+# 1) 离线挖矿（约 30-60 min on 1×A100，~2.5 GB VRAM）
+python -m src.stage3_fipo.mine_hard_samples \
+    --model_path models/sft_aux_merged \
+    --train_parquet data/fipo/train.parquet \
+    --out_jsonl data/fipo/sft_aux_train_scores.jsonl \
+    --batch_size 4 --max_new_tokens 512 --resume
+
+# 2) 看一眼困难样本分布（不写文件）
+python -m src.stage3_fipo.build_rl_train \
+    --scores_jsonl data/fipo/sft_aux_train_scores.jsonl \
+    --report_only
+
+# 3) 构造 RL 训练集（70% hard + 30% easy，共 1500 条）
+python -m src.stage3_fipo.build_rl_train \
+    --scores_jsonl data/fipo/sft_aux_train_scores.jsonl \
+    --train_parquet data/fipo/train.parquet \
+    --out_parquet data/fipo/rl_train.parquet \
+    --hard_frac 0.7 --total_size 1500
+
+# 4) FIPO v2：换 train_files、其它不变
+EXP_NAME=FIPO-v2-hard-mining \
+LOGGERS=console,swanlab CUDA_VISIBLE_DEVICES=1,2,3,4,5,6 N_GPUS=6 \
+TRAIN_FILE=$PWD/data/fipo/rl_train.parquet \
+setsid bash src/stage3_fipo/run_fipo_v1.sh > logs/fipo_v2_run.log 2>&1 &
+```
+
+#### 预期效果对比
+
+| 指标 | v1（全 easy） | v2（混困难） |
+|---|---|---|
+| `critic/score` 分布 | [4.5, 5.0] | [1.5, 5.0] |
+| 组内 std | ≈0.1 | ≈1.0 |
+| `actor/grad_norm` 非零 step 比例 | 11% | **>80%**（理论） |
+| val 提升潜力 | 0 | +0.05 ~ +0.15 |
+| Reward hacking 风险 | 低（无更新） | **中**，需监控 length 与 lexicon 漂移 |
+
 ### P3.5 · 其它（低优先）
 
 - LoRA 视觉 attn 启用：当前仅 LM + merger 加 LoRA。若评估发现细粒度视觉属性（颜色/材质）准确率掉，可白名单匹配 `visual.*qkv` / `visual.*proj`（注意视觉 encoder 默认冻结要先解冻或单独允许）

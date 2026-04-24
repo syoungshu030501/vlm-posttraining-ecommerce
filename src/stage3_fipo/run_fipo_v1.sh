@@ -57,6 +57,13 @@ export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0}"
 # verl's worker.set_device(physical_id) call. Inherited by every Ray worker.
 export FIPO_PATCH_VERL="${FIPO_PATCH_VERL:-1}"
 
+# Push Ray's CPU-RAM OOM kill threshold from the default 0.95 to 0.97.
+# We have 944GB of host RAM; FSDP param_offload alone for 8B-actor + 8B-ref
+# (~96GB combined) plus rollout buffers + bge encoder spikes near 0.95 when
+# rollout sequences are long. Bumping the threshold gives ~20GB of headroom
+# without disabling Ray's safety net entirely.
+export RAY_memory_usage_threshold="${RAY_memory_usage_threshold:-0.97}"
+
 # --------------------------------------------------------------------- paths
 PROJECT_NAME="${PROJECT_NAME:-vlm-posttraining-ecommerce}"
 EXP_NAME="${EXP_NAME:-FIPO-v1-rule-reward}"
@@ -129,7 +136,7 @@ python -m src.stage3_fipo.main_fipo \
     actor_rollout_ref.actor.clip_ratio_high=0.28 \
     actor_rollout_ref.actor.clip_ratio_c=10.0 \
     actor_rollout_ref.actor.fsdp_config.param_offload=True \
-    actor_rollout_ref.actor.fsdp_config.optimizer_offload=True \
+    actor_rollout_ref.actor.fsdp_config.optimizer_offload=False \
     actor_rollout_ref.rollout.name=vllm \
     actor_rollout_ref.rollout.n=${N_RESP} \
     actor_rollout_ref.rollout.temperature=1.0 \
