@@ -831,18 +831,24 @@ python -m src.stage3_fipo.build_rl_train \
     --scores_jsonl data/fipo/sft_aux_train_scores.jsonl \
     --report_only
 
-# 3) 构造 RL 训练集（70% hard + 30% easy，共 1500 条）
+# 3) 构造 RL 训练集（实跑用 50% hard + easy，共 1400 条；实际产 1749 条因 hard 池小于请求会触发上采样）
+#    注意：不要直接用默认 hard_frac=0.7 + total_size=1500 —— 我们实测困难池只有 351
+#    条 (17.6%)，0.7×1500 = 1050 → 触发 3x 上采样，难例会过度重复
 python -m src.stage3_fipo.build_rl_train \
     --scores_jsonl data/fipo/sft_aux_train_scores.jsonl \
     --train_parquet data/fipo/train.parquet \
-    --out_parquet data/fipo/rl_train.parquet \
-    --hard_frac 0.7 --total_size 1500
+    --out_parquet data/fipo/rl_train_hard.parquet \
+    --hard_frac 0.5 --total_size 1400 \
+    --align_thresh 0.5 --total_thresh 4.5
 
-# 4) FIPO v2：换 train_files、其它不变
-EXP_NAME=FIPO-v2-hard-mining \
-LOGGERS=console,swanlab CUDA_VISIBLE_DEVICES=1,2,3,4,5,6 N_GPUS=6 \
-TRAIN_FILE=$PWD/data/fipo/rl_train.parquet \
-setsid bash src/stage3_fipo/run_fipo_v1.sh > logs/fipo_v2_run.log 2>&1 &
+# 4) FIPO v2：换 train_files + 开 swanlab、其它与 v1 严格对齐
+export SWANLAB_API_KEY=$(awk '/password/ {print $2; exit}' "$HOME/.swanlab/.netrc")
+CUDA_VISIBLE_DEVICES="1,2,3,4,5,6" N_GPUS=6 \
+BATCH_SIZE=6 N_RESP=8 MINI_BSZ=3 MICRO_BSZ_PER_GPU=1 \
+LOGGERS=swanlab,console EXP_NAME=FIPO-v2-hard-mined \
+TRAIN_FILE=$PWD/data/fipo/rl_train_hard.parquet \
+setsid bash src/stage3_fipo/run_fipo_v1.sh > logs/fipo_v2_hard.log 2>&1 < /dev/null &
+disown
 ```
 
 #### 预期效果对比
@@ -854,6 +860,74 @@ setsid bash src/stage3_fipo/run_fipo_v1.sh > logs/fipo_v2_run.log 2>&1 &
 | `actor/grad_norm` 非零 step 比例 | 11% | **>80%**（理论） |
 | val 提升潜力 | 0 | +0.05 ~ +0.15 |
 | Reward hacking 风险 | 低（无更新） | **中**，需监控 length 与 lexicon 漂移 |
+
+#### 实测挖矿结果（2026-04-24，2000/2000 条）
+
+挖矿耗时：**4651 s（≈78 min）**，单卡 GPU 2 (L20 48GB)，BGE 编码器 + Qwen3-VL-8B，峰值显存 25.9 GB / 48 GB。
+
+| 难例规则 | 命中数 | 占比 | 说明 |
+|---|---:|---:|---|
+| `label_wrong`（violation 判错） | **24** | **1.2%** | SFT-aux 真错判，最硬骨头 |
+| `lexicon_contradict`（关键词矛盾） | 6 | 0.3% | reason 含违规词但判 false（或反之） |
+| `align_low`（BGE 语义对齐 < 0.5） | 254 | 12.7% | reason 措辞与 GT 偏离 |
+| `total_low`（总 reward < 4.5） | 351 | 17.6% | 上面三类的并集，等同 `is_hard` |
+
+> 核心启示：SFT-aux 在 violation 二分类上已经 **98.8% 正确**，下一阶段 RL 的边际收益主要在「reason 描述的细致度 / 与规则文档的对齐度」，而不是「敢不敢判违规」。
+
+#### v2 实际启动参数（2026-04-24）
+
+| 参数 | v1 (saturation) | **v2 (hard-mined)** | 决策依据 |
+|---|---|---|---|
+| `TRAIN_FILE` | `data/fipo/train.parquet` (2000) | `data/fipo/rl_train_hard.parquet` (1749) | 注入难例 |
+| `--hard_frac` | — | **0.5** | 1.0 全难例会丢失"easy 兜底"的稳定信号；0.7 上采样 3x 太激进 |
+| `--total_size` | — | **1400**（实际产 1749） | 接近 v1 量级，可比 |
+| `--align_thresh` | — | **0.5** | BGE 余弦 < 0.5 在中文电商 reason 上是「明显偏离」的经验线 |
+| `--total_thresh` | — | **4.5** | 与 v1 `critic/score` 上限 5.0 的 90% 分位对齐 |
+| 上采样比例 | — | **2.0x**（hard pool 351 → 700） | 等比例 + 对应 GRPO 8 rollouts，每条难例期望被采 16 次 |
+| 最终 mix | — | **700 hard + 1049 easy = 1749** | 难例占比 17.6% → **40%** |
+| `N_GPUS` | 6 | **6**（GPU 1-6） | 避开 GPU 0 ECC，留 GPU 7 给 calibration |
+| `BATCH_SIZE / N_RESP / MINI_BSZ / MICRO_BSZ_PER_GPU` | 6 / 8 / 3 / 1 | 6 / 8 / 3 / 1 | 保持不变，单变量对比 |
+| `MAX_PROMPT_LEN / MAX_RESP_LEN` | 8192 / 1024 | 8192 / 1024 | 保持不变 |
+| `optimizer_offload` | True → False（修复后） | **False** | 保留 v1 OOM 修复 |
+| `RAY_memory_usage_threshold` | 0.95 → 0.97（修复后） | **0.97** | 保留 v1 OOM 修复 |
+| `ACTOR_STRATEGY / REF_STRATEGY` | fsdp2 / fsdp2 | fsdp2 / fsdp2 | 保留 |
+| `GEN_TP` | 1 | 1 | 单卡 vLLM 实例，6 卡即 6 实例 |
+| `LOGGERS` | console（v1 没启 swanlab） | **swanlab,console** | 这次开 swanlab，方便 diff |
+| `CKPTS_DIR` | `/mnt/nfs/.../FIPO-v1-rule-reward` | `/mnt/nfs/.../FIPO-v2-hard-mined` | NFS，避免占满本地 SSD |
+| `total_epochs / save_freq / test_freq` | 2 / 40 / 10 | 2 / 40 / 10 | 保留 |
+| `val_before_train` | True | True | 拿 baseline 比较 |
+
+完整启动命令（已实跑，pid 2573644）：
+
+```bash
+export SWANLAB_API_KEY=$(awk '/password/ {print $2; exit}' "$HOME/.swanlab/.netrc")
+
+CUDA_VISIBLE_DEVICES="1,2,3,4,5,6" N_GPUS=6 \
+BATCH_SIZE=6 N_RESP=8 MINI_BSZ=3 MICRO_BSZ_PER_GPU=1 \
+LOGGERS=swanlab,console EXP_NAME=FIPO-v2-hard-mined \
+TRAIN_FILE=$PWD/data/fipo/rl_train_hard.parquet \
+setsid bash src/stage3_fipo/run_fipo_v1.sh > logs/fipo_v2_hard.log 2>&1 < /dev/null &
+disown
+```
+
+#### v2 关键观察指标（vs v1，按重要性排序）
+
+1. **`actor/grad_norm` 非零 step 占比**：v1 = 11%，v2 目标 ≥50%。这是判断 hard mining 解了 reward saturation 的最直接信号。
+2. **`critic/score` 标准差 / 直方图**：v1 = std≈0.1，几乎只在 [4.5, 5.0]；v2 期望 std≥0.5，分布拉宽到 [1.5, 5.0]。
+3. **`reward/lexicon`、`reward/semantic_align`** 各分量：监控是否出现 reward hacking（length 暴涨 / lexicon 全堆关键词）。
+4. **val_acc**（每 10 step）：v1 训完几乎不动；v2 期望 +0.05 ~ +0.15。
+5. **CPU RAM 占用峰值**：A+B 修复后稳定在 ~80%；超过 95% 即 Ray OOM。
+
+#### v2 启动后的初始化耗时实测
+
+| 阶段 | 耗时 | 状态信号 |
+|---|---|---|
+| Hydra config 解析 + Ray 启动 | ~30 s | `[TaskRunner]` 第一行日志 |
+| 6× RewardLoopWorker（含 BGE 加载） | ~60 s | `[RewardLoopWorker pid=...] BertModel LOAD REPORT` 出现 |
+| 6× vLLMHttpServer 初始化 | ~3-5 min | `vLLM ready` / 端口 listen |
+| FSDP shard + actor/ref load | ~3-5 min | GPU mem 从 ~500MB 涨到 ~30GB |
+| `val_before_train`（200 条） | ~5-8 min | `[validate]` log 块结束 |
+| 第一个 `train_step` | **总 ~12-18 min** 后开始 | `actor/loss` 第一次出现非零 |
 
 ### P6 · Stage 4 RAG：置信度门控重设计 + 索引补强（**2026-04-24**）
 
