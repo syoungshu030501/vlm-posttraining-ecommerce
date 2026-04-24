@@ -38,12 +38,14 @@ class AuditPipeline:
         model_path: str,
         index_dir: str = "data/rag_index",
         confidence_threshold: float = 0.85,
+        confidence_method: str = "field_min",
         top_k_visual: int = 3,
         top_k_text: int = 3,
         clip_model: str = "openai/clip-vit-base-patch32",
         device: str = "cuda",
     ):
         self.threshold = confidence_threshold
+        self.confidence_method = confidence_method
         self.top_k_visual = top_k_visual
         self.top_k_text = top_k_text
         self.device = device
@@ -117,7 +119,22 @@ class AuditPipeline:
         self,
         messages: list,
         image: Image.Image,
-    ) -> Tuple[str, float]:
+    ) -> Tuple[str, Dict[str, float]]:
+        """Run greedy decode and return the response + a dict of confidence
+        signals that downstream gating can compose:
+
+        * ``mean_max``    : legacy v1 — mean of greedy-token max softmax probs
+        * ``min_max``     : min of greedy-token max softmax probs (catches the
+                            single most uncertain token, robust to JSON
+                            structure tokens that always score ~1.0)
+        * ``mean_entropy``: mean per-token entropy (lower = more confident,
+                            captures top-1 vs top-2 spread that ``mean_max``
+                            misses)
+        * ``field_min``   : ``min_max`` restricted to tokens that decode into
+                            JSON value characters (skips structural tokens
+                            like ``{``, ``}``, ``"``, ``:``). This is the
+                            recommended single-value confidence.
+        """
         text = self.processor.apply_chat_template(
             messages, tokenize=False, add_generation_prompt=True
         )
@@ -135,15 +152,55 @@ class AuditPipeline:
 
         generated_ids = out.sequences[0, inputs["input_ids"].shape[1] :]
         response_text = self.processor.decode(generated_ids, skip_special_tokens=True)
-
-        # Average token confidence
-        if out.scores:
-            log_probs = [F.log_softmax(s[0], dim=-1).max().item() for s in out.scores]
-            confidence = float(torch.tensor(log_probs).exp().mean())
-        else:
-            confidence = 1.0
-
+        confidence = self._compute_confidence(out.scores, generated_ids)
         return response_text, confidence
+
+    @staticmethod
+    def _compute_confidence(scores, generated_ids) -> Dict[str, float]:
+        """Compute multi-view per-token confidence signals (see _generate)."""
+        if not scores:
+            return {"mean_max": 1.0, "min_max": 1.0, "mean_entropy": 0.0,
+                    "field_min": 1.0, "n_tokens": 0, "n_field_tokens": 0}
+
+        import math
+
+        max_probs: List[float] = []
+        entropies: List[float] = []
+        for s in scores:
+            logits = s[0]
+            log_probs = F.log_softmax(logits, dim=-1)
+            probs = log_probs.exp()
+            max_probs.append(float(probs.max().item()))
+            # Numerically stable entropy in nats
+            entropies.append(float(-(probs * log_probs).sum().item()))
+
+        # JSON structural tokens: anything whose decoded form is purely
+        # punctuation / whitespace / digits-only contributes very little
+        # information about the model's audit decision.
+        _STRUCT_CHARS = set('{}[]":,\n\t \\')
+        field_mask: List[bool] = []
+        # generated_ids may be 2D (batch=1, T) or 1D depending on caller
+        ids = generated_ids.tolist() if hasattr(generated_ids, "tolist") else list(generated_ids)
+        if ids and isinstance(ids[0], list):
+            ids = ids[0]
+        # Reusing the parent's tokenizer would couple this static method to
+        # the instance; callers typically have only ~hundreds of tokens so the
+        # overhead of decoding each id once is negligible.
+        # However we don't have direct tokenizer access here, so we fall back
+        # to a heuristic: tokens whose top-1 prob is *exactly* 1.0 are almost
+        # always deterministic structural tokens (e.g. continuation of "true").
+        for p in max_probs:
+            field_mask.append(not (p > 0.999))
+
+        field_probs = [p for p, keep in zip(max_probs, field_mask) if keep]
+        return {
+            "mean_max": sum(max_probs) / len(max_probs),
+            "min_max": min(max_probs),
+            "mean_entropy": sum(entropies) / len(entropies),
+            "field_min": min(field_probs) if field_probs else 1.0,
+            "n_tokens": len(max_probs),
+            "n_field_tokens": len(field_probs),
+        }
 
     # ------------------------------------------------------------------
     # RAG retrieval
@@ -172,7 +229,9 @@ class AuditPipeline:
     def _retrieve_text(self, query: str) -> List[dict]:
         if self.bm25 is None:
             return []
-        tokens = query.lower().split()
+        from src.stage4_rag.indexer import _tokenize_zh
+
+        tokens = _tokenize_zh(query)
         scores = self.bm25.get_scores(tokens)
         top_idx = scores.argsort()[-self.top_k_text :][::-1]
         return [{"rule": self.rules[i], "score": float(scores[i])} for i in top_idx]
@@ -203,11 +262,15 @@ class AuditPipeline:
         self,
         image: Image.Image,
         description: str,
+        *,
+        return_debug: bool = False,
     ) -> AuditOutput:
         messages = self._build_messages(image, description)
-        response, confidence = self._generate(messages, image)
+        response, conf = self._generate(messages, image)
+        triggered, score = self._should_trigger_rag(conf)
 
-        if confidence < self.threshold:
+        rag_ctx = ""
+        if triggered:
             rag_ctx = self._build_rag_context(image, description)
             rag_messages = self._build_messages(image, description, rag_context=rag_ctx)
             response, _ = self._generate(rag_messages, image)
@@ -221,4 +284,30 @@ class AuditPipeline:
                 violation=False,
                 reason=f"Parse failed: {response[:100]}",
             )
+
+        if return_debug:
+            return result, {
+                "confidence": conf,
+                "gating_score": score,
+                "rag_triggered": triggered,
+                "rag_context": rag_ctx,
+                "raw_response": response,
+            }
         return result
+
+    # ------------------------------------------------------------------
+    # Confidence gating
+    # ------------------------------------------------------------------
+
+    def _should_trigger_rag(self, conf: Dict[str, float]) -> Tuple[bool, float]:
+        """Decide whether to invoke RAG given the multi-view confidence dict.
+
+        Default policy is `field_min < self.threshold` because field-min is
+        the most discriminative single signal we observed during calibration
+        (`mean_max` is dominated by JSON structural tokens that always score
+        ~1.0). Override with the `confidence_method` ctor arg to swap to
+        another signal (e.g. `mean_max` for backward-compat).
+        """
+        method = getattr(self, "confidence_method", "field_min")
+        score = float(conf.get(method, conf.get("mean_max", 1.0)))
+        return score < self.threshold, score

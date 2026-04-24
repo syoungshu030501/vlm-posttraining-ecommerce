@@ -855,6 +855,81 @@ setsid bash src/stage3_fipo/run_fipo_v1.sh > logs/fipo_v2_run.log 2>&1 &
 | val 提升潜力 | 0 | +0.05 ~ +0.15 |
 | Reward hacking 风险 | 低（无更新） | **中**，需监控 length 与 lexicon 漂移 |
 
+### P6 · Stage 4 RAG：置信度门控重设计 + 索引补强（**2026-04-24**）
+
+#### 原实现的 3 个核心问题
+
+`AuditPipeline._generate` (v1) 用 `mean(max_softmax_prob)` 做置信度，阈值 0.85 拍脑袋。问题：
+
+1. **JSON 结构 token 噪声稀释**：`{`、`}`、`"`、`:`、字段名等 token 的 max prob ≈1.0，占 ≥60% token，**真正反映幻觉的 `violation` true/false 与 `reason` 实词被淹没**
+2. **无中文 BM25 分词**：`indexer.py` 与 `inference.py` 都用 `text.lower().split()`，对中文规则文档每条收缩为 1 个 token，BM25 几乎退化成全检索
+3. **violation_cases.jsonl 未入索引**：150 条真实违规案例存在 `data/raw/`，但 `indexer` 只索引规则库 → RAG 主要召回路径之一被废
+
+#### 修复
+
+| 模块 | 修复 | 文件 |
+|---|---|---|
+| 置信度多视图 | `_compute_confidence` 同时返回 `mean_max`/`min_max`/`field_min`/`mean_entropy` 4 个信号；新增 `field_min`（屏蔽 max_prob>0.999 的结构 token，只看真正"思考"的 token） | `src/stage4_rag/inference.py` |
+| 双策略门控 | `confidence_method` ctor 参数（默认 `field_min`，可切回 `mean_max` 兼容旧实验）；`predict(return_debug=True)` 暴露所有信号 + RAG 触发原因，便于校准 | 同上 |
+| 中文 BM25 | 抽公共 `_tokenize_zh()`：jieba 优先，缺失时回退字符级；`indexer.py` 与 `inference.py._retrieve_text` 共用 | `indexer.py`、`inference.py` |
+| 案例库入索引 | `indexer.py` 新增 `--case_file`；规则 + 案例统一进 BM25 | 同上 |
+| 本地 CLIP | `--clip_model` 默认指 `models/pretrained/clip-vit-base-patch32`，避开网络依赖 | `indexer.py` |
+| 离线 build | 已支持 `HF_HUB_OFFLINE=1` 全离线索引构建 | 同上 |
+
+#### 索引产物（已构建，2026-04-24）
+
+| 索引 | 维度/规模 | 大小 |
+|---|---|---|
+| FAISS visual | 3093 张 × 512 dim (CLIP-ViT-B/32) | 6.3 MB |
+| BM25 textual | 170 文档（20 规则 + 150 真实违规案例） | 489 KB |
+| image_paths | 3093 entries | 109 KB |
+
+#### 置信度 4 信号对比
+
+| 信号 | 计算 | 优点 | 缺点 |
+|---|---|---|---|
+| `mean_max` | mean of greedy-token max softmax prob | 廉价、单 forward | **被结构 token 稀释** |
+| `min_max` | min of greedy-token max softmax prob | 突出最不确定 token | 偶发噪声敏感 |
+| `mean_entropy` | mean per-token entropy（nats） | 反映分布而非贪心 | HIGHER = 更不确定（与其它三个相反） |
+| **`field_min`** | min(max_prob) over tokens with `max_prob ≤ 0.999`（自动屏蔽结构 token） | **针对性反映 reason/violation 不确定性** | 启发式过滤，对极端 case 有 false negative |
+
+> 推荐主选 `field_min`，搭配 RM 二次打分（待实现）做双门控；`mean_max` 仅保留供与旧实验对比用。
+
+#### 校准方法（已脚本化）
+
+`scripts/calibrate_confidence.py`：
+
+1. 用 `sft_aux_merged` greedy 跑 val.parquet 200 条，记录 4 个信号 + `is_correct`
+2. 对每个信号扫所有阈值，画 (recall_errors, precision, frac_triggered) 曲线
+3. 在 `target_recall=0.8` 约束下挑 precision 最高的阈值，写入 `results/stage4_confidence_calibration.json`
+4. 同时把每条 sample 的 `(index, conf, is_correct)` 都序列化，可后续回放/diff
+
+启动命令（约 10 min on 1 卡）：
+
+```bash
+python -m scripts.calibrate_confidence \
+    --model_path models/sft_aux_merged \
+    --val_parquet data/fipo/val.parquet \
+    --out_json results/stage4_confidence_calibration.json
+```
+
+#### 索引构建命令
+
+```bash
+# 完整：图像 (CLIP) + 文本 (BM25)，需 ~40s on 1 卡
+python -m src.stage4_rag.indexer \
+    --image_dir data/raw/images \
+    --rule_file data/raw/rules.jsonl \
+    --case_file data/raw/violation_cases.jsonl \
+    --out_dir data/rag_index
+
+# 只建文本索引（无 GPU 也可），用于无 CLIP 时
+python -m src.stage4_rag.indexer \
+    --image_dir data/raw/images \
+    --skip_visual --rule_file data/raw/rules.jsonl --case_file data/raw/violation_cases.jsonl \
+    --out_dir data/rag_index
+```
+
 ### P3.5 · 其它（低优先）
 
 - LoRA 视觉 attn 启用：当前仅 LM + merger 加 LoRA。若评估发现细粒度视觉属性（颜色/材质）准确率掉，可白名单匹配 `visual.*qkv` / `visual.*proj`（注意视觉 encoder 默认冻结要先解冻或单独允许）
