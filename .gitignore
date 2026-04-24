@@ -33,3 +33,6 @@ vendor/verl-latest/
 
 # Hydra runtime outputs
 outputs/
+
+# Personal interview notes (not part of public repo)
+docs/INTERVIEW.md

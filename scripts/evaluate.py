@@ -1,11 +1,24 @@
 """
 Evaluation script: compute JSON format accuracy, violation F1, and hallucination rate.
 
+Two evaluation modes:
+  * baseline  (default): plain greedy decode with the policy model
+  * rag       (--use_rag): Stage-4 AuditPipeline with confidence-gated retrieval
+
 Usage:
+    # baseline
     python scripts/evaluate.py \
-        --model_path models/rl_ckpt/latest \
+        --model_path models/sft_aux_merged \
         --test_parquet data/sft/test.parquet \
-        --out results.json
+        --out results/eval_sft_aux.json
+
+    # with RAG (confidence-gated retrieval over FAISS+BM25)
+    python scripts/evaluate.py \
+        --model_path models/sft_aux_merged \
+        --test_parquet data/sft/test.parquet \
+        --use_rag --rag_index_dir data/rag_index \
+        --rag_signal field_min --rag_threshold 0.85 \
+        --out results/eval_sft_aux_rag.json
 """
 from __future__ import annotations
 
@@ -106,16 +119,36 @@ def main(args: argparse.Namespace) -> None:
         config=vars(args),
         project=args.project_name,
         experiment_name=args.experiment_name,
-        tags=["evaluation"],
-        description="Model evaluation",
+        tags=["evaluation", "rag" if args.use_rag else "baseline"],
+        description=f"Model evaluation (use_rag={args.use_rag})",
     )
 
-    model, processor = load_model_and_processor(
-        args.model_path,
-        apply_lora=False,
-        use_flash_attn=True,
-    )
-    model.eval()
+    pipeline = None
+    model = processor = None
+    if args.use_rag:
+        from src.stage4_rag.inference import AuditPipeline
+
+        pipeline = AuditPipeline(
+            model_path=args.model_path,
+            index_dir=args.rag_index_dir,
+            confidence_threshold=args.rag_threshold,
+            confidence_method=args.rag_signal,
+            top_k_visual=args.rag_top_k_visual,
+            top_k_text=args.rag_top_k_text,
+            clip_model=args.rag_clip_model,
+            device=device,
+        )
+        print(
+            f"[eval] RAG enabled: signal={args.rag_signal} threshold={args.rag_threshold} "
+            f"top_k_visual={args.rag_top_k_visual} top_k_text={args.rag_top_k_text}"
+        )
+    else:
+        model, processor = load_model_and_processor(
+            args.model_path,
+            apply_lora=False,
+            use_flash_attn=True,
+        )
+        model.eval()
 
     df = pd.read_parquet(args.test_parquet)
     if args.max_samples > 0:
@@ -123,6 +156,8 @@ def main(args: argparse.Namespace) -> None:
 
     predictions = []
     ground_truths = []
+    rag_triggered_count = 0
+    confidence_signals: List[Dict] = []
 
     for _, row in tqdm(df.iterrows(), total=len(df)):
         import io
@@ -132,16 +167,30 @@ def main(args: argparse.Namespace) -> None:
         else:
             image = Image.open(str(img_val)).convert("RGB")
 
-        response = run_inference(model, processor, image, str(row["prompt"]), device)
-        parsed = try_parse(response)
-        predictions.append(parsed.__dict__ if parsed else None)
+        if pipeline is not None:
+            result, debug = pipeline.predict(image, str(row["prompt"]), return_debug=True)
+            parsed = result
+            if debug.get("rag_triggered"):
+                rag_triggered_count += 1
+            confidence_signals.append(debug.get("confidence", {}))
+            predictions.append(parsed.__dict__ if parsed else None)
+        else:
+            response = run_inference(model, processor, image, str(row["prompt"]), device)
+            parsed = try_parse(response)
+            predictions.append(parsed.__dict__ if parsed else None)
         ground_truths.append({"violation": row.get("violation", False)})
 
     metrics = compute_metrics(predictions, ground_truths)
+    if pipeline is not None:
+        n = len(predictions)
+        metrics["rag_triggered_rate"] = round(rag_triggered_count / max(n, 1), 4)
+        metrics["rag_signal"] = args.rag_signal
+        metrics["rag_threshold"] = args.rag_threshold
     print(json.dumps(metrics, indent=2, ensure_ascii=False))
     log_metrics(tracker, metrics)
 
     if args.out:
+        Path(args.out).parent.mkdir(parents=True, exist_ok=True)
         Path(args.out).write_text(json.dumps(metrics, indent=2, ensure_ascii=False))
         print(f"Results saved to {args.out}")
     finish_run(tracker)
@@ -155,4 +204,16 @@ if __name__ == "__main__":
     parser.add_argument("--max_samples", type=int, default=0)
     parser.add_argument("--project_name", default="vlm-posttraining")
     parser.add_argument("--experiment_name", default="evaluation")
+    # RAG knobs
+    parser.add_argument("--use_rag", action="store_true",
+                        help="Run AuditPipeline with confidence-gated RAG retrieval")
+    parser.add_argument("--rag_index_dir", default="data/rag_index")
+    parser.add_argument("--rag_signal", default="field_min",
+                        choices=["mean_max", "min_max", "field_min", "mean_entropy"])
+    parser.add_argument("--rag_threshold", type=float, default=0.85,
+                        help="Trigger RAG when the chosen signal crosses this threshold "
+                             "(< for max-prob signals, > for entropy)")
+    parser.add_argument("--rag_top_k_visual", type=int, default=3)
+    parser.add_argument("--rag_top_k_text", type=int, default=3)
+    parser.add_argument("--rag_clip_model", default="models/pretrained/clip-vit-base-patch32")
     main(parser.parse_args())

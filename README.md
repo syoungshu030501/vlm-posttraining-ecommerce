@@ -1035,6 +1035,125 @@ python -m src.stage4_rag.indexer \
     --out_dir data/rag_index
 ```
 
+### P6.1 · 阈值实测、Bug 修复与端到端评测装配（**2026-04-25**）
+
+P6 完成了置信度多视图与索引重建，本节记录把 RAG 真正"接进 evaluation pipeline"过程中实测出来的几个关键发现，**所有结论都来自当天在 `models/sft_aux_merged` + `data/rag_index` 上的实测，不是设计推断**。
+
+#### 1. 阈值实测：默认 `0.85` 在两个方向都错
+
+`AuditPipeline` 默认 `confidence_threshold=0.85` 是历史延续（`mean_max` 时代的经验值）。在 `data/fipo/val.parquet` 上跑 `sft_aux_merged` greedy decode（30 行 sanity，全部 `is_correct=True`，仅看 confidence 分布），4 个信号的实测分位数：
+
+| 信号 | min | p10 | p25 | median | p75 | p90 | max | 默认 0.85 触发率 |
+|---|---|---|---|---|---|---|---|---|
+| `mean_max` | 0.902 | 0.924 | 0.935 | 0.950 | 0.960 | 0.963 | 0.979 | **0%**（全大于 0.85，永不触发） |
+| `min_max` | 0.245 | 0.339 | 0.358 | 0.413 | 0.482 | 0.562 | 0.616 | **100%**（全小于 0.85，每条都触发） |
+| `field_min` | 0.245 | 0.339 | 0.358 | 0.413 | 0.482 | 0.562 | 0.616 | **100%** |
+| `mean_entropy`* | 0.056 | 0.106 | 0.117 | 0.142 | 0.172 | 0.195 | 0.281 | n/a（方向相反，越大越不确定） |
+
+\* `mean_entropy` 单位是 nats，`AuditPipeline._should_trigger_rag` 走 `< threshold` 路径时方向相反，需在调用方手动反转或换 method。
+
+**两个方向的失败模式**
+
+- `mean_max` 被 JSON 结构 token（max prob ≈ 1.0）稀释到 [0.90, 0.98] 这种"几乎全选满"的窄带，**用 0.85 作阈值意味着 RAG 永远不被触发**。这等同于退化成"baseline + 检索器只在内存里待着"。
+- `field_min` 屏蔽了 `max_prob > 0.999` 的结构 token 后，剩下都是 attribute 名 / `violation` / reason 实词的 max prob，本身就显著低（中位数 0.413）。**用 0.85 意味着每条都触发**，把 RAG 退化成"无脑两遍生成"，推理成本翻倍但选择性归零。
+
+**生产阈值决策**
+
+→ 选 `field_min < 0.40`（约 val 实测 p35 分位），**预期触发约 35% 样本**。理由：
+
+| 方案 | field_min 阈值 | 预期触发率 | 推理成本 | 选择性 | 评价 |
+|---|---|---|---|---|---|
+| 默认 | 0.85 | 100% | 2× | 0 | 无意义 |
+| 保守 | 0.36 (p25) | 25% | 1.25× | 高 | RAG 信号被裁剪掉一半，可能漏救 |
+| **选用** | **0.40 (~p35)** | **~35%** | **1.35×** | **较高** | **甜蜜点** |
+| 激进 | 0.48 (p75) | 75% | 1.75× | 低 | 接近"全触发"，得不偿失 |
+
+**为什么不直接用 `_recommend()` 自动选**：`scripts/calibrate_confidence.py:_recommend()` 依赖 `is_correct=False` 的样本来求 (recall, precision)。当前 `sft_aux_merged` 在 val 上 acc=100%（30/30），**找不到错误样本可标定**，自动选阈值退化成"recall_errors=0 时挑最大阈值"，会推回 0.85 这种无意义值。当 val acc 接近饱和时，更可靠的做法是改用**信号本身的分位数**作为选阈值的依据（本节的做法）。如未来用更难的 val 集（例如把 top-K hard-mined 样本灌进 val），可重新跑 `_recommend()` 闭环。
+
+#### 2. Bug：`_embed_image` 没解包 `BaseModelOutputWithPooling`
+
+`AuditPipeline._embed_image` 最初直接 `F.normalize(self.clip_model.get_image_features(...))`。在 `transformers ≥ 4.46` 上 `CLIPModel.get_image_features` 的返回不再是裸 tensor 而是 `BaseModelOutputWithPooling` 包装：
+
+```
+AttributeError: 'BaseModelOutputWithPooling' object has no attribute 'norm'
+  at src/stage4_rag/inference.py:215  emb = F.normalize(emb, dim=-1)
+```
+
+`indexer.build_visual_index` 早就有 `image_embeds → pooler_output → last_hidden_state.mean(1)` 的 fallback 链（P6 修过），**但 `inference.py` 这条路径漏写**。修复方法是把 indexer 的 fallback 完整搬到 `_embed_image` 中，同时在两边解包逻辑保持一致避免再分叉。
+
+#### 3. `evaluate.py` 加 `--use_rag` 端到端开关
+
+之前 `scripts/evaluate.py` 只走 baseline 推理（`run_inference()` 直接 `model.generate`），**没法测 RAG 的净收益**。本次给它装上 RAG 流水线开关，新参数：
+
+```bash
+--use_rag                       # 走 AuditPipeline，否则 baseline
+--rag_index_dir data/rag_index
+--rag_signal field_min          # mean_max / min_max / field_min / mean_entropy
+--rag_threshold 0.40
+--rag_top_k_visual 3
+--rag_top_k_text 3
+--rag_clip_model models/pretrained/clip-vit-base-patch32
+```
+
+实现要点：
+
+- `--use_rag` 走 `AuditPipeline.predict(return_debug=True)`，把每条样本的 `confidence`、`gating_score`、`rag_triggered`、`rag_context` 都拿回来；baseline 路径完全不变（向后兼容已有 `results/eval_sft_*.json`）
+- 复用现有 `compute_metrics()`，**额外把 `rag_triggered_rate / rag_signal / rag_threshold` 写进 `out` JSON**，方便后面横评不同阈值的成本-收益曲线
+- `Path(args.out).parent.mkdir(parents=True, exist_ok=True)`，写到 `results/` 等子目录不再 `FileNotFoundError`
+
+#### 4. 端到端评测：基线、设计与运行中现状
+
+**Baseline（无 RAG，已沉淀）**：
+
+| Ckpt | F1 | Precision | Recall | hallucination_rate | JSON ok |
+|---|---|---|---|---|---|
+| `sft_baseline_merged` | 0.9883 | 0.9806 | 0.9961 | **30.72%** | 100% |
+| `sft_aux_merged` | 0.9844 | 0.9767 | 0.9921 | **30.27%** | 100% |
+
+**关键诊断**：violation F1 已经在 98%+ 饱和（与 P5 RM 的 mean_margin 饱和、P6 RL 的 reward 饱和呼应）。**RAG 真正要打的指标是 `hallucination_rate`（30%）**——它定义为「`reason` 没引用任何 `attributes` key」，正是检索增强的目标场景：被检案例 / 规则文本作为 reason 的"锚点"喂回模型，理论上能直接降低这个比例。
+
+**RAG 评测命令**（**当前运行中**，单卡 GPU 7）：
+
+```bash
+CUDA_VISIBLE_DEVICES=7 PYTHONUNBUFFERED=1 \
+python -u scripts/evaluate.py \
+    --model_path models/sft_aux_merged \
+    --test_parquet data/sft/test.parquet \
+    --use_rag --rag_index_dir data/rag_index \
+    --rag_signal field_min --rag_threshold 0.40 \
+    --rag_top_k_visual 3 --rag_top_k_text 3 \
+    --out results/eval_sft_aux_rag.json
+```
+
+**实测吞吐**（前 35 条稳态后）：
+
+| 项 | 值 |
+|---|---|
+| 单样本平均时延 | ~10 s/it（含 ~35% 触发的二次生成 + CLIP encode + FAISS search + BM25 query） |
+| 全量 ETA | 664 × 10s ≈ **110 min** |
+| GPU 7 显存 | ~19.5 GB（VLM ckpt + CLIP-ViT-B/32 + FAISS in-memory） |
+| GPU 7 util | 80% – 100%（单卡推理瓶颈） |
+
+**待结果出来后回填的对比表**（占位，下一次 commit 补）：
+
+| 配置 | F1 | hallucination_rate | rag_triggered_rate |
+|---|---|---|---|
+| sft_aux_merged baseline | 0.9844 | 0.3027 | n/a |
+| sft_aux_merged + RAG (`field_min<0.40`) | TBD | TBD | TBD |
+| FIPO step 160 + RAG（如做 ckpt merge） | TBD | TBD | TBD |
+
+#### 5. Calibration 实操经验（踩坑记）
+
+- **stdout buffer 黑洞**：`nohup python scripts/calibrate_confidence.py > log 2>&1 &` 在没有 `PYTHONUNBUFFERED=1` 或 `python -u` 时，**`print` 全被 fully-buffered 吃掉**。第一次 200 行跑了 12+ min 看不到任何 `[calib] 20/200` 进度，看上去像卡死但 `nvidia-smi` SM=100% 在算。生产命令必须 `PYTHONUNBUFFERED=1 python -u ...`。
+- **`max_new_tokens=512` 容易撑满**：模型对个别 long-tail 样本会一直生成不出 EOS，跑满 512 token 单样本就要 30s+。对 calibration 这种"只要读 confidence 信号"的任务，`--max_new_tokens 320` 已经足够覆盖目标 JSON 结构（实测最长 reason 也就 200 token），把单样本时延从 ~10s 压到 ~3.7s。
+- **`limit=30` 快速 sanity**：用 30 行先跑通流水线（< 2 min），确认 `processor.tokenizer` 没 missing key、`out.scores` shape 一致、JSON parse 成功率 100%，再决定要不要 200 全量。这是被第一次 12 min 卡死后总结的预防做法。
+
+#### 6. 已知 limitations / 下一步
+
+- **没有 errors 可标定**：val 30 行 sft_aux_merged 全对 → 自动 `_recommend()` 失效。下一步可以把 `mine_hard_samples.py` 输出里 `total < 4.0` 的 50-100 条加进 val，构造"困难 val"再跑 `calibrate_confidence.py`，让 (recall_errors, precision) 曲线真正能用
+- **RM 二次打分门控未接**：当前只用 confidence 单门控。理想架构是 `confidence < τ_c → 检索 → RM 对 (baseline_resp, rag_resp) 打分 → 取高分`，避免 RAG 把对的样本带偏。`models/rm_ckpt_*` 已经训好可以直接调用，待端到端跑通后再补
+- **FIPO ckpt 还没合并**：`/mnt/nfs/young/VLM4reasoning/rl_ckpt/FIPO-v2-hard-mined/global_step_160` 是 FSDP shard，需要 `verl.scripts.model_merger` 转成 HF 标准格式才能给 `AuditPipeline` 用。RAG 当前只在 SFT-aux 上测
+
 ### P3.5 · 其它（低优先）
 
 - LoRA 视觉 attn 启用：当前仅 LM + merger 加 LoRA。若评估发现细粒度视觉属性（颜色/材质）准确率掉，可白名单匹配 `visual.*qkv` / `visual.*proj`（注意视觉 encoder 默认冻结要先解冻或单独允许）

@@ -212,6 +212,15 @@ class AuditPipeline:
 
         inputs = self.clip_proc(images=image, return_tensors="pt").to(self.device)
         emb = self.clip_model.get_image_features(**inputs)
+        # transformers >= 4.46 may wrap the return; mirror indexer.build_visual_index
+        if hasattr(emb, "image_embeds"):
+            emb = emb.image_embeds
+        elif hasattr(emb, "last_hidden_state"):
+            emb = (
+                emb.pooler_output
+                if hasattr(emb, "pooler_output") and emb.pooler_output is not None
+                else emb.last_hidden_state.mean(1)
+            )
         emb = F.normalize(emb, dim=-1)
         return emb.cpu().numpy().astype("float32")
 
