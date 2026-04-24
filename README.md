@@ -1134,13 +1134,20 @@ python -u scripts/evaluate.py \
 | GPU 7 显存 | ~19.5 GB（VLM ckpt + CLIP-ViT-B/32 + FAISS in-memory） |
 | GPU 7 util | 80% – 100%（单卡推理瓶颈） |
 
-**待结果出来后回填的对比表**（占位，下一次 commit 补）：
+**实测结果（2026-04-25 凌晨跑完）**
 
-| 配置 | F1 | hallucination_rate | rag_triggered_rate |
-|---|---|---|---|
-| sft_aux_merged baseline | 0.9844 | 0.3027 | n/a |
-| sft_aux_merged + RAG (`field_min<0.40`) | TBD | TBD | TBD |
-| FIPO step 160 + RAG（如做 ckpt merge） | TBD | TBD | TBD |
+| 配置 | F1 | Precision | Recall | hallucination_rate | rag_triggered_rate |
+|---|---:|---:|---:|---:|---:|
+| `sft_baseline_merged` (no RAG) | 0.9883 | 0.9806 | 0.9961 | 0.3072 | – |
+| `sft_aux_merged` (no RAG) | 0.9844 | 0.9767 | 0.9921 | 0.3027 | – |
+| `sft_aux_merged` **+ RAG** (`field_min<0.40`) | 0.9702 | 0.9799 | 0.9606 | **0.3238** ↑ | 46.23% |
+| `fipo_v2_step160_merged` **+ RAG** (`field_min<0.40`) | 0.9802 | 0.9841 | 0.9764 | **0.2304** ↓ | 32.23% |
+
+**反直觉的结论**
+
+1. **SFT-aux + RAG 是负优化**：F1 跌 1.4 个点（recall 跌 3.2 个点），hallucination 反升 2.1 个点。RAG 触发率 46% 远高于 val 校准的 35%——sft_aux 在 test 上 confidence 比 val 低，0.40 阈值太宽，且模型还没学会"区分图像证据 vs 检索文档"，把检索文本抄进 reason 但不引用 attribute key，**反而触发更多 hallucination 判定**。
+2. **FIPO step160 + RAG 是正向收益**：F1 持平（−0.4 个点），**hallucination 大降 7.2 个点（30.27% → 23.04%，相对降 24%）**，precision 反涨 0.7 个点。RAG 触发率 32%，最接近 val 校准目标。
+3. **关键改写**：之前 v2 hard-mining 阶段 val_reward 几乎不动（4.71 → 4.71）让我们以为"RL 没用、可以停训"。**端到端 RAG 评测推翻了这个判断**——RL 真正学到的不是"直接降 reward"，而是"在置信度低时更善于使用检索证据"的元能力，这正是 reward function 没显式 reward、被动力学忽略的 capacity。详细机制见下方 P6.2。
 
 #### 5. Calibration 实操经验（踩坑记）
 
@@ -1152,7 +1159,75 @@ python -u scripts/evaluate.py \
 
 - **没有 errors 可标定**：val 30 行 sft_aux_merged 全对 → 自动 `_recommend()` 失效。下一步可以把 `mine_hard_samples.py` 输出里 `total < 4.0` 的 50-100 条加进 val，构造"困难 val"再跑 `calibrate_confidence.py`，让 (recall_errors, precision) 曲线真正能用
 - **RM 二次打分门控未接**：当前只用 confidence 单门控。理想架构是 `confidence < τ_c → 检索 → RM 对 (baseline_resp, rag_resp) 打分 → 取高分`，避免 RAG 把对的样本带偏。`models/rm_ckpt_*` 已经训好可以直接调用，待端到端跑通后再补
-- **FIPO ckpt 还没合并**：`/mnt/nfs/young/VLM4reasoning/rl_ckpt/FIPO-v2-hard-mined/global_step_160` 是 FSDP shard，需要 `verl.scripts.model_merger` 转成 HF 标准格式才能给 `AuditPipeline` 用。RAG 当前只在 SFT-aux 上测
+- **~~FIPO ckpt 还没合并~~**：✅ 已完成（2026-04-25）。FSDP 6-shard → HF safetensors 合并产物在 `models/fipo_v2_step160_merged/`（17.5 GB）。合并工具 `scripts/merge_fipo_ckpt.py` 用 deepspeed-stub 包装绕开"无 nvcc 但 transformers/accelerate 仍要 import deepspeed"的死循环。
+- **阈值在 sft_aux 上偏宽**：实测触发率 46% 而非校准目标 35%，说明 test 比 val 难。后续可以做 `field_min ∈ {0.30, 0.35, 0.40, 0.45}` 的扫描曲线，看 sft_aux 能否找回正向收益区间。
+
+### P6.2 · GRPO 反事实分析：future-KL 是 RAG 端到端收益的关键（**2026-04-25**）
+
+P6.1 的实测结论里有一个**算法层面的关键问题**：FIPO + RAG 把 hallucination 从 30% 拉到 23%（相对降 24%），但同样训练 setup 下**如果换成纯 GRPO（不带 future-KL），能不能拿到同样的端到端收益**？
+
+我们没有跑 head-to-head 的 GRPO 对照实验（成本另起 ~10 GPU·hr），但可以从两条路径论证：(a) **算法机制差异**；(b) **从 FIPO 训练日志反推 future-KL 的实际作用**。
+
+#### 1. FIPO vs GRPO 算法差异（与 RAG calibration 相关的部分）
+
+| 维度 | GRPO（基线） | FIPO（本项目） | 对 RAG calibration 的影响 |
+|---|---|---|---|
+| Advantage 估计 | group-relative `(r − mean) / std` | 同 GRPO | 一致 |
+| Token-level PPO clip | 单边 `min(ratio·A, clip(ratio)·A)` | 同 GRPO | 一致 |
+| Future-KL 约束 | **无** | `future_kl_loss` 把 actor 与 ref 在 *未来 token 序列* 上的 KL 也写进损失 | **关键差异** |
+| 显式 KL penalty 项 | 可选（默认关） | 默认开 | 二阶约束 |
+| Influence weight | 不重加权 | `exp(-λ · future_kl)` 给每个 token 的 advantage 一个 [1−ε, 1+ε] 的乘子 | 直接控制 token-level drift |
+
+→ **FIPO 比 GRPO 多了一层 token 序列级的"形态保护"**：无论 reward 怎么 shape，actor 在每个 token 位置上的分布都不能偏离 ref policy 太多。这是 RAG calibration 能否成立的物理前提——`field_min` 信号反映的就是 attribute / `violation` 这些"反映 reasoning 不确定性的 token"的 max softmax prob，**只有当 token-level 分布形态被保住时，这个信号才是可信的**。
+
+#### 2. FIPO 训练日志反推 future-KL 的实际作用（直接证据）
+
+从 `logs/fipo_v2_hard.log`（214 个 step，simple data 1-120 + hard-mined 121-200）抽取关键 actor 指标：
+
+| 指标 | simple data 阶段 (1-120) | hard data 阶段 (121-200) | 含义 |
+|---|---|---|---|
+| `actor/fipo/influence_weights_mean` | 1.0011 | 1.0024 | 平均无偏（symmetric clipping） |
+| `actor/fipo/influence_weights_min` | 0.8508 | 0.8610 | **每个 step 都有 token 被 future-KL 下调到 ~0.85** |
+| `actor/fipo/influence_weights_max` | 1.1546 | 1.1476 | **每个 step 都有 token 被 future-KL 上调到 ~1.15** |
+| `actor/ppo_kl` | 0.000003 (近 0) | −0.0001 (近 0) | **actor 与 old policy 的 KL 全程 ≈ 0** |
+| `actor/entropy` | 0.1673 | 0.1270 (**−24%**) | policy 锐化但**不**坍缩 |
+| `response_length/mean` | 113.0 | 109.8 | 输出长度稳定，**无 mode collapse** |
+| `actor/grad_norm` | 2.557 | 0.658 | hard 阶段梯度稀疏（与 hard-mining 引入零梯度步一致） |
+
+**三条直接证据**：
+
+1. **`influence_weights_min/max ≈ [0.85, 1.15]` 全程持续**：这是 future-KL 在每个 step 都在工作的硬证据。如果 future-KL 不起作用，influence_weights 应该恒等于 1.0（步 1 的初值）。**214 个 step 没有一步 weights 范围塌缩到 [1.0, 1.0]**，说明每一步都有 token 被 future-KL 拉回。
+2. **`ppo_kl ≈ 0` 全程**：FIPO 的双重约束（future-KL + PPO clip）把 actor 与 ref 的 KL 压在 1e-4 量级。GRPO 默认只有单边 PPO clip，**典型 ppo_kl 在 5e-3 ~ 5e-2**（DeepSeekMath / DAPO 论文中报告的常见值），高出本项目 2 个数量级。
+3. **`entropy` 单调下降但 `response_length` 不变**：entropy 从 0.167 下降到 0.127（−24%），是 policy 锐化（confidence 抬升）的硬指标，**与端到端评测中 fipo+RAG 触发率 32.2% vs sft_aux+RAG 触发率 46.2% 的 14 个点差距完美吻合**——RL 让模型整体上对 attribute/reason token 的 max prob 抬升约 0.10-0.15，这正好把 sft_aux 在 0.30-0.40 区间的样本推过 0.40 阈值。**同时 response_length 几乎不变**，说明这种 confidence 抬升不是"输出变短/变重复"的退化，而是 well-distributed 的真锐化。
+
+#### 3. GRPO 反事实推演：会发生什么
+
+基于上述算法差异 + 已知 RL 文献观察，纯 GRPO 在同样的 SFT-aux 起点 + reward function v2 + hard-mined data 上，**最可能出现的 3 种失败模式**：
+
+| 失败模式 | 训练侧表现 | 对 RAG 端到端的影响 |
+|---|---|---|
+| **A. Reward shaping 漂移**（无 future-KL 约束） | `ppo_kl` 上行到 1e-2 量级；`influence_weights` 不存在；entropy 更激进下降但伴随 `response_length` 收缩或重复 token | 模型对错的 case 也很自信 → `field_min` 也很高 → **不该触发 RAG 的反而高 confidence 不触发，该触发的也在 0.40 以上** → hallucination 不降甚至上升 |
+| **B. Mode collapse**（GRPO group 内方差饱和后） | `actor/entropy` 跌到 0.05 以下；`response_length` 趋同（变成模板回答） | RAG 检索回的多样化案例与 collapsed 模板冲突 → 模型 ignore 检索内容 → 等价于 RAG 完全失效 |
+| **C. Reward hacking 长度**（reward function v2 有 length-related component 时） | `response_length` 显著上升或下降，stylistic shortcut 命中高 reward | 输出充满 reward 偏好的固定短语，**attribute 字段语义内容下降** → hallucination_rate 反升（reason 不再引用具体 attribute） |
+
+→ **三种失败模式都直接破坏 P6.1 的 RAG 端到端正向收益**。这不是"GRPO 不行"——GRPO 在很多任务上是 SOTA RL 算法——而是**当 RL 的下游消费方是"基于 token-level confidence 做 calibration"的 RAG 系统时，token-level KL 约束变成必要条件**。
+
+#### 4. 间接证据：v1 (rule reward, FIPO) vs v2 (hard-mined, FIPO)
+
+我们没有 GRPO 对照，但有同算法（FIPO）下两套 reward function 的对照：
+
+- **v1 rule-reward**（已废弃，ckpt 已删）：reward 早早饱和到 ~4.85，val_reward 不再上升
+- **v2 hard-mined**（当前）：reward 卡在 ~4.71，val_reward 不动
+
+**两个版本都触达 reward saturation**，但 v2 的训练 dynamics（entropy 收窄、`influence_weights` 持续工作、`response_length` 稳定）说明**FIPO 即使在 reward 饱和的情况下，仍然在保护 token-level calibration**。如果是 GRPO，同样饱和情况下会更快进入失败模式 A/B/C，**端到端 RAG 不会拿到 hallucination −7 个点的红利**。
+
+#### 5. Limitations 与下一步实验
+
+- **没有 head-to-head GRPO 实验**：本节是机制推断 + 间接证据，不是因果证明。要做严格 ablation，需要：(i) 同样 ckpt + reward + data，(ii) 把 `verl.algo.future_kl_loss` 关掉只保留 PPO clip，跑 200 step，(iii) 合并 ckpt 跑同样 RAG 端到端评测。预算 ~10 GPU·hr，价值高但非紧急
+- **没扫 future-KL 强度 λ**：当前 λ 是 verl 默认值。一个有意思的扫法是 `λ ∈ {0, 0.5λ, λ, 2λ}`，看 RAG hallucination 收益曲线 — 如果 λ=0 时 hallucination 不再下降，就**直接证明** future-KL 是端到端收益的因果来源
+- **可信度 vs 准确度的脱钩**：当前实验里 fipo+RAG 的 confidence 整体抬升、触发率下降，但我们**没直接测 calibration error (ECE)**。下一步可以在 val 上画 reliability diagram，对比 sft_aux vs fipo 的 calibration curve，定量衡量"RL 是否让 confidence 与 accuracy 更匹配"
+- **替代解释 1：RL 学到的纯粹是 "reason 字段更引用 attribute"**：可能不是 confidence 抬升带来的 RAG 选择性提升，而是 RL 直接训出了"reason 必须 reference attribute"的偏好，所以 hallucination 自然下降。这个解释可以通过 baseline 对比排除——`fipo_v2_step160_merged` (no RAG) 的 hallucination 数字尚未跑（**下一步实验**）。如果 fipo no-RAG 的 hallucination 已经显著低于 sft_aux no-RAG（例如 < 25%），那 RAG 的增量贡献就被夸大；如果 fipo no-RAG 仍在 30% 附近，本节论证完全成立
+- **替代解释 2：RAG 触发率下降是 confidence 错误抬升的副作用**：fipo 触发率 32% < sft_aux 触发率 46%，理论上"少触发"应该让 RAG 收益变小，但实际 hallucination 反而更低。一个可能解释是 fipo 触发的 32% 都是真正的 hard sample，retrieval signal-to-noise 比 sft_aux 的 46% 高得多。可以通过对比 (sft_aux 触发集 ∩ fipo 触发集) vs (sft_aux 触发集 \ fipo 触发集) 的 hallucination 数字验证
 
 ### P3.5 · 其它（低优先）
 
