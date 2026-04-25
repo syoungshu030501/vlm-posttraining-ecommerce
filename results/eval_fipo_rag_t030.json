@@ -1,0 +1,11 @@
+{
+  "n_samples": 664,
+  "json_format_accuracy": 1.0,
+  "violation_precision": 0.9805,
+  "violation_recall": 0.9921,
+  "violation_f1": 0.9863,
+  "hallucination_rate": 0.2364,
+  "rag_triggered_rate": 0.0768,
+  "rag_signal": "field_min",
+  "rag_threshold": 0.3
+}

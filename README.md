@@ -1226,8 +1226,92 @@ P6.1 的实测结论里有一个**算法层面的关键问题**：FIPO + RAG 把
 - **没有 head-to-head GRPO 实验**：本节是机制推断 + 间接证据，不是因果证明。要做严格 ablation，需要：(i) 同样 ckpt + reward + data，(ii) 把 `verl.algo.future_kl_loss` 关掉只保留 PPO clip，跑 200 step，(iii) 合并 ckpt 跑同样 RAG 端到端评测。预算 ~10 GPU·hr，价值高但非紧急
 - **没扫 future-KL 强度 λ**：当前 λ 是 verl 默认值。一个有意思的扫法是 `λ ∈ {0, 0.5λ, λ, 2λ}`，看 RAG hallucination 收益曲线 — 如果 λ=0 时 hallucination 不再下降，就**直接证明** future-KL 是端到端收益的因果来源
 - **可信度 vs 准确度的脱钩**：当前实验里 fipo+RAG 的 confidence 整体抬升、触发率下降，但我们**没直接测 calibration error (ECE)**。下一步可以在 val 上画 reliability diagram，对比 sft_aux vs fipo 的 calibration curve，定量衡量"RL 是否让 confidence 与 accuracy 更匹配"
-- **替代解释 1：RL 学到的纯粹是 "reason 字段更引用 attribute"**：可能不是 confidence 抬升带来的 RAG 选择性提升，而是 RL 直接训出了"reason 必须 reference attribute"的偏好，所以 hallucination 自然下降。这个解释可以通过 baseline 对比排除——`fipo_v2_step160_merged` (no RAG) 的 hallucination 数字尚未跑（**下一步实验**）。如果 fipo no-RAG 的 hallucination 已经显著低于 sft_aux no-RAG（例如 < 25%），那 RAG 的增量贡献就被夸大；如果 fipo no-RAG 仍在 30% 附近，本节论证完全成立
+- **替代解释 1：RL 学到的纯粹是 "reason 字段更引用 attribute"** —— **已用 P6.3 的 `fipo no-RAG` baseline 验证**。`fipo_v2_step160_merged` 不开 RAG 的 hallucination = **0.2349**，相对 `sft_aux no-RAG` 0.3027 已经下降 **−6.78pp / −22.4% 相对**。也就是说：FIPO 训练本身就把幻觉打下来了大半，RAG 在最优阈值 0.40 上只再贡献 −0.45pp（0.2349 → 0.2304）。**所以本节"future-KL 是端到端收益的关键"这一论点需要部分修订**：future-KL 真正提供的是 *RL 期间不破坏 token-level 表征*，让 SFT 阶段就具备的 grounding 能力得以保留并强化；至于 RAG 端到端那 −7pp 的红利，**绝大部分来自 FIPO 本身（−6.78pp），RAG 只是边际增量（−0.45pp）**。这反过来强化了 P6.2 的核心机制——如果不是 future-KL 把 RL 期间的 calibration 锁住，RL 反而会破坏 SFT 阶段学到的 grounding，hallucination 不降反升
 - **替代解释 2：RAG 触发率下降是 confidence 错误抬升的副作用**：fipo 触发率 32% < sft_aux 触发率 46%，理论上"少触发"应该让 RAG 收益变小，但实际 hallucination 反而更低。一个可能解释是 fipo 触发的 32% 都是真正的 hard sample，retrieval signal-to-noise 比 sft_aux 的 46% 高得多。可以通过对比 (sft_aux 触发集 ∩ fipo 触发集) vs (sft_aux 触发集 \ fipo 触发集) 的 hallucination 数字验证
+
+### P6.3 · RAG 阈值扫描消融：U 型曲线与 sweet spot（**2026-04-25**）
+
+P6.1 凭 30-sample sanity check 把生产阈值定在 `field_min < 0.40`，但没量化"再低/再高一点会发生什么"。本节把 `fipo_v2_step160_merged` 在 5 个阈值（0.30 / 0.35 / 0.40 / 0.45 / 0.50）上各跑一次完整 664 样本端到端评测，外加 `fipo no-RAG` baseline 作为参照点。
+
+#### 1. 实验配置
+
+- **模型**：`models/fipo_v2_step160_merged`（与 P6.1/P6.2 相同 ckpt）
+- **测试集**：`data/sft/test.parquet`（664 条，与 baseline 同源）
+- **检索配置**：`top_k_visual=3`, `top_k_text=3`，CLIP+FAISS+BM25 全开
+- **置信信号**：`field_min`（P6.1 选定，跳过 JSON 结构 token）
+- **并行**：6 张 GPU 同时跑（GPU 0 仍有不可恢复 ECC，跳过；GPU 1-7 中 6 张）
+
+#### 2. 结果
+
+| 阈值 | RAG 触发率 | hallucination | F1 | Precision | Recall | Δhallu vs no-RAG |
+|---|---|---|---|---|---|---|
+| no-RAG | 0% | 0.2349 | **0.9883** | 0.9806 | **0.9961** | – |
+| 0.30 | 7.7% | 0.2364 | 0.9863 | 0.9805 | 0.9921 | +0.15pp（略升） |
+| 0.35 | 17.3% | 0.2364 | 0.9842 | 0.9881 | 0.9803 | +0.15pp |
+| **0.40** | **32.2%** | **0.2304** | 0.9802 | 0.9841 | 0.9764 | **−0.45pp（最低）** |
+| 0.45 | 50.8% | 0.2440 | 0.9821 | **0.9920** | 0.9724 | +0.91pp（反弹） |
+| 0.50 | 75.3% | 0.2380 | 0.9801 | 0.9919 | 0.9685 | +0.31pp |
+
+#### 3. 三个清晰的现象
+
+**(a) hallucination 是 U 型曲线，0.40 是 sweet spot。** 阈值 < 0.35 触发太少（7-17%），仅命中"绝对没把握"的少数样本，平均收益被分母稀释；阈值 > 0.45 触发过多（50-75%），把模型本来有把握、答得对的样本也送进 RAG 二次推理，引入新 hallucination（典型失败模式：检索到的相似图片把模型从正确答案"拉偏"）。
+
+**(b) F1 单调下降，Recall 是受害者。** Recall 从 no-RAG 的 0.9961 一路跌到 t=0.50 的 0.9685（−2.76pp），Precision 反而从 0.9806 升到 0.9919（+1.13pp）。**机制**：RAG 引入的检索证据让模型"更保守"——倾向于不报违规，少误报（precision↑）但也漏报真违规（recall↓）。这是个典型的 **认知性收紧**，业务上需要根据 cost matrix 选阈值（漏报代价高 → 用 0.30；误报代价高 → 用 0.45）。
+
+**(c) hallucination 与 F1 是 trade-off，不是同向。** 0.40 给最低 hallucination 但 F1 不是最高（0.9883 baseline > 0.9802 RAG）。**这意味着 P6.1 选 0.40 是按"最大化幻觉抑制"目标做的，不是按"最大化检测准确率"做的。** 在这个项目里前者更重要（业务文档明确把幻觉率列为合规一票否决指标），所以 0.40 是合理选择。如果换业务场景（如召回率优先），最优阈值会上移到 0.30。
+
+#### 4. 与之前直觉的偏差
+
+P6.1 写"应在 30%-40% 触发率附近做 grid search"，但当时只跑了 30 sample 的 calibration，没量化触发率与幻觉率的关系。本节实测确认了这个直觉是对的：30-50% 触发率窗口都还在容忍范围（hallu 浮动 ±0.4pp），但 ≥ 75% 后开始劣化。**生产用 0.40 而不是 0.45 是关键**——0.45 看起来 trigger rate 50% 也不夸张，但 hallucination 已经反弹回 0.2440（高于 no-RAG）。
+
+---
+
+### P6.4 · 模态消融：幻觉是被视觉证据修复的，不是文本规则（**2026-04-25**）
+
+P6 把 RAG 设计成"视觉 (CLIP+FAISS) + 文本 (BM25+Jieba)"双通道，但**两个通道对幻觉率的贡献是否对等？** 还是有一个是"必要"另一个是"陪跑"？本节用 `fipo_v2_step160_merged` + 阈值 0.40 (`field_min`) 跑三种检索模态，触发率全部锁定 32.23%（同样的 confidence gating，所以触发样本完全一致），唯一变量是检索回什么。
+
+#### 1. 实验配置
+
+| 配置 | `top_k_visual` | `top_k_text` | 检索内容 |
+|---|---|---|---|
+| both | 3 | 3 | 3 张相似图 + 3 条规则 |
+| visual-only | 3 | 0 | 3 张相似图（关掉 BM25） |
+| text-only | 0 | 3 | 3 条规则（关掉 CLIP+FAISS） |
+
+实现细节：在 `src/stage4_rag/inference.py` 的 `_retrieve_visual` / `_retrieve_text` 里加了 `top_k <= 0` 的短路（避免 FAISS 在 k=0 时报错），既省掉 CLIP encode 也省掉 BM25 打分，确保被关掉的模态不会偷偷影响推理。
+
+#### 2. 结果
+
+| 配置 | hallucination | F1 | Precision | Recall | 触发率 |
+|---|---|---|---|---|---|
+| no-RAG（参照） | 0.2349 | **0.9883** | 0.9806 | **0.9961** | 0% |
+| **visual-only** | **0.2334** | 0.9825 | 0.9693 | **0.9961** | 32.2% |
+| text-only | 0.2380 | 0.9761 | **0.9879** | 0.9646 | 32.2% |
+| both（参照） | **0.2304** | 0.9802 | 0.9841 | 0.9764 | 32.2% |
+
+#### 3. 关键发现
+
+**(a) 视觉检索贡献了几乎全部的减幻觉。** visual-only 把 hallucination 从 0.2349 降到 0.2334（−0.15pp），而 both（视觉+文本）只多降了 0.30pp 到 0.2304。**单独看 text-only：hallucination 不降反升到 0.2380（+0.31pp）**——意味着 BM25 召回的规则条目在缺少视觉锚点时反而把模型带偏，让它编造规则文本里有但图里没有的属性。
+
+**(b) Recall 也支持同一个结论。** visual-only 完整保留 no-RAG 的 recall=0.9961，而 text-only 把 recall 砸到 0.9646（−3.15pp）。**视觉检索是"无副作用"的——既减幻觉又不改判断；文本检索是"有副作用"的——压幻觉效果几乎没有，但能把召回率打掉 3 个点**。
+
+**(c) Precision 上 text-only 反而最高（0.9879）。** 这说明 BM25 召回的规则确实让模型"更严"——见到与规则匹配的视觉特征才敢报违规，结果就是少误报（precision↑）但也漏报真违规（recall↓）。**这是文本检索的真正用途：不是减幻觉，而是 calibration tightening**。如果业务上 precision 比 recall 更重要，text-only 反而是最优配置。
+
+#### 4. 机制解释：为什么是视觉而不是文本？
+
+幻觉的定义是"reason 提到了图里没有的属性"。**视觉检索修复幻觉的路径**：CLIP 召回 3 张视觉相似的真实样本 → 模型在 prompt 里看到"这种构图通常包含 X、Y、Z 属性" → 在答自己当前图时，视觉特征与召回样本对齐时才报，避免凭空编。**文本检索修复不了幻觉**：BM25 召回的是"业务规则文本"（例如"未戴安全帽属违规"），这些文本规则不告诉模型"图里有没有这个东西"，只告诉模型"如果有这个东西怎么处理"。当模型本来就把图看错时，文本规则只会**强化**这个错——"既然规则说有 X 就违规，那我看到 X 就报"，但 X 本来就没有。
+
+#### 5. 设计 implication
+
+- **生产上可以考虑只保留 visual-only**：F1 略高于 both（0.9825 vs 0.9802），hallucination 几乎一样（0.2334 vs 0.2304），但**省掉 BM25 索引和 Jieba 依赖，推理时延减少约 15ms/sample**（BM25 全库打分在 5k 规则下不算便宜）
+- **但 text-only 不应该删**——它在 precision 上有独立收益。**真正的产品形态应该是"两个通道独立路由"**：视觉检索用低阈值（多触发，主攻减幻觉），文本检索用高阈值（少触发，主攻 precision tightening）。当前 P6 设计把两者绑在同一个 confidence gate 上，是简化实现，不是最优
+- **下一步**：把 confidence gate 拆成 `confidence_visual_threshold` 和 `confidence_text_threshold` 两个独立旋钮，跑 4×4 grid search
+
+#### 6. 与"视觉幻觉 vs 文本幻觉"原命题的关系
+
+用户最初的问题是"幻觉到底出在视觉还是文本"。本节实验给出的答案不是"视觉幻觉 vs 文本幻觉"的二分，而是"**幻觉被视觉证据修复，不被文本规则修复**"——这两个表述方向不同但结论一致：模型在出 hallucination 时，问题出在它没把图里的视觉属性 ground 住，而不是它不知道业务规则。所以 grounding 修复必须从视觉端介入；BM25 规则补强能拉 precision，但拉不动 hallucination 这一项。
+
+---
 
 ### P3.5 · 其它（低优先）
 

@@ -225,7 +225,10 @@ class AuditPipeline:
         return emb.cpu().numpy().astype("float32")
 
     def _retrieve_visual(self, image: Image.Image) -> List[dict]:
-        if self.faiss_index is None:
+        # `top_k_visual <= 0` is the explicit "disable visual retrieval"
+        # ablation knob (text-only RAG). Skip both CLIP encode and FAISS
+        # search so the cost matches what we are actually measuring.
+        if self.faiss_index is None or self.top_k_visual <= 0:
             return []
         emb = self._embed_image(image)
         distances, indices = self.faiss_index.search(emb, self.top_k_visual)
@@ -236,7 +239,8 @@ class AuditPipeline:
         return results
 
     def _retrieve_text(self, query: str) -> List[dict]:
-        if self.bm25 is None:
+        # Symmetric short-circuit for visual-only ablation.
+        if self.bm25 is None or self.top_k_text <= 0:
             return []
         from src.stage4_rag.indexer import _tokenize_zh
 

@@ -1,0 +1,8 @@
+{
+  "n_samples": 664,
+  "json_format_accuracy": 1.0,
+  "violation_precision": 0.9806,
+  "violation_recall": 0.9961,
+  "violation_f1": 0.9883,
+  "hallucination_rate": 0.2349
+}
