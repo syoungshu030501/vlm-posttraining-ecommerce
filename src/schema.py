@@ -145,3 +145,106 @@ def same_coarse(a: str | None, b: str | None) -> bool:
     """Whether two free-text categories land in the same coarse bucket."""
     return coarse_category(a) == coarse_category(b)
 
+
+# ---------------------------------------------------------------------------
+# Violation types (Stage 2 v3: field-wise PRM multi-class head)
+# ---------------------------------------------------------------------------
+# v3 把原 binary `violation` 拆为两个信号：
+#   1. violation_prob ∈ [0, 1]   (continuous，由双教师投票得到 soft target)
+#   2. violation_type             (multi-class 11 类，含 "无违规" 兜底)
+#
+# 类别可扩展：新增类型只需追加到 VIOLATION_TYPES 末尾并重训 type_head 最后
+# 一层；前面的 logits index 保持向后兼容。
+#
+# 顺序约定：index 0 永远是 "无违规"。
+
+VIOLATION_TYPES: tuple[str, ...] = (
+    "无违规",       # 0  fallback / negative class
+    # ↓ v2 已存在的 6 类
+    "极限词",       # 1
+    "材质虚标",     # 2
+    "功效夸大",     # 3
+    "品牌侵权",     # 4
+    "价格欺诈",     # 5
+    "图文不符",     # 6
+    # ↓ v3 新增 4 类
+    "涉黄涉政",     # 7
+    "医疗夸大",     # 8
+    "虚假代言",     # 9
+    "违禁品",       # 10
+)
+
+VIOLATION_TYPE_TO_ID: dict[str, int] = {t: i for i, t in enumerate(VIOLATION_TYPES)}
+
+# v2 → v3 老类名兼容映射（旧偏好数据里用的字段值）
+_VIOLATION_ALIASES: dict[str, str] = {
+    "false": "无违规", "False": "无违规", "0": "无违规", "": "无违规",
+    "true": "极限词",  # 老 binary 数据若只标 True 而无 type，回退到最常见类
+    "no_violation": "无违规",
+    "limit_word": "极限词",
+    "fake_material": "材质虚标",
+    "exaggeration": "功效夸大",
+    "brand_infringement": "品牌侵权",
+    "price_fraud": "价格欺诈",
+    "image_text_mismatch": "图文不符",
+}
+
+
+def normalize_violation_type(t: str | bool | None) -> str:
+    """Map free-text / legacy bool to canonical VIOLATION_TYPES entry.
+
+    Unknown strings → '无违规' (safer default; never picks a wrong specific type).
+    """
+    if t is None or t is False:
+        return "无违规"
+    if t is True:
+        return "极限词"
+    s = str(t).strip()
+    if s in VIOLATION_TYPES:
+        return s
+    if s in _VIOLATION_ALIASES:
+        return _VIOLATION_ALIASES[s]
+    return "无违规"
+
+
+def violation_type_id(t: str | bool | None) -> int:
+    return VIOLATION_TYPE_TO_ID[normalize_violation_type(t)]
+
+
+# ---------------------------------------------------------------------------
+# Field-wise label container (Stage 2 v3 preference data)
+# ---------------------------------------------------------------------------
+# 每条样本除了原 (image, prompt, response, chosen, rejected) 还有这块 labels：
+
+@dataclass
+class FieldLabels:
+    """Field-wise PRM training targets for one response.
+
+    All fields are optional — missing fields are masked out in the loss
+    so legacy data that only has `violation_prob` still works.
+    """
+    category_coarse: str | None = None        # ∈ COARSE_CATEGORIES
+    attributes: list[dict] | None = None       # [{key, val, grounded: bool, mc: float}]
+    violation_prob: float | None = None        # ∈ [0, 1]
+    violation_type: str | None = None          # ∈ VIOLATION_TYPES
+    reason_align: float | None = None          # BGE 余弦 ∈ [0, 1]
+
+    @classmethod
+    def from_dict(cls, d: dict | None) -> "FieldLabels":
+        if not d:
+            return cls()
+        vt = d.get("violation_type")
+        return cls(
+            category_coarse=d.get("category_coarse") or (
+                coarse_category(d.get("category")) if d.get("category") else None
+            ),
+            attributes=d.get("attributes"),
+            violation_prob=d.get("violation_prob"),
+            violation_type=normalize_violation_type(vt) if vt is not None else None,
+            reason_align=d.get("reason_align"),
+        )
+
+    def has(self, name: str) -> bool:
+        v = getattr(self, name, None)
+        return v is not None and (not isinstance(v, list) or len(v) > 0)
+

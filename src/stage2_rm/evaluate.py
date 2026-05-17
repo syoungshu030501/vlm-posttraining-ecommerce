@@ -26,16 +26,17 @@ import torch
 from torch.utils.data import DataLoader
 
 from src.stage2_rm.dataset import PreferenceDataset, preference_collate_fn
-from src.stage2_rm.model import RewardModel
+from src.stage2_rm.model import ProcessRewardModel, RewardModel
 from src.utils.model_loader import load_model_and_processor
 
 
 @torch.no_grad()
 def evaluate_holdout(
-    rm: RewardModel,
+    rm,
     loader: DataLoader,
     strategies: list[str],
     device: torch.device,
+    is_prm: bool = False,
 ) -> Dict[str, float | dict]:
     rm.eval()
     n_correct = 0
@@ -44,26 +45,53 @@ def evaluate_holdout(
     chosen_len_sum = 0
     rejected_len_sum = 0
     per_strat = defaultdict(lambda: {"correct": 0, "total": 0, "margin_sum": 0.0})
+    prm_token_reward_sum = 0.0
+    prm_token_count = 0
 
     idx_iter = iter(strategies)
     for batch in loader:
         def to_dev(t):
             return t.to(device) if isinstance(t, torch.Tensor) else t
 
-        chosen_r = rm(
-            input_ids=to_dev(batch["chosen_input_ids"]),
-            attention_mask=to_dev(batch["chosen_attention_mask"]),
-            pixel_values=to_dev(batch.get("chosen_pixel_values")),
-            image_grid_thw=to_dev(batch.get("chosen_image_grid_thw")),
-            mm_token_type_ids=to_dev(batch.get("chosen_mm_token_type_ids")),
-        )
-        rejected_r = rm(
-            input_ids=to_dev(batch["rejected_input_ids"]),
-            attention_mask=to_dev(batch["rejected_attention_mask"]),
-            pixel_values=to_dev(batch.get("rejected_pixel_values")),
-            image_grid_thw=to_dev(batch.get("rejected_image_grid_thw")),
-            mm_token_type_ids=to_dev(batch.get("rejected_mm_token_type_ids")),
-        )
+        if is_prm:
+            chosen_token_r = rm(
+                input_ids=to_dev(batch["chosen_input_ids"]),
+                attention_mask=to_dev(batch["chosen_attention_mask"]),
+                pixel_values=to_dev(batch.get("chosen_pixel_values")),
+                image_grid_thw=to_dev(batch.get("chosen_image_grid_thw")),
+                mm_token_type_ids=to_dev(batch.get("chosen_mm_token_type_ids")),
+            )
+            rejected_token_r = rm(
+                input_ids=to_dev(batch["rejected_input_ids"]),
+                attention_mask=to_dev(batch["rejected_attention_mask"]),
+                pixel_values=to_dev(batch.get("rejected_pixel_values")),
+                image_grid_thw=to_dev(batch.get("rejected_image_grid_thw")),
+                mm_token_type_ids=to_dev(batch.get("rejected_mm_token_type_ids")),
+            )
+            chosen_mask = to_dev(batch["chosen_response_mask"])
+            rejected_mask = to_dev(batch["rejected_response_mask"])
+
+            chosen_r = (chosen_token_r * chosen_mask).sum(1) / chosen_mask.sum(1).clamp(min=1)
+            rejected_r = (rejected_token_r * rejected_mask).sum(1) / rejected_mask.sum(1).clamp(min=1)
+
+            active_tokens = chosen_token_r[chosen_mask.bool()]
+            prm_token_reward_sum += active_tokens.sum().item()
+            prm_token_count += active_tokens.numel()
+        else:
+            chosen_r = rm(
+                input_ids=to_dev(batch["chosen_input_ids"]),
+                attention_mask=to_dev(batch["chosen_attention_mask"]),
+                pixel_values=to_dev(batch.get("chosen_pixel_values")),
+                image_grid_thw=to_dev(batch.get("chosen_image_grid_thw")),
+                mm_token_type_ids=to_dev(batch.get("chosen_mm_token_type_ids")),
+            )
+            rejected_r = rm(
+                input_ids=to_dev(batch["rejected_input_ids"]),
+                attention_mask=to_dev(batch["rejected_attention_mask"]),
+                pixel_values=to_dev(batch.get("rejected_pixel_values")),
+                image_grid_thw=to_dev(batch.get("rejected_image_grid_thw")),
+                mm_token_type_ids=to_dev(batch.get("rejected_mm_token_type_ids")),
+            )
         diff = (chosen_r - rejected_r).detach().cpu()
         correct = (diff > 0).float()
         n_correct += int(correct.sum().item())
@@ -89,6 +117,8 @@ def evaluate_holdout(
         "mean_margin": margin_sum / max(n_total, 1),
         "len_shortcut": (chosen_len_sum - rejected_len_sum) / max(n_total, 1),
     }
+    if is_prm and prm_token_count > 0:
+        overall["mean_token_reward"] = prm_token_reward_sum / prm_token_count
     by_strategy = {
         k: {
             "n": v["total"],
@@ -108,18 +138,27 @@ def run(args: argparse.Namespace) -> Dict[str, float | dict]:
         use_flash_attn=args.flash_attn,
         device_map=None,
     )
-    rm = RewardModel(
-        model,
-        head_bias=args.head_bias,
-        head_layernorm=args.head_layernorm,
-        head_mlp=args.head_mlp,
-        head_mlp_hidden=args.head_mlp_hidden,
-        head_dropout=args.head_dropout,
-    ).to(device)
+    if args.prm:
+        rm = ProcessRewardModel(
+            model,
+            head_dropout=args.prm_head_dropout,
+        ).to(device)
+    else:
+        rm = RewardModel(
+            model,
+            head_bias=args.head_bias,
+            head_layernorm=args.head_layernorm,
+            head_mlp=args.head_mlp,
+            head_mlp_hidden=args.head_mlp_hidden,
+            head_dropout=args.head_dropout,
+        ).to(device)
     state = torch.load(args.reward_head, map_location=device)
     rm.reward_head.load_state_dict(state)
 
-    dataset = PreferenceDataset(args.holdout_parquet, processor)
+    dataset = PreferenceDataset(
+        args.holdout_parquet, processor,
+        response_mask=args.prm,
+    )
 
     import pandas as pd
     df = pd.read_parquet(args.holdout_parquet)
@@ -135,7 +174,7 @@ def run(args: argparse.Namespace) -> Dict[str, float | dict]:
         collate_fn=lambda b: preference_collate_fn(b, pad_token_id=pad_id),
     )
 
-    metrics = evaluate_holdout(rm, loader, strategies, device)
+    metrics = evaluate_holdout(rm, loader, strategies, device, is_prm=args.prm)
     metrics["meta"] = {
         "model_path": args.model_path,
         "reward_head": args.reward_head,
@@ -145,6 +184,7 @@ def run(args: argparse.Namespace) -> Dict[str, float | dict]:
         "head_mlp": args.head_mlp,
         "head_mlp_hidden": args.head_mlp_hidden,
         "head_dropout": args.head_dropout,
+        "prm": args.prm,
         "strategy_distribution": dict(Counter(strategies)),
     }
     print(json.dumps({k: v for k, v in metrics.items() if k != "meta"}, indent=2, ensure_ascii=False))
@@ -169,4 +209,6 @@ if __name__ == "__main__":
     parser.add_argument("--head_mlp_hidden", type=int, default=None)
     parser.add_argument("--head_dropout", type=float, default=0.0)
     parser.add_argument("--out_json", default=None)
+    parser.add_argument("--prm", action="store_true", help="Evaluate as PRM model.")
+    parser.add_argument("--prm_head_dropout", type=float, default=0.1)
     run(parser.parse_args())

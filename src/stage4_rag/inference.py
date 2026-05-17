@@ -29,7 +29,7 @@ import torch
 import torch.nn.functional as F
 from PIL import Image
 
-from src.schema import SYSTEM_PROMPT, AuditOutput, try_parse
+from src.schema import SYSTEM_PROMPT, AuditOutput, coarse_category, try_parse
 
 
 class AuditPipeline:
@@ -324,3 +324,274 @@ class AuditPipeline:
         method = getattr(self, "confidence_method", "field_min")
         score = float(conf.get(method, conf.get("mean_max", 1.0)))
         return score < self.threshold, score
+
+
+# ----------------------------------------------------------------------------
+# Stage 4.1 — Agentic RAG: Plan-Then-Retrieve + Verify-then-Rewrite
+# ----------------------------------------------------------------------------
+
+class AgenticAuditPipeline(AuditPipeline):
+    """Two extensions on top of AuditPipeline that turn single-pass RAG into
+    a 3-step agentic loop:
+
+    1. **Plan-Then-Retrieve** — first-pass output's ``category`` is mapped to
+       a coarse bucket (10 buckets via :func:`schema.coarse_category`); BM25
+       text retrieval is then *routed* to docs whose ``category`` matches the
+       same coarse bucket OR is "通用" (cross-category platform rules).
+    2. **Long-tail forced trigger** — categories in the long-tail set
+       (medical / electronics / food / others) bypass the confidence gate and
+       always trigger retrieval, since these are the categories where the
+       base model is least reliable (training data <2% each).
+    3. **Verify-then-Rewrite** — after the second-pass output, ask the *same*
+       model whether the audit conclusion is consistent with both the image
+       and the retrieved evidence. We read the next-token softmax mass on
+       "是" / "否" to obtain ``verify_score ∈ [0,1]``:
+
+       - ``verify_score < vt_low``      → fall back to v1 (reject v2).
+       - ``vt_low ≤ score < vt_high``   → rewrite once with feedback prompt.
+       - ``verify_score ≥ vt_high``     → accept v2.
+    """
+
+    DEFAULT_LONG_TAIL = ("医药", "电子产品", "食品", "其他")
+
+    def __init__(
+        self,
+        *args,
+        long_tail_categories: Optional[List[str]] = None,
+        verify_threshold_low: float = 0.5,
+        verify_threshold_high: float = 0.7,
+        enable_verify: bool = True,
+        enable_rewrite: bool = True,
+        enable_routing: bool = True,
+        enable_long_tail_trigger: bool = True,
+        **kwargs,
+    ):
+        super().__init__(*args, **kwargs)
+        self.long_tail_set = set(long_tail_categories or self.DEFAULT_LONG_TAIL)
+        self.vt_low = verify_threshold_low
+        self.vt_high = verify_threshold_high
+        self.enable_verify = enable_verify
+        self.enable_rewrite = enable_rewrite
+        self.enable_routing = enable_routing
+        self.enable_long_tail_trigger = enable_long_tail_trigger
+
+        tok = self.processor.tokenizer
+        # Take the first sub-token id of "是"/"否" — Qwen tokenizer encodes
+        # each Chinese character as a single token in practice, but we still
+        # take [0] to be safe.
+        self.yes_id = tok.encode("是", add_special_tokens=False)[0]
+        self.no_id = tok.encode("否", add_special_tokens=False)[0]
+
+    # ------------------------------------------------------------------
+    # Routed text retrieval (Plan-Then-Retrieve)
+    # ------------------------------------------------------------------
+
+    def _retrieve_text_routed(self, query: str, coarse: str) -> List[dict]:
+        """Same as ``_retrieve_text`` but only keeps docs whose ``category``
+        matches ``coarse`` or is "通用" / unset (platform-wide rules)."""
+        if self.bm25 is None or self.top_k_text <= 0:
+            return []
+        if not self.enable_routing:
+            return self._retrieve_text(query)
+
+        from src.stage4_rag.indexer import _tokenize_zh
+
+        tokens = _tokenize_zh(query)
+        scores = self.bm25.get_scores(tokens)
+
+        import numpy as np
+
+        keep_mask = np.zeros(len(self.rules), dtype=bool)
+        for i, r in enumerate(self.rules):
+            cat = r.get("category", "") or ""
+            keep_mask[i] = (cat == coarse) or (cat in ("通用", "")) or (
+                # cases use free-text but are normalised by coarse_category
+                coarse_category(cat) == coarse
+            )
+
+        masked = scores.copy().astype("float32")
+        masked[~keep_mask] = -1e9
+        top_idx = masked.argsort()[-self.top_k_text :][::-1]
+        return [
+            {"rule": self.rules[i], "score": float(masked[i])}
+            for i in top_idx
+            if masked[i] > -1e8
+        ]
+
+    def _build_routed_context(
+        self,
+        image: Image.Image,
+        description: str,
+        coarse: str,
+    ) -> Tuple[str, List[dict], List[dict]]:
+        visual_hits = self._retrieve_visual(image)
+        text_hits = self._retrieve_text_routed(description, coarse)
+
+        lines: List[str] = []
+        if visual_hits:
+            lines.append("相似违规案例（视觉检索）：")
+            for i, h in enumerate(visual_hits, 1):
+                lines.append(f"  {i}. {h['path']} (相似度 {h['score']:.3f})")
+        if text_hits:
+            lines.append(f"相关平台规则（文本检索 · 路由至「{coarse}」品类）：")
+            for i, h in enumerate(text_hits, 1):
+                rule_text = (h["rule"].get("text", "") or "")[:200]
+                cat = h["rule"].get("category", "")
+                lines.append(f"  {i}. [{cat}] {rule_text}")
+        return "\n".join(lines), visual_hits, text_hits
+
+    # ------------------------------------------------------------------
+    # Verifier (self-verification)
+    # ------------------------------------------------------------------
+
+    @torch.inference_mode()
+    def _verify(
+        self,
+        image: Image.Image,
+        parsed: AuditOutput,
+        rag_context: str,
+    ) -> float:
+        """Return P(yes) / (P(yes) + P(no)) at the next-token position.
+
+        ``1.0`` = the model fully agrees that the audit conclusion is
+        supported by image + retrieved evidence; ``0.0`` = strong disagreement.
+        """
+        attrs_str = "; ".join(
+            f"{k}: {v}" for k, v in (parsed.attributes or {}).items()
+        )
+        verify_q = (
+            "你是审核质检员。请基于商品图片以及下方的检索证据，"
+            "判断「待复核审核结论」是否被同时支持。\n\n"
+            f"【待复核审核结论】\n"
+            f"品类：{parsed.category}\n"
+            f"提取属性：{attrs_str}\n"
+            f"违规判定：{parsed.violation}\n"
+            f"理由：{parsed.reason}\n\n"
+            f"【检索证据】\n{rag_context or '（无）'}\n\n"
+            "结论的视觉断言是否与图片一致，且违规判定是否与证据一致？"
+            "只输出一个汉字：是 或 否。"
+        )
+        messages = [
+            {"role": "system", "content": "你是严谨的审核质检员，只输出「是」或「否」。"},
+            {
+                "role": "user",
+                "content": [
+                    {"type": "image", "image": image},
+                    {"type": "text", "text": verify_q},
+                ],
+            },
+        ]
+        text = self.processor.apply_chat_template(
+            messages, tokenize=False, add_generation_prompt=True
+        )
+        inputs = self.processor(
+            text=[text], images=[image], return_tensors="pt"
+        ).to(self.device)
+        out = self.model.generate(
+            **inputs,
+            max_new_tokens=1,
+            do_sample=False,
+            output_scores=True,
+            return_dict_in_generate=True,
+        )
+        logits = out.scores[0][0]
+        probs = F.softmax(logits, dim=-1)
+        yes_p = float(probs[self.yes_id].item())
+        no_p = float(probs[self.no_id].item())
+        return yes_p / (yes_p + no_p + 1e-8)
+
+    # ------------------------------------------------------------------
+    # Public interface — overrides
+    # ------------------------------------------------------------------
+
+    def predict(  # type: ignore[override]
+        self,
+        image: Image.Image,
+        description: str,
+        *,
+        return_debug: bool = False,
+    ):
+        # ---- Step 1 · First pass (no retrieval) ----
+        msg_v1 = self._build_messages(image, description)
+        resp_v1, conf = self._generate(msg_v1, image)
+        parsed_v1 = try_parse(resp_v1)
+
+        # ---- Step 2 · Multi-trigger gating ----
+        triggered_by_conf, score = self._should_trigger_rag(conf)
+        coarse = coarse_category(parsed_v1.category if parsed_v1 else "")
+        triggered_by_long_tail = (
+            self.enable_long_tail_trigger and coarse in self.long_tail_set
+        )
+        triggered = triggered_by_conf or triggered_by_long_tail
+
+        debug: Dict[str, Any] = {
+            "confidence": conf,
+            "gating_score": score,
+            "coarse_category": coarse,
+            "triggered_by_conf": triggered_by_conf,
+            "triggered_by_long_tail": triggered_by_long_tail,
+            "rag_triggered": triggered,
+            "verify_score": None,
+            "fallback_used": False,
+            "rewrite_used": False,
+            "raw_response_v1": resp_v1,
+        }
+
+        if not triggered:
+            result = parsed_v1 or AuditOutput(
+                "unknown", {}, False, f"Parse failed: {resp_v1[:100]}"
+            )
+            return (result, debug) if return_debug else result
+
+        # ---- Step 3 · Plan-Then-Retrieve (routed) ----
+        rag_ctx, visual_hits, text_hits = self._build_routed_context(
+            image, description, coarse
+        )
+        debug["rag_context"] = rag_ctx
+        debug["retrieved_text_categories"] = [
+            h["rule"].get("category", "") for h in text_hits
+        ]
+        debug["retrieved_visual_count"] = len(visual_hits)
+
+        # ---- Step 4 · Re-generate with augmented context ----
+        msg_v2 = self._build_messages(image, description, rag_context=rag_ctx)
+        resp_v2, _ = self._generate(msg_v2, image)
+        parsed_v2 = try_parse(resp_v2)
+        debug["raw_response_v2"] = resp_v2
+
+        if parsed_v2 is None:
+            debug["fallback_used"] = True
+            result = parsed_v1 or AuditOutput(
+                "unknown", {}, False, f"Both passes parse-failed: {resp_v2[:100]}"
+            )
+            return (result, debug) if return_debug else result
+
+        # ---- Step 5 · Verify ----
+        if not self.enable_verify:
+            return (parsed_v2, debug) if return_debug else parsed_v2
+
+        verify_score = self._verify(image, parsed_v2, rag_ctx)
+        debug["verify_score"] = verify_score
+
+        # ---- Step 6 · Decide: accept / rewrite / fallback ----
+        if verify_score < self.vt_low:
+            debug["fallback_used"] = True
+            result = parsed_v1 or parsed_v2
+        elif verify_score < self.vt_high and self.enable_rewrite:
+            debug["rewrite_used"] = True
+            feedback = (
+                "\n\n[质检员反馈] 上一版结论与证据匹配度不足。"
+                "请重新生成 JSON：reason 中每条断言都必须能被检索证据或图片直接支持，"
+                "不要引入证据中没有的属性。"
+            )
+            msg_v3 = self._build_messages(
+                image, description, rag_context=rag_ctx + feedback
+            )
+            resp_v3, _ = self._generate(msg_v3, image)
+            parsed_v3 = try_parse(resp_v3)
+            debug["raw_response_v3"] = resp_v3
+            result = parsed_v3 or parsed_v2
+        else:
+            result = parsed_v2
+
+        return (result, debug) if return_debug else result

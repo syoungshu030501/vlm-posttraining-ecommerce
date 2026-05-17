@@ -17,17 +17,55 @@ from PIL import Image
 from torch.utils.data import Dataset
 
 
+def compute_response_mask(
+    input_ids: torch.Tensor,
+    im_start_id: int,
+    im_end_id: int,
+) -> torch.Tensor:
+    """Return (T,) mask: 1 for assistant response tokens, 0 elsewhere.
+
+    Finds the last <|im_start|> (assistant turn) and marks from there to
+    <|im_end|> as response.  Works with Qwen2.5/3 chat templates.
+    """
+    ids = input_ids.tolist()
+
+    last_start = -1
+    for i in range(len(ids) - 1, -1, -1):
+        if ids[i] == im_start_id:
+            last_start = i
+            break
+    if last_start == -1:
+        return torch.ones_like(input_ids, dtype=torch.long)
+
+    end_pos = len(ids)
+    for i in range(last_start + 1, len(ids)):
+        if ids[i] == im_end_id:
+            end_pos = i
+            break
+
+    mask = torch.zeros_like(input_ids, dtype=torch.long)
+    mask[last_start : end_pos + 1] = 1
+    return mask
+
+
 class PreferenceDataset(Dataset):
     def __init__(
         self,
         parquet_path: str,
         processor,
         max_len: int = 1536,
+        response_mask: bool = False,
     ):
         import pandas as pd
         self.df = pd.read_parquet(parquet_path)
         self.processor = processor
         self.max_len = max_len
+        self._response_mask = response_mask
+
+        if response_mask:
+            tokenizer = getattr(processor, "tokenizer", processor)
+            self._im_start_id = tokenizer.convert_tokens_to_ids("<|im_start|>")
+            self._im_end_id = tokenizer.convert_tokens_to_ids("<|im_end|>")
 
     def __len__(self) -> int:
         return len(self.df)
@@ -85,6 +123,15 @@ class PreferenceDataset(Dataset):
             item["chosen_mm_token_type_ids"] = chosen_enc["mm_token_type_ids"][0]
         if "mm_token_type_ids" in rejected_enc:
             item["rejected_mm_token_type_ids"] = rejected_enc["mm_token_type_ids"][0]
+
+        if self._response_mask:
+            item["chosen_response_mask"] = compute_response_mask(
+                chosen_enc["input_ids"][0], self._im_start_id, self._im_end_id,
+            )
+            item["rejected_response_mask"] = compute_response_mask(
+                rejected_enc["input_ids"][0], self._im_start_id, self._im_end_id,
+            )
+
         return item
 
 
@@ -132,6 +179,14 @@ def preference_collate_fn(batch: List[Dict], pad_token_id: int = 0) -> Dict:
     if all("rejected_mm_token_type_ids" in b for b in batch):
         out["rejected_mm_token_type_ids"] = torch.stack(
             [_pad(b["rejected_mm_token_type_ids"], rejected_max_len, 0) for b in batch]
+        )
+
+    if all("chosen_response_mask" in b for b in batch):
+        out["chosen_response_mask"] = torch.stack(
+            [_pad(b["chosen_response_mask"], chosen_max_len, 0) for b in batch]
+        )
+        out["rejected_response_mask"] = torch.stack(
+            [_pad(b["rejected_response_mask"], rejected_max_len, 0) for b in batch]
         )
 
     return out

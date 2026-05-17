@@ -5,11 +5,41 @@ models/
 *.bin
 *.safetensors
 
-# Large datasets
+# Datasets (top-level only; do NOT match scripts/data/)
+/data/
 data/sft/triplets.parquet
+
+# Evaluation result artifacts (regeneratable, often large)
+results/
+legacy/results/
+
+# Training logs and SwanLab local cache
+logs/
+swanlog/
+legacy/logs/
+legacy/swanlog/
+
+# Hydra runtime outputs
+outputs/
+legacy/outputs/
+
+# Vendored verl-latest (cloned for reference, ~250MB; project ships only patches)
+vendor/verl-latest/
+legacy/vendor/verl-latest/
+
+# Reference PDFs (large, redistributable elsewhere; legacy/docs may also host personal docs)
+*.pdf
+
+# Personal interview / docs that aren't part of public repo
+docs/INTERVIEW.md
+legacy/docs/INTERVIEW.md
+
+# Claude Code harness state (per-user)
+.claude/
 
 # Python
 __pycache__/
+**/__pycache__/
 *.py[cod]
 *$py.class
 .env
@@ -20,19 +50,3 @@ env/
 
 # OS
 .DS_Store
-
-# Datasets (top-level only; do NOT match scripts/data/)
-/data/
-
-# Training logs and SwanLab local cache
-logs/
-swanlog/
-
-# Vendored verl-latest (cloned for reference, ~250MB; project ships only patches)
-vendor/verl-latest/
-
-# Hydra runtime outputs
-outputs/
-
-# Personal interview notes (not part of public repo)
-docs/INTERVIEW.md

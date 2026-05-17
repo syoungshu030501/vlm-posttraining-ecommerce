@@ -20,7 +20,7 @@ from torch.utils.data import DataLoader
 
 from src.stage2_rm.dataset import PreferenceDataset, preference_collate_fn
 from src.stage2_rm.evaluate import evaluate_holdout
-from src.stage2_rm.model import RewardModel, bradley_terry_loss
+from src.stage2_rm.model import ProcessRewardModel, RewardModel, bradley_terry_loss, prm_bt_loss
 from src.utils.model_loader import load_model_and_processor
 from src.utils.tracking import finish_run, init_swanlab, log_metrics
 
@@ -34,16 +34,27 @@ def train(args: argparse.Namespace) -> None:
         use_flash_attn=args.flash_attn,
         device_map=None,
     )
-    rm = RewardModel(
-        model,
-        head_bias=args.head_bias,
-        head_layernorm=args.head_layernorm,
-        head_mlp=args.head_mlp,
-        head_mlp_hidden=args.head_mlp_hidden,
-        head_dropout=args.head_dropout,
-    ).to(device)
+    if args.prm:
+        rm = ProcessRewardModel(
+            model,
+            head_dropout=args.prm_head_dropout,
+        ).to(device)
+        print("Training ProcessRewardModel (per-token rewards)")
+    else:
+        rm = RewardModel(
+            model,
+            head_bias=args.head_bias,
+            head_layernorm=args.head_layernorm,
+            head_mlp=args.head_mlp,
+            head_mlp_hidden=args.head_mlp_hidden,
+            head_dropout=args.head_dropout,
+        ).to(device)
+        print("Training RewardModel (scalar rewards)")
 
-    dataset = PreferenceDataset(args.train_parquet, processor)
+    dataset = PreferenceDataset(
+        args.train_parquet, processor,
+        response_mask=args.prm,
+    )
     pad_id = getattr(processor, "pad_token_id", None)
     if pad_id is None and hasattr(processor, "tokenizer"):
         pad_id = processor.tokenizer.pad_token_id or 0
@@ -66,7 +77,10 @@ def train(args: argparse.Namespace) -> None:
             if "pair_strategy" in holdout_df.columns
             else ["unknown"] * len(holdout_df)
         )
-        holdout_ds = PreferenceDataset(args.holdout_parquet, processor)
+        holdout_ds = PreferenceDataset(
+            args.holdout_parquet, processor,
+            response_mask=args.prm,
+        )
         holdout_loader = DataLoader(
             holdout_ds,
             batch_size=args.batch_size,
@@ -78,13 +92,14 @@ def train(args: argparse.Namespace) -> None:
         print(f"Loaded holdout: {len(holdout_ds)} pairs from {args.holdout_parquet}")
 
     optimizer = torch.optim.AdamW(rm.reward_head.parameters(), lr=args.lr)
+    stage_label = "stage2-prm" if args.prm else "stage2-rm"
     tracker = init_swanlab(
-        stage="stage2-rm",
+        stage=stage_label,
         config=vars(args),
         project=args.project_name,
-        experiment_name=args.experiment_name,
-        tags=["stage2", "rm"],
-        description="Reward model training",
+        experiment_name=args.experiment_name or stage_label,
+        tags=["stage2", "prm" if args.prm else "rm"],
+        description="Process Reward Model training" if args.prm else "Reward model training",
     )
 
     out_dir = Path(args.out_dir)
@@ -105,32 +120,61 @@ def train(args: argparse.Namespace) -> None:
             def to_device(t):
                 return t.to(device) if isinstance(t, torch.Tensor) else t
 
-            chosen_r = rm(
-                input_ids=to_device(batch["chosen_input_ids"]),
-                attention_mask=to_device(batch["chosen_attention_mask"]),
-                pixel_values=to_device(batch.get("chosen_pixel_values")),
-                image_grid_thw=to_device(batch.get("chosen_image_grid_thw")),
-                mm_token_type_ids=to_device(batch.get("chosen_mm_token_type_ids")),
-            )
-            rejected_r = rm(
-                input_ids=to_device(batch["rejected_input_ids"]),
-                attention_mask=to_device(batch["rejected_attention_mask"]),
-                pixel_values=to_device(batch.get("rejected_pixel_values")),
-                image_grid_thw=to_device(batch.get("rejected_image_grid_thw")),
-                mm_token_type_ids=to_device(batch.get("rejected_mm_token_type_ids")),
-            )
+            if args.prm:
+                chosen_token_r = rm(
+                    input_ids=to_device(batch["chosen_input_ids"]),
+                    attention_mask=to_device(batch["chosen_attention_mask"]),
+                    pixel_values=to_device(batch.get("chosen_pixel_values")),
+                    image_grid_thw=to_device(batch.get("chosen_image_grid_thw")),
+                    mm_token_type_ids=to_device(batch.get("chosen_mm_token_type_ids")),
+                )
+                rejected_token_r = rm(
+                    input_ids=to_device(batch["rejected_input_ids"]),
+                    attention_mask=to_device(batch["rejected_attention_mask"]),
+                    pixel_values=to_device(batch.get("rejected_pixel_values")),
+                    image_grid_thw=to_device(batch.get("rejected_image_grid_thw")),
+                    mm_token_type_ids=to_device(batch.get("rejected_mm_token_type_ids")),
+                )
+                chosen_mask = to_device(batch["chosen_response_mask"])
+                rejected_mask = to_device(batch["rejected_response_mask"])
 
-            loss = bradley_terry_loss(chosen_r, rejected_r)
-            loss.backward()
-            optimizer.step()
-            optimizer.zero_grad()
+                loss = prm_bt_loss(chosen_token_r, rejected_token_r, chosen_mask, rejected_mask)
+                loss.backward()
+                optimizer.step()
+                optimizer.zero_grad()
+
+                # Accuracy: mean-pool token rewards → sequence scores
+                chosen_seq = (chosen_token_r * chosen_mask).sum(1) / chosen_mask.sum(1).clamp(min=1)
+                rejected_seq = (rejected_token_r * rejected_mask).sum(1) / rejected_mask.sum(1).clamp(min=1)
+                n_correct += (chosen_seq > rejected_seq).sum().item()
+                n_total += chosen_seq.shape[0]
+            else:
+                chosen_r = rm(
+                    input_ids=to_device(batch["chosen_input_ids"]),
+                    attention_mask=to_device(batch["chosen_attention_mask"]),
+                    pixel_values=to_device(batch.get("chosen_pixel_values")),
+                    image_grid_thw=to_device(batch.get("chosen_image_grid_thw")),
+                    mm_token_type_ids=to_device(batch.get("chosen_mm_token_type_ids")),
+                )
+                rejected_r = rm(
+                    input_ids=to_device(batch["rejected_input_ids"]),
+                    attention_mask=to_device(batch["rejected_attention_mask"]),
+                    pixel_values=to_device(batch.get("rejected_pixel_values")),
+                    image_grid_thw=to_device(batch.get("rejected_image_grid_thw")),
+                    mm_token_type_ids=to_device(batch.get("rejected_mm_token_type_ids")),
+                )
+
+                loss = bradley_terry_loss(chosen_r, rejected_r)
+                loss.backward()
+                optimizer.step()
+                optimizer.zero_grad()
+
+                n_correct += (chosen_r > rejected_r).sum().item()
+                n_total += chosen_r.shape[0]
+
             total_loss += loss.item()
             global_step += 1
             n_steps += 1
-
-            # Accuracy: chosen should score higher than rejected
-            n_correct += (chosen_r > rejected_r).sum().item()
-            n_total += chosen_r.shape[0]
 
             log_metrics(
                 tracker,
@@ -170,7 +214,7 @@ def train(args: argparse.Namespace) -> None:
             print(f"  New best RM (loss={best_loss:.4f})")
 
         if holdout_loader is not None:
-            ho_metrics = evaluate_holdout(rm, holdout_loader, holdout_strategies, device)
+            ho_metrics = evaluate_holdout(rm, holdout_loader, holdout_strategies, device, is_prm=args.prm)
             print(
                 f"  holdout @ epoch {epoch}: acc={ho_metrics['pair_accuracy']:.4f}  "
                 f"margin={ho_metrics['mean_margin']:.4f}  len_diff={ho_metrics['len_shortcut']:.2f}"
@@ -238,5 +282,16 @@ if __name__ == "__main__":
         "--holdout_parquet",
         default=None,
         help="Optional held-out preference parquet; when given, run pair-accuracy eval per epoch.",
+    )
+    parser.add_argument(
+        "--prm",
+        action="store_true",
+        help="Train a Process Reward Model (per-token rewards) instead of scalar Outcome RM.",
+    )
+    parser.add_argument(
+        "--prm_head_dropout",
+        type=float,
+        default=0.1,
+        help="Dropout in PRM head (default 0.1). Only used with --prm.",
     )
     train(parser.parse_args())
