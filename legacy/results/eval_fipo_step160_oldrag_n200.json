@@ -1,0 +1,69 @@
+{
+  "n_samples": 200,
+  "json_format_accuracy": 1.0,
+  "violation_precision": 0.9655,
+  "violation_recall": 0.9767,
+  "violation_f1": 0.9711,
+  "hallucination_rate": 0.275,
+  "rag_triggered_rate": 0.35,
+  "trigger_by_confidence_rate": 0.35,
+  "trigger_by_long_tail_rate": 0.0,
+  "fallback_to_v1_rate": 0.0,
+  "rewrite_rate": 0.0,
+  "verify_score_mean": null,
+  "verify_score_median": null,
+  "rag_signal": "field_min",
+  "rag_threshold": 0.4,
+  "vt_low": 0.5,
+  "vt_high": 0.7,
+  "elapsed_sec": 1027.0,
+  "sec_per_sample": 5.14,
+  "per_coarse_category": {
+    "其他": {
+      "n": 3,
+      "f1": 1.0,
+      "halluc": 0.3333
+    },
+    "包": {
+      "n": 12,
+      "f1": 1.0,
+      "halluc": 0.4167
+    },
+    "化妆品": {
+      "n": 10,
+      "f1": 1.0,
+      "halluc": 0.3
+    },
+    "医药": {
+      "n": 7,
+      "f1": 1.0,
+      "halluc": 0.5714
+    },
+    "手表": {
+      "n": 26,
+      "f1": 0.9565,
+      "halluc": 0.1538
+    },
+    "服装": {
+      "n": 92,
+      "f1": 0.9647,
+      "halluc": 0.2826
+    },
+    "配饰": {
+      "n": 3,
+      "f1": 1.0,
+      "halluc": 0.0
+    },
+    "鞋": {
+      "n": 42,
+      "f1": 0.9677,
+      "halluc": 0.2143
+    },
+    "食品": {
+      "n": 5,
+      "f1": 1.0,
+      "halluc": 0.6
+    }
+  },
+  "long_tail_trigger_by_category": {}
+}

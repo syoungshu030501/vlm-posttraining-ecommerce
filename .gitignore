@@ -9,9 +9,8 @@ models/
 /data/
 data/sft/triplets.parquet
 
-# Evaluation result artifacts (regeneratable, often large)
-results/
-legacy/results/
+# Evaluation result artifacts (large debug dumps stay local; small JSON reports
+# under legacy/results/ are tracked so reviewers can reproduce reported numbers).
 
 # Training logs and SwanLab local cache
 logs/

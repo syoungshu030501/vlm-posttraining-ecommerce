@@ -1,0 +1,32 @@
+[
+  {
+    "gating_score": 0.4620096683502197,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.4908851683139801,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.45999783277511597,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  }
+]

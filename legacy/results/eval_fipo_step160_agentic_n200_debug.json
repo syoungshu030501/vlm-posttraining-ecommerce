@@ -1,0 +1,2397 @@
+[
+  {
+    "gating_score": 0.4620096683502197,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.4908851683139801,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.45999783277511597,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.4760291278362274,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.3963705897331238,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9998910930844633,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "服装",
+      "服装",
+      "服装"
+    ]
+  },
+  {
+    "gating_score": 0.5588223934173584,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.48841607570648193,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.5620667338371277,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.47164538502693176,
+    "coarse_category": "食品",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": true,
+    "rag_triggered": true,
+    "verify_score": 0.9999646337474581,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "食品",
+      "食品"
+    ]
+  },
+  {
+    "gating_score": 0.4531216025352478,
+    "coarse_category": "手表",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.2316073179244995,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.6224593334780916,
+    "fallback_used": false,
+    "rewrite_used": true,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "服装"
+    ]
+  },
+  {
+    "gating_score": 0.4164465665817261,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.4999917149543762,
+    "coarse_category": "包",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.565714955329895,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.4325772225856781,
+    "coarse_category": "其他",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": true,
+    "rag_triggered": true,
+    "verify_score": 0.9995121328527233,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "价格",
+      "广告宣传"
+    ]
+  },
+  {
+    "gating_score": 0.561284601688385,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.5165591239929199,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.4999922215938568,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.39384520053863525,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9999687880882215,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "服装",
+      "服装",
+      "服装"
+    ]
+  },
+  {
+    "gating_score": 0.47155582904815674,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.48074135184288025,
+    "coarse_category": "手表",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.35981979966163635,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9999339378601068,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "服装",
+      "服装",
+      "服装"
+    ]
+  },
+  {
+    "gating_score": 0.48416802287101746,
+    "coarse_category": "配饰",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.38338518142700195,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9999038875839972,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "服装",
+      "服装",
+      "服装"
+    ]
+  },
+  {
+    "gating_score": 0.5569461584091187,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.3940693438053131,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9959298523947907,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "服装",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.3598332703113556,
+    "coarse_category": "包",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9947798644253537,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.39387476444244385,
+    "coarse_category": "鞋",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9968273071346008,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "鞋"
+    ]
+  },
+  {
+    "gating_score": 0.4838169813156128,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.3652568757534027,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.0075772407411304355,
+    "fallback_used": true,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.28908368945121765,
+    "coarse_category": "化妆品",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.0052201255701284045,
+    "fallback_used": true,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.5613727569580078,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.49173253774642944,
+    "coarse_category": "包",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.48430684208869934,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.4972355365753174,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.5546059012413025,
+    "coarse_category": "包",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.26949843764305115,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.4378234902953219,
+    "fallback_used": true,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.5415204763412476,
+    "coarse_category": "其他",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": true,
+    "rag_triggered": true,
+    "verify_score": 0.22270013418654488,
+    "fallback_used": true,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "广告宣传",
+      "广告宣传",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.42175570130348206,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.37435808777809143,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9993736558860083,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "服装",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.4892015755176544,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.4646676182746887,
+    "coarse_category": "化妆品",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.30452612042427063,
+    "coarse_category": "手表",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.18242551681132615,
+    "fallback_used": true,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.499424546957016,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.36859363317489624,
+    "coarse_category": "鞋",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9998910930844633,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "鞋",
+      "鞋",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.46601879596710205,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.3146648705005646,
+    "coarse_category": "化妆品",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.07585817774330593,
+    "fallback_used": true,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "化妆品",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.3507808446884155,
+    "coarse_category": "鞋",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.562176504023165,
+    "fallback_used": false,
+    "rewrite_used": true,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.49595972895622253,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.4681341350078583,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.35986045002937317,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9968273071689376,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "服装",
+      "服装",
+      "服装"
+    ]
+  },
+  {
+    "gating_score": 0.4275406002998352,
+    "coarse_category": "化妆品",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.4852147698402405,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.4192117750644684,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.5621659755706787,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.5607830286026001,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.45090043544769287,
+    "coarse_category": "手表",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.5616639256477356,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.4991733729839325,
+    "coarse_category": "包",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.3649410009384155,
+    "coarse_category": "手表",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9947798644392979,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.5621761679649353,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.4999236762523651,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.4074164927005768,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.5466848611831665,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.48303017020225525,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.32966524362564087,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9995121328527233,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "服装",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.5517647862434387,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.4108528196811676,
+    "coarse_category": "包",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.4740276634693146,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.24180838465690613,
+    "coarse_category": "手表",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.06008664834347419,
+    "fallback_used": true,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.7304254770278931,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.4740203022956848,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.5065586566925049,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.5370393395423889,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.4353688359260559,
+    "coarse_category": "手表",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.23371684551239014,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.13296424333112666,
+    "fallback_used": true,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "服装"
+    ]
+  },
+  {
+    "gating_score": 0.48219045996665955,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.49432218074798584,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.491944819688797,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.3203606605529785,
+    "coarse_category": "鞋",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9999339378601068,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.44613248109817505,
+    "coarse_category": "手表",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.2387417107820511,
+    "coarse_category": "手表",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9998601679097532,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.22093355655670166,
+    "coarse_category": "手表",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9998765954217491,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.4241340756416321,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.42225679755210876,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.5621760487556458,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.6403804421424866,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.44301706552505493,
+    "coarse_category": "包",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.6187356114387512,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.49920353293418884,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.4620096683502197,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.32039251923561096,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9947798643290434,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.5351511240005493,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.44415271282196045,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.5317273736000061,
+    "coarse_category": "手表",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.5617815256118774,
+    "coarse_category": "配饰",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.35262346267700195,
+    "coarse_category": "包",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.0953494597026194,
+    "fallback_used": true,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.4998784363269806,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.5616624355316162,
+    "coarse_category": "食品",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": true,
+    "rag_triggered": true,
+    "verify_score": 0.9998765954212665,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "食品",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.3540811240673065,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.05340333073018905,
+    "fallback_used": true,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "服装",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.4802402853965759,
+    "coarse_category": "手表",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.4818251430988312,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.3826408088207245,
+    "coarse_category": "手表",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9971990628937949,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.4678381383419037,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.36513784527778625,
+    "coarse_category": "化妆品",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9997040328684594,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "化妆品"
+    ]
+  },
+  {
+    "gating_score": 0.4890316426753998,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.567554235458374,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.5619999170303345,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.4419412612915039,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.5274626016616821,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.4609842598438263,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.26697057485580444,
+    "coarse_category": "鞋",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.4999999949995577,
+    "fallback_used": true,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.44002485275268555,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.5549885630607605,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.37054288387298584,
+    "coarse_category": "化妆品",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9940889215579904,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.3096884787082672,
+    "coarse_category": "手表",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.037326885218523405,
+    "fallback_used": true,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.47437337040901184,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.4441109895706177,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.3485698699951172,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.999769483283703,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "服装",
+      "服装",
+      "服装"
+    ]
+  },
+  {
+    "gating_score": 0.40394163131713867,
+    "coarse_category": "医药",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": true,
+    "rag_triggered": true,
+    "verify_score": 0.9997040328684594,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "医药",
+      "医药"
+    ]
+  },
+  {
+    "gating_score": 0.4228493273258209,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.4802863895893097,
+    "coarse_category": "手表",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.43544068932533264,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.5363631844520569,
+    "coarse_category": "手表",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.5616500973701477,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.39093509316444397,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9999038875809042,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "服装",
+      "服装",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.5621755123138428,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.5620235800743103,
+    "coarse_category": "食品",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": true,
+    "rag_triggered": true,
+    "verify_score": 0.07585817701284785,
+    "fallback_used": true,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "食品",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.3530609607696533,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.11920291881310435,
+    "fallback_used": true,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "服装",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.3455411195755005,
+    "coarse_category": "医药",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": true,
+    "rag_triggered": true,
+    "verify_score": 0.1480471799074945,
+    "fallback_used": true,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "医药"
+    ]
+  },
+  {
+    "gating_score": 0.5367447137832642,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.360876202583313,
+    "coarse_category": "手表",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9999687880882215,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.5608682036399841,
+    "coarse_category": "包",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.37035757303237915,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9999545921294967,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "服装",
+      "服装",
+      "服装"
+    ]
+  },
+  {
+    "gating_score": 0.28875890374183655,
+    "coarse_category": "化妆品",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.07585817774330593,
+    "fallback_used": true,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "化妆品",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.5621641874313354,
+    "coarse_category": "食品",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": true,
+    "rag_triggered": true,
+    "verify_score": 0.7772998486290315,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "食品",
+      "食品"
+    ]
+  },
+  {
+    "gating_score": 0.3714132308959961,
+    "coarse_category": "鞋",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9999485477863176,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.44642606377601624,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.34812772274017334,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.29421496418197696,
+    "fallback_used": true,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "服装",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.5546222925186157,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.3450281620025635,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9998910930844633,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "服装",
+      "服装",
+      "服装"
+    ]
+  },
+  {
+    "gating_score": 0.5849891901016235,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.3850681185722351,
+    "coarse_category": "手表",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9998910930844633,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.321718692779541,
+    "coarse_category": "手表",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9971990628208155,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.33897069096565247,
+    "coarse_category": "手表",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9820137799629887,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.3001001477241516,
+    "coarse_category": "手表",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9998601679118726,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.40343615412712097,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.3805479407310486,
+    "coarse_category": "化妆品",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.11920291467710548,
+    "fallback_used": true,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.3940693438053131,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9959298523947907,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "服装",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.3598223626613617,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9579122625851145,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.4831032156944275,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.3892567455768585,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9991959040670354,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "服装",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.44930824637413025,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.35331490635871887,
+    "coarse_category": "包",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.7549149807640196,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.6780495643615723,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.3540249466896057,
+    "coarse_category": "医药",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": true,
+    "rag_triggered": true,
+    "verify_score": 0.029312230632425308,
+    "fallback_used": true,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "医药",
+      "医药"
+    ]
+  },
+  {
+    "gating_score": 0.48096659779548645,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.5226169228553772,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.2561761736869812,
+    "coarse_category": "手表",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9968273071258252,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.48460060358047485,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.49508747458457947,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.3297158181667328,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.3775406802383933,
+    "fallback_used": true,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "服装",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.5222786068916321,
+    "coarse_category": "医药",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": true,
+    "rag_triggered": true,
+    "verify_score": 0.9399133402275961,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "医药"
+    ]
+  },
+  {
+    "gating_score": 0.3871951699256897,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9991959040465693,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "服装",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.48550960421562195,
+    "coarse_category": "手表",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.5109840035438538,
+    "coarse_category": "配饰",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.4806325435638428,
+    "coarse_category": "包",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.3117406964302063,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.7772998538189982,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "服装",
+      "服装",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.3924083709716797,
+    "coarse_category": "医药",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": true,
+    "rag_triggered": true,
+    "verify_score": 0.9994472113780096,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "医药",
+      "医药"
+    ]
+  },
+  {
+    "gating_score": 0.4190729856491089,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.4809773862361908,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.24701151251792908,
+    "coarse_category": "其他",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": true,
+    "rag_triggered": true,
+    "verify_score": 0.9994472113934537,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "价格",
+      "广告宣传"
+    ]
+  },
+  {
+    "gating_score": 0.38107019662857056,
+    "coarse_category": "化妆品",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9978172735616452,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.3438822329044342,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9953904172451566,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "服装",
+      "服装",
+      "服装"
+    ]
+  },
+  {
+    "gating_score": 0.2845115661621094,
+    "coarse_category": "手表",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.20181322346505814,
+    "fallback_used": true,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.46786925196647644,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.772637128829956,
+    "coarse_category": "包",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.38042446970939636,
+    "coarse_category": "鞋",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.20181320916024245,
+    "fallback_used": true,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.5621760487556458,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.33366450667381287,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.407333397653016,
+    "fallback_used": true,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.5310630798339844,
+    "coarse_category": "医药",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": true,
+    "rag_triggered": true,
+    "verify_score": 0.9999339378589073,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "医药",
+      "通用",
+      "医药"
+    ]
+  },
+  {
+    "gating_score": 0.4468795657157898,
+    "coarse_category": "化妆品",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.48727142810821533,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.44716137647628784,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.48415058851242065,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.3407951891422272,
+    "coarse_category": "食品",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": true,
+    "rag_triggered": true,
+    "verify_score": 0.11920292541878227,
+    "fallback_used": true,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.4191979169845581,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.49864518642425537,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.3217858672142029,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9998765954220707,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "服装",
+      "服装",
+      "服装"
+    ]
+  },
+  {
+    "gating_score": 0.5621094703674316,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.3475952446460724,
+    "coarse_category": "服装",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9999251437666697,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "服装",
+      "服装",
+      "服装"
+    ]
+  },
+  {
+    "gating_score": 0.6060289740562439,
+    "coarse_category": "鞋",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.2677042782306671,
+    "coarse_category": "手表",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.9998415537775175,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  },
+  {
+    "gating_score": 0.4595029652118683,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.3564125597476959,
+    "coarse_category": "鞋",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.8175744643938495,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "鞋"
+    ]
+  },
+  {
+    "gating_score": 0.4987943470478058,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.250699907541275,
+    "coarse_category": "医药",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": true,
+    "rag_triggered": true,
+    "verify_score": 0.9993736559033818,
+    "fallback_used": false,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "医药",
+      "医药",
+      "医药"
+    ]
+  },
+  {
+    "gating_score": 0.5580103397369385,
+    "coarse_category": "服装",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.5275818109512329,
+    "coarse_category": "手表",
+    "triggered_by_conf": false,
+    "triggered_by_long_tail": false,
+    "rag_triggered": false,
+    "verify_score": null,
+    "fallback_used": false,
+    "rewrite_used": false
+  },
+  {
+    "gating_score": 0.3375314176082611,
+    "coarse_category": "鞋",
+    "triggered_by_conf": true,
+    "triggered_by_long_tail": false,
+    "rag_triggered": true,
+    "verify_score": 0.34864513520518753,
+    "fallback_used": true,
+    "rewrite_used": false,
+    "retrieved_text_categories": [
+      "通用",
+      "通用",
+      "通用"
+    ]
+  }
+]

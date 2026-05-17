@@ -1,0 +1,34 @@
+{
+  "n_samples": 3,
+  "json_format_accuracy": 1.0,
+  "violation_precision": 0.0,
+  "violation_recall": 0.0,
+  "violation_f1": 0.0,
+  "hallucination_rate": 0.0,
+  "rag_triggered_rate": 0.0,
+  "trigger_by_confidence_rate": 0.0,
+  "trigger_by_long_tail_rate": 0.0,
+  "fallback_to_v1_rate": 0.0,
+  "rewrite_rate": 0.0,
+  "verify_score_mean": null,
+  "verify_score_median": null,
+  "rag_signal": "field_min",
+  "rag_threshold": 0.4,
+  "vt_low": 0.5,
+  "vt_high": 0.7,
+  "elapsed_sec": 25.2,
+  "sec_per_sample": 8.39,
+  "per_coarse_category": {
+    "服装": {
+      "n": 1,
+      "f1": 0.0,
+      "halluc": 0.0
+    },
+    "鞋": {
+      "n": 2,
+      "f1": 0.0,
+      "halluc": 0.0
+    }
+  },
+  "long_tail_trigger_by_category": {}
+}
