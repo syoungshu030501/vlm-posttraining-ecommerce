@@ -49,3 +49,6 @@ env/
 
 # OS
 .DS_Store
+
+# HuggingFace upload staging (symlink-only, do NOT commit)
+.hf_staging/
